@@ -3,20 +3,26 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1">
 	<title>Reading list</title>
 
 	<!-- Un-Minified version -->
 	<link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">	
+
+	<link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
 
 
 	<main id="app-container">
 		<form action="" id="search-form">
-			<input type="text" name="query" autofocus>
-			<input type="submit" name="" id="" value="chercher">
+			<input type="text" name="query" id="query" autofocus>
+			<input type="submit" name="" id="submit-form" value="Chercher">
 		</form>
+
+		<div id="reading-list">
+
+		</div>
 	</main>
 
 	
@@ -35,10 +41,7 @@
 		); 
 		book.viewBookInConsole(); 
 
-		let wishes = new Wishlist(); 
-		console.log(wishes); 
-		// wishes.addBook(book); 
-		// wishes.saveWishlist(); 
+		let wishlist = new Wishlist(); 
 	</script>
 </body>
 </html>

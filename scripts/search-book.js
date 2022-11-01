@@ -2,6 +2,10 @@ const searchForm = document.querySelector('#search-form');
 const DEFAULT_RESULTS_NUMBER = 5;
 
 
+// !dev-only : 
+// fetchBooksInformations("au guet", DEFAULT_RESULTS_NUMBER); 
+// ****************
+
 searchForm.addEventListener('submit', event => {
 	event.preventDefault(); 
 
@@ -33,37 +37,48 @@ async function fetchBooksInformations(query, maxResults) {
 			i.authors ? i.authors.join(',') : '', 
 			i.publisher,  
 			i.description, 
-			i.imageLinks ? i.imageLinks.thumbnail : "images/default_image.png", 
+			i.imageLinks ? i.imageLinks.thumbnail : "images/empty.png", 
 			i.industryIdentifiers ? i.industryIdentifiers[0].identifier : '',
 			book.id
 		))
 	})
 
-	console.log(resultsBooks); 
+	// console.log(resultsBooks); 
 
 	let newInsert = ''; 
-	resultsBooks.forEach(book => {
-		console.log(writeBookCard(book)); 
-		newInsert += writeBookCard(book); 
-	})
+	for (let i in resultsBooks) {
+		newInsert += writeBookCard(resultsBooks[i], i); 
+	}
 
 	let newBlock = `<div id="search-results">${newInsert}</div>`; 
 
 	if (document.getElementById('search-results')) { document.getElementById('search-results').remove() }
 
 	searchForm.insertAdjacentHTML('afterend', newBlock); 
+
+	let allEntries = document.querySelectorAll(".book-entry button"); 
+	console.log(allEntries); 
+
+	for (let i = 0 ; i < allEntries.length; i++ ) {
+		allEntries[i].addEventListener('click', event => {
+			wishlist.add(resultsBooks[event.target.id]); 
+			alert('Livre ajouté'); 
+		})
+	}
 	
 }
 
-function writeBookCard(book) {
-	let template = `<article>
-		<div><img width="200" src="${book.miniature_link}" /><div>	
-		<div>
-			<h3>${book.title}</h3>
-			<h4>${book.author}</h4>
-			<small>${book.description}</small>
-			<p><strong>${book.publisher}</strong></p>
-			<button onclick="">Ajouter</button>
+function writeBookCard(book, index) {
+	let template = `<article class="book-entry" id="book-${index}">
+		<div><img width="80" src="${book.miniature_link}" /></div>	
+		<div class="info-container">
+			<h3 class="title">${book.title}</h3>
+			<h4 class="author">${book.author}</h4>
+			<p class="description">${book.description}</p>
+			<p class="publisher"><strong>${book.publisher}</strong></p>
+		</div>
+		<div class="cta-container">
+			<button id="${index}">+</button>
 		</div>
 	</article>`; 
 
