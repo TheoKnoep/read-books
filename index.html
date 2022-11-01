@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reading list</title>
+
+	<!-- Un-Minified version -->
+	<link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">	
+</head>
+<body>
+
+
+	<main id="app-container">
+		<form action="" id="search-form">
+			<input type="text" name="query" autofocus>
+			<input type="submit" name="" id="" value="chercher">
+		</form>
+	</main>
+
+	
+
+	<script src="scripts/Book.js"></script>
+	<script src="scripts/Wishlist.js"></script>
+
+
+	<script src="scripts/search-book.js"></script>
+
+	<script>
+		let book = new Book(
+			"La Fraternité de l'anneau", 
+			"J.R.R. Tolkien", 
+			"Christian Bourgeois"
+		); 
+		book.viewBookInConsole(); 
+
+		let wishes = new Wishlist(); 
+		console.log(wishes); 
+		// wishes.addBook(book); 
+		// wishes.saveWishlist(); 
+	</script>
+</body>
+</html>
