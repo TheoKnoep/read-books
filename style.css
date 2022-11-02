@@ -11,9 +11,24 @@
 
 
 
+/* Reading list */
+#app-container {
+
+}
+#reading-list {
+	height: 100vh;
+}
+
+
+
 
 
 /* Books search results  */
+#search-form {
+	scroll-snap-align: start;
+}
+
+
 #search-results .book-entry {
 	display: flex;
 	flex-wrap: wrap; 

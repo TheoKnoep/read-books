@@ -43,7 +43,8 @@ class QuickToast {
                         background-color: var(--text); 
                         padding: .8em 2em; 
                         box-shadow: 1px 1px 4px rgba(0,0,0,.4); 
-                        border-radius: 4px; border-left: solid ${successColor} 4px; 
+                        border-radius: 4px; 
+                        border-left: solid var(--accent) 4px; 
                         color: var(--bg); 
                         user-select: none;
                         display: flex;

@@ -42,6 +42,7 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 	// Handle CTA : 
 	for (let i = 0 ; i < allEntriesBtn.length; i++ ) {
 		allEntriesBtn[i].addEventListener('click', event => {
+			event.stopPropagation(); 
 			wishlist.add(resultsBooks[event.target.id]); 
 			new QuickToast("Livre ajouté à la wishlist", 3000).display();
 		})
