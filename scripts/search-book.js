@@ -28,8 +28,8 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 
 	searchForm.insertAdjacentHTML('afterend', newBlock); 
 
-	const allEntries = document.querySelectorAll(".book-entry"); 
-	const allEntriesBtn = document.querySelectorAll(".book-entry button"); 
+	const allEntries = document.querySelectorAll("#search-results .book-entry"); 
+	const allEntriesBtn = document.querySelectorAll("#search-results .book-entry button"); 
 
 	// Handle view description : 
 	for (let i = 0 ; i < allEntries.length; i++ ) {
@@ -99,8 +99,8 @@ function writeBookCard(book, index) {
 		<div class="info-container">
 			<h3 class="title">${book.title}</h3>
 			<h4 class="author">${book.author}</h4>
-			<p class="description maxheight0">${book.description}</p>
-			<p class="publisher"><strong>${book.publisher}</strong></p>
+			<p class="description maxheight0">${book.description || '<em>Pas de description disponible</em>'}</p>
+			<p class="publisher"><strong>${book.publisher || '?'}</strong></p>
 		</div>
 		<div class="cta-container">
 			<button id="${index}">+</button>

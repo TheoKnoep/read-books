@@ -13,9 +13,10 @@
 
 
 	<!-- Scripts Classes -->
+	<script src="scripts/QuickToast.js"></script>
 	<script src="scripts/Book.js"></script>
 	<script src="scripts/Wishlist.js"></script>
-	<script src="scripts/QuickToast.js"></script>
+	
 
 
 	<!-- MD converter -->
@@ -34,26 +35,36 @@
 		<div id="reading-list">
 			<script>document.getElementById('reading-list').scrollIntoView(); </script>
 			<h2>Livres à lire</h2>
+			<div id="reading-list-content">
+				<template id="book-item-template">
+					<article class="book-entry" id="book-0">
+						<div><img width="80" src="http://books.google.com/books/content?id=i_BcAAAAMAAJ&amp;printsec=frontcover&amp;img=1&amp;zoom=1&amp;source=gbs_api"></div>	
+						<div class="info-container">
+							<h3 class="title">TITLE</h3>
+							<h4 class="author">AUTHOR</h4>
+							<p class="description maxheight0">DESCRIPTION</p>
+							<p class="publisher"><strong>PUBLISHER</strong></p>
+						</div>
+						<div>
+							<button class="delete-btn">X</button>
+						</div>
+					</article>
+				</template>
+			</div>
 		</div>
 	</main>
 
 	
 
 
-
-
-	<script src="scripts/search-book.js"></script>
-
 	<script>
-		let book = new Book(
-			"La Fraternité de l'anneau", 
-			"J.R.R. Tolkien", 
-			"Christian Bourgeois"
-		); 
-		book.viewBookInConsole(); 
-
 		let wishlist = new Wishlist(); 
 	</script>
+
+	<script src="scripts/search-book.js"></script>
+	<script src="scripts/display-wishlist.js"></script>
+
+	
 
 	<script>
 		function checkSearchFormPosition() {

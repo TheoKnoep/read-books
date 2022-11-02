@@ -15,7 +15,7 @@ class Book {
 		this.google_id = google_id; 
 		this.series = null; 
 		this.series_number = null; 
-		this.language = "français"; 
+		this.language = null; 
 	}
 
 	viewBookInConsole() {
