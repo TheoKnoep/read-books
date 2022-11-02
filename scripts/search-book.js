@@ -3,17 +3,42 @@ const DEFAULT_RESULTS_NUMBER = 5;
 
 
 // !dev-only : 
-fetchBooksInformations("capitale du sud", 10, true); 
+// displaySearchResults("capitale du sud", 10, true); 
 // ****************
 
 searchForm.addEventListener('submit', event => {
 	event.preventDefault(); 
 	let data = new FormData(searchForm); 
 	const query = data.get('query'); 
-	fetchBooksInformations(query, DEFAULT_RESULTS_NUMBER); 
+	displaySearchResults(query, DEFAULT_RESULTS_NUMBER, true); 
 })
 
 
+async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
+	const resultsBooks = await fetchBooksInformations(query, maxResults, onlyThumbnails); 
+
+	let newInsert = ''; 
+	for (let i in resultsBooks) {
+		newInsert += writeBookCard(resultsBooks[i], i); 
+	}
+
+	let newBlock = `<div id="search-results">${newInsert}</div>`; 
+
+	if (document.getElementById('search-results')) { document.getElementById('search-results').remove() }
+
+	searchForm.insertAdjacentHTML('afterend', newBlock); 
+
+	let allEntries = document.querySelectorAll(".book-entry button"); 
+	console.log(allEntries); 
+
+	for (let i = 0 ; i < allEntries.length; i++ ) {
+		allEntries[i].addEventListener('click', event => {
+			wishlist.add(resultsBooks[event.target.id]); 
+			// alert('Livre ajouté'); 
+			new QuickToast("Livre ajouté à la wishlist", 3000).display();
+		})
+	}
+}
 
 async function fetchBooksInformations(query, maxResults, onlyThumbnails = false) {
 	const url = "https://www.googleapis.com/books/v1/volumes?q="; 
@@ -55,26 +80,7 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 	}
 	// console.log(resultsBooks); 
 
-	let newInsert = ''; 
-	for (let i in resultsBooks) {
-		newInsert += writeBookCard(resultsBooks[i], i); 
-	}
-
-	let newBlock = `<div id="search-results">${newInsert}</div>`; 
-
-	if (document.getElementById('search-results')) { document.getElementById('search-results').remove() }
-
-	searchForm.insertAdjacentHTML('afterend', newBlock); 
-
-	let allEntries = document.querySelectorAll(".book-entry button"); 
-	console.log(allEntries); 
-
-	for (let i = 0 ; i < allEntries.length; i++ ) {
-		allEntries[i].addEventListener('click', event => {
-			wishlist.add(resultsBooks[event.target.id]); 
-			alert('Livre ajouté'); 
-		})
-	}
+	return resultsBooks; 
 	
 }
 
