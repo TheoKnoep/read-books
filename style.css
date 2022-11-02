@@ -18,6 +18,16 @@
 }
 
 
+
+/*  HEADER */
+.header {
+	position: sticky; 
+	top: 0; 
+	width: 100%;
+	background-color: #00838f;
+}
+
+
 /* Reading list */
 #app-container {
 
@@ -42,6 +52,9 @@
 	justify-content: space-between;
 	max-height: 100%;
 	transition: all ease-in 320ms;
+}
+.book-entry {
+	padding: .4em; 
 }
 
 .book-entry .title, .book-entry .author {
@@ -75,4 +88,8 @@
 	width: 40px; 
 	height: 40px;
 	align-self: flex-end;
+}
+
+.book-entry button {
+	margin: 0;
 }
