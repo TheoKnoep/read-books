@@ -25,7 +25,7 @@
 </head>
 <body>
 
-	<header class="header">Header</header>
+	<!-- <header class="header">Header</header> -->
 	<main id="app-container">
 		<form class="displaynone" action="" id="search-form">
 			<input type="text" name="query" id="query" >
@@ -33,7 +33,6 @@
 		</form>
 
 		<div id="reading-list">
-			<script>document.getElementById('reading-list').scrollIntoView(); </script>
 			<h2>Livres à lire</h2>
 			<div id="reading-list-content">
 				<template id="book-item-template">
@@ -54,7 +53,7 @@
 		</div>
 	</main>
 	<footer>
-		<button id="open-search-btn">+</button>
+		<button id="open-search-btn" class="main-button">+</button>
 	</footer>
 
 	
@@ -64,6 +63,7 @@
 		let wishlist = new Wishlist(); 
 	</script>
 
+	<script src="scripts/dom-manipulation.js"></script>
 	<script src="scripts/search-book.js"></script>
 	<script src="scripts/display-wishlist.js"></script>
 

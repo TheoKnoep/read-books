@@ -3,6 +3,27 @@
 	user-select: none;
 }
 
+body::-webkit-scrollbar {
+	width: 12px;
+}
+body::-webkit-scrollbar-track {
+	background: #3d3d3d;
+	/* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: #6f6f6f;
+	/* color of the scroll thumb */
+	border-radius: 20px;
+	/* roundness of the scroll thumb */
+	border: 2px solid #3d3d3d;
+	/* creates padding around scroll thumb */
+}
+
+
+
+
+
 /* UTILS */
 .displaynone {
 	display: none; 
@@ -25,6 +46,29 @@
 	top: 0; 
 	width: 100%;
 	background-color: #00838f;
+	z-index: 1;
+}
+
+.main-button {
+	border-radius: 120px; 
+	box-shadow: 1px 1px 4px rgba(0,0,0,.6);
+	position: fixed; 
+	bottom: .6em; 
+	right: .6em; 
+	width: 72px; 
+	height: 72px; 
+	transition: all ease 240ms; 
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+}
+.main-button.active {
+	transform: rotate(45deg);
+	background-color: #fff;
 }
 
 
@@ -33,7 +77,7 @@
 
 }
 #reading-list {
-	height: 100vh;
+	min-height: 100vh;
 }
 
 
