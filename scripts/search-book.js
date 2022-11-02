@@ -1,9 +1,9 @@
 const searchForm = document.querySelector('#search-form'); 
-const DEFAULT_RESULTS_NUMBER = 5;
+const DEFAULT_RESULTS_NUMBER = 10;
 
 
 // !dev-only : 
-// displaySearchResults("capitale du sud", 10, true); 
+// displaySearchResults("france sélection", 10, true); 
 // ****************
 
 searchForm.addEventListener('submit', event => {
@@ -28,13 +28,21 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 
 	searchForm.insertAdjacentHTML('afterend', newBlock); 
 
-	let allEntries = document.querySelectorAll(".book-entry button"); 
-	console.log(allEntries); 
+	const allEntries = document.querySelectorAll(".book-entry"); 
+	const allEntriesBtn = document.querySelectorAll(".book-entry button"); 
 
+	// Handle view description : 
 	for (let i = 0 ; i < allEntries.length; i++ ) {
 		allEntries[i].addEventListener('click', event => {
+			// allEntries[i].querySelector('.description').classList.toggle('displaynone'); 
+			allEntries[i].querySelector('.description').classList.toggle('maxheight0'); 
+		})
+	}
+
+	// Handle CTA : 
+	for (let i = 0 ; i < allEntriesBtn.length; i++ ) {
+		allEntriesBtn[i].addEventListener('click', event => {
 			wishlist.add(resultsBooks[event.target.id]); 
-			// alert('Livre ajouté'); 
 			new QuickToast("Livre ajouté à la wishlist", 3000).display();
 		})
 	}
@@ -90,7 +98,7 @@ function writeBookCard(book, index) {
 		<div class="info-container">
 			<h3 class="title">${book.title}</h3>
 			<h4 class="author">${book.author}</h4>
-			<!-- <p class="description">${book.description}</p> -->
+			<p class="description maxheight0">${book.description}</p>
 			<p class="publisher"><strong>${book.publisher}</strong></p>
 		</div>
 		<div class="cta-container">
