@@ -37,7 +37,7 @@ async function fetchBooksInformations(query, maxResults) {
 			i.authors ? i.authors.join(',') : '', 
 			i.publisher,  
 			i.description, 
-			i.imageLinks ? i.imageLinks.thumbnail : "images/empty.png", 
+			i.imageLinks ? i.imageLinks.thumbnail : "images/empty.svg", 
 			i.industryIdentifiers ? i.industryIdentifiers[0].identifier : '',
 			book.id
 		))
