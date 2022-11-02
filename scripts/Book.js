@@ -41,4 +41,17 @@ Format : ${this.format}
 	testFunction() {
 		alert("Boom"); 
 	}
+
+	updateStatus() {
+		const lifeCycle = [
+			"to-read", 
+			"on-going", 
+			"finished"
+		]
+		let currentStep = lifeCycle.indexOf(this.status); 
+
+		if (currentStep < 2 ) { 
+			this.status = lifeCycle[currentStep + 1 ]; 
+		} 
+	}
 }

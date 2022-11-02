@@ -21,6 +21,17 @@ class Wishlist {
 		localStorage.setItem('wishlist', JSON.stringify(this.books)); 
 	}
 
+	getBooksByStatus(status) {
+		console.log('status ', status); 
+		let output = [...this.books]; 
+		// console.log("filter ", output); 
+		// output.forEach(book => console.log(book.status)); 
+		return output.filter(book => {
+			console.log(book.status); 
+			book.status == status; 
+		})
+	}
+
 	static testAlert(elt) {
 		console.log(elt);  
 

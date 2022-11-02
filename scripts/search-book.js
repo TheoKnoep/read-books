@@ -21,12 +21,11 @@ async function fetchBooksInformations(query, maxResults) {
 	const url = "https://www.googleapis.com/books/v1/volumes?q="; 
 
 	const response = await fetch(url + query + "&maxResults=" + maxResults); 
-
 	const data = await response.json(); 
 
-	console.log(data); 
-	console.log("Résultats : " + data.totalItems); 
-	console.log(data.items); 
+	// console.log(data); 
+	// console.log("Résultats : " + data.totalItems); 
+	// console.log(data.items); 
 
 	let resultsBooks = []; 
 
