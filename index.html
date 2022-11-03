@@ -19,7 +19,7 @@
 	<script src="classes/Utils.js"></script>
 	<script src="classes/Cache.js"></script>
 	<script src="classes/View.js"></script>
-	<script src="classes/QuickToast.js"></script>
+	<script src="classes/UX.js"></script>
 	<script src="classes/Book.js"></script>
 	<script src="classes/Wishlist.js"></script>
 	
@@ -52,6 +52,11 @@
 
 	<script>
 		let wishlist = new Wishlist(); 
+
+		new UserChoice("Voulez-vous accéder à l'application ?").waitFor()
+			.then(() => window.location.href = '#/'); 
+
+			
 	</script>
 
 
