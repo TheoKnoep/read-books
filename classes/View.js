@@ -72,7 +72,7 @@ class View {
         return 'displayed'; 
     }
 
-    static search_form() {
+    static search_form(existing_query = "") {
         const CONTAINER = document.querySelector('#app-container'); 
 
         let HTMLContent = `
@@ -85,12 +85,16 @@ class View {
 
         document.querySelector('#query').focus(); 
 
+        if (existing_query) { displaySearchResults(existing_query, DEFAULT_RESULTS_NUMBER, true);  }
+
         // EVENTS
         document.querySelector('#search-form').addEventListener('submit', event => {
             event.preventDefault(); 
             let data = new FormData(document.querySelector('#search-form')); 
+            document.querySelector('#search-form').blur(); // try to hide keyboard on mobile device. Is it working ?
             const query = data.get('query'); 
             displaySearchResults(query, DEFAULT_RESULTS_NUMBER, true); 
+            window.location.hash = '#/add/' + query; 
         })
     }
 

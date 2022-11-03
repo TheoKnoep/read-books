@@ -21,6 +21,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 
+h1, h2, h3, h4, h5, h6 {
+	margin: .1em 0; 
+}
 
 
 
@@ -47,6 +50,8 @@ body::-webkit-scrollbar-thumb {
 	width: 100%;
 	background-color: #00838f;
 	z-index: 1;
+	padding: .1em;
+	text-align: left;
 }
 
 .main-button {
