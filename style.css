@@ -208,5 +208,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .about-container .versions-container {
-	font-family: monospace;
+	font-family: var(--mono-font);
+	background-color: var(--accent-bg);
+    /* border: 1px solid var(--border); */
+}
+.about-container .versions-container p {
+	margin: 0; 
+	padding: .6em; 
+}
+
+li.star {
+	list-style-type: '★ ';
 }

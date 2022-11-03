@@ -13,6 +13,11 @@ class View {
 
 
 
+
+
+
+
+
     static wish_list(books_list) {
         const CONTAINER = document.querySelector('#app-container'); 
         let counter = 0; 
@@ -22,7 +27,7 @@ class View {
         if (books_list.length === 0) {
             HTMLcontent = `<div class="reading-list empty-list">
                 <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path><path d="m12 13-1-1 2-2-3-2.5 2.77-2.92"></path></svg>&nbsp;Rien à lire !</h2>
-                <p><em>Il semblerait que votre liste de livre est vide&hellip;</em></p>
+                <p><em>Il semblerait que votre liste est vide&hellip;</em></p>
                 <p><a href="#/add" style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path><line x1="12" x2="12" y1="7" y2="13"></line><line x1="15" x2="9" y1="10" y2="10"></line></svg>&nbsp;Ajouter un livre ?</a></p>
             </div>`; 
         } else {
@@ -88,6 +93,17 @@ class View {
         return 'displayed'; 
     }
 
+
+
+
+
+
+
+
+
+
+
+
     static search_form(existing_query = "") {
         const CONTAINER = document.querySelector('#app-container'); 
 
@@ -118,9 +134,35 @@ class View {
         })
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     static single_book(book) {
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     static about() {
         const CONTAINER = this.config().main_container; 
@@ -139,20 +181,14 @@ class View {
                 </div>
                 
                 <h2>Versions : </h2>
-                <!-- <ul class="versions-container">
-                    <ul>2022-11-03  ||  V.0.9.1
-                        <li>recherche de livre dans l'API de Google Books</li>
-                        <li>ajout des livres à la liste de lecture</li>
-                        <li>supprimer des livres de liste de lecture</li>
-                    </ul>
-                </ul> -->
-
-                <pre>
-2022-11-03 :: V.0.9.1
-    - recherche de livre dans l'API de Google Books
-    - ajout des livres à la liste de lecture
-    - supprimer des livres de liste de lecture
-                </pre>
+                <div class="versions-container">
+                    <p>
+                        <strong>2022-11-03</strong> | V.0.9.1<br/>
+                        - recherche de livre dans l'API de Google Books<br/>
+                        - ajout des livres à la liste de lecture<br/>
+                        - supprimer des livres de liste de lecture<br/>
+                    </p>
+                </div>
 
                 
                 <h2>
@@ -160,11 +196,12 @@ class View {
                     Fonctionnalités à venir :
                 </h2>
                 <ul>
-                    <li>Gérer sa bibliothèque</li>
-                    <li>Tracker ses lectures en cours</li>
-                    <li>Prendre des notes sur un ouvrage</li>
-                    <li>Import/export de données de livres au format JSON</li>
-                    <li>Synchronisation en ligne sur plusieurs appareils</li>
+                    <li class="star">Gérer sa bibliothèque</li>
+                    <li class="star">Tracker ses lectures en cours</li>
+                    <li class="star">Prendre des notes sur un ouvrage</li>
+                    <li class="star">Import/export de données de livres au format JSON</li>
+                    <li class="star">Synchronisation en ligne sur plusieurs appareils</li>
+                    <li class="star">Recherche avancée dans les livres (par auteur, éditeur, etc.)</li>
                 </ul>
 
             </div>`; 
@@ -172,6 +209,20 @@ class View {
         CONTAINER.innerHTML = HTMLcontent; 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     static not_found() {
         const CONTAINER = document.querySelector('#app-container'); 
