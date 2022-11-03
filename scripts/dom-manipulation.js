@@ -2,7 +2,6 @@
 
 // Navigation Primary Button : 
 function toggleAddButton(elt) {
-	console.log(checkStateButton()); 
 	if (checkStateButton() === 1) {
 		disactivateButton(elt); 
 	} else {
@@ -21,9 +20,20 @@ function disactivateButton(elt) {
 
 function checkStateButton() {
 	let route = window.location.hash; 
-	if (route === '#/add') {
+	if (route.includes('#/add')) {
 		return 1; 
 	} else {
 		return 0; 
 	}
 }
+function applyRightBtnStyle() {
+	if (checkStateButton() === 1) {
+		document.querySelector("#open-search-btn").classList.add('active');
+	} else {
+		document.querySelector("#open-search-btn").classList.remove('active');
+	}
+}
+
+window.addEventListener('load', applyRightBtnStyle); 
+window.addEventListener('hashchange', applyRightBtnStyle); 
+

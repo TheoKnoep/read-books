@@ -52,7 +52,6 @@ class View {
 
         // Handle CTA : 
         const allDeleteBtn = document.querySelectorAll('#reading-list .book-entry button');
-        console.log(allDeleteBtn); 
         for (let i = 0 ; i < allDeleteBtn.length; i++ ) {
             allDeleteBtn[i].addEventListener('click', event => {
                 event.stopPropagation(); 
