@@ -30,7 +30,7 @@ function displayBooksOfWishlist() {
         clone.querySelector('.author').textContent = book.author; 
         clone.querySelector('.description').textContent = book.description; 
         clone.querySelector('.publisher strong').textContent = book.publisher; 
-        clone.querySelector('button').id =  counter; 
+        clone.querySelector('button').id =  book.isbn; 
     
         bookListContainer.appendChild(clone); 
         counter++; 
@@ -50,8 +50,8 @@ function displayBooksOfWishlist() {
 	for (let i = 0 ; i < allDeleteBtn.length; i++ ) {
 		allDeleteBtn[i].addEventListener('click', event => {
 			event.stopPropagation(); 
-            event.target.parentNode.parentNode.remove(); 
-            wishlist.remove(event.target.id); 
+            Utils.getParentOfClass(event.target, 'book-entry').remove(); 
+            wishlist.remove(Utils.getParentOfClass(event.target, 'delete-btn').id); 
 			new QuickToast("Supprimé !", 3000).display(); 
 		})
 	}

@@ -38,7 +38,8 @@ class Wishlist {
 		this.saveWishlist(); 
 	}
 
-	remove(index) {
+	remove(isbn) {
+		let index = this.getSingleBookByISBN(isbn); 
 		this.books.splice(index, 1); 
 		this.saveWishlist(); 
 		new QuickToast('Supprimée avec succès').display(); 
