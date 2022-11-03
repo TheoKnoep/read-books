@@ -96,9 +96,11 @@ body::-webkit-scrollbar-thumb {
 	justify-content: space-between;
 	max-height: 100%;
 	transition: all ease-in 320ms;
-}
-.book-entry {
 	padding: .4em; 
+}
+
+.book-entry p {
+	margin: .1em; 
 }
 
 .book-entry .title, .book-entry .author {

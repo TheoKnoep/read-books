@@ -57,10 +57,15 @@ class View {
             allDeleteBtn[i].addEventListener('click', event => {
                 event.stopPropagation(); 
                 console.log(event.target); 
-                Utils.getParentOfClass(event.target, 'book-entry').remove(); 
-                console.log( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
-                wishlist.remove( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
-                // new QuickToast('Supprimée avec succès').display(); 
+                try {
+                    Utils.getParentOfClass(event.target, 'book-entry').remove(); 
+                    console.log( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
+                    wishlist.remove( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
+                    new QuickToast('Supprimé avec succès').display(); 
+                } catch(err) {
+                    new QuickToast(err).display(); 
+                }
+                
             })
         }
 
@@ -72,7 +77,7 @@ class View {
 
         let HTMLContent = `
         <form class="" action="" id="search-form">
-            <input type="text" name="query" id="query" >
+            <input type="text" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
             <input type="submit" name="" id="submit-form" value="Chercher">
         </form>`; 
 

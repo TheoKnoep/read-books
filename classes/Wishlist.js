@@ -35,13 +35,21 @@ class Wishlist {
 	}
 
 	add(newBook) {
-		this.books.push(newBook); 
-		this.saveWishlist(); 
+		console.log(this.checkForDoublon(newBook)); 
+		if (this.checkForDoublon(newBook)) {
+			return false; 
+		} else {
+			this.books.push(newBook); 
+			this.saveWishlist(); 
+			return true; 
+		}
 	}
 
 	remove(isbn) {
 		let index = this.getIndexOfSingleBookByISBN(isbn); 
-		if (!index) { return new Error('ISBN not found') }
+
+		if (index === null) { throw Error('ISBN not found') }
+		
 		this.books.splice(index, 1); 
 		this.saveWishlist(); 
 	}
@@ -81,7 +89,7 @@ class Wishlist {
 		if (!Book.prototype.isPrototypeOf(new_book)) { return new Error('Parameter is not Book type') }
 		let res = false; 
 		this.books.forEach(existing_book => {; 
-			if (new_book === existing_book) { res = true }
+			if (new_book.isbn === existing_book.isbn) { res = true }
 		})
 		return res; 
 	}

@@ -14,7 +14,7 @@ const DEFAULT_RESULTS_NUMBER = 10;
 
 
 async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
-	const resultsBooks = await fetchBooksInformations(query, maxResults, onlyThumbnails); 
+	const resultsBooks = await fetchBooksInformations(sanitizeQuery(query), maxResults, onlyThumbnails); 
 
 	let newInsert = ''; 
 	for (let i in resultsBooks) {
@@ -42,8 +42,12 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 	for (let i = 0 ; i < allEntriesBtn.length; i++ ) {
 		allEntriesBtn[i].addEventListener('click', event => {
 			event.stopPropagation(); 
-			wishlist.add(resultsBooks[event.target.id]); 
-			new QuickToast("Livre ajouté à la wishlist", 3000).display();
+			if (wishlist.add(resultsBooks[event.target.id])) {
+				new QuickToast("Livre ajouté à la wishlist", 3000).display();
+			} else {
+				new QuickToast('Ce livre est déjà votre wishlist', 3000).display(); 
+			}
+			
 		})
 	}
 }
@@ -117,4 +121,12 @@ function writeBookCard(book, index) {
 	</article>`; 
 
 	return template; 
+}
+
+
+function sanitizeQuery(query) {
+	let sanitized_query = ''; 
+	sanitized_query = query.replaceAll('-', ''); 
+	sanitized_query = encodeURI(sanitized_query); 
+	return sanitized_query; 
 }
