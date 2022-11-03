@@ -35,7 +35,7 @@ class View {
         let HTMLcontent = `
         <main id="app-container">
             <div id="reading-list">
-                <h2>Livres à lire</h2>
+                <!-- <h2>Livres à lire</h2> -->
                 ${booksList}
             </div>
 	    </main>`; 
@@ -84,7 +84,10 @@ class View {
 
         document.querySelector('#query').focus(); 
 
-        if (existing_query) { displaySearchResults(existing_query, DEFAULT_RESULTS_NUMBER, true);  }
+        if (existing_query) { 
+            displaySearchResults(existing_query, DEFAULT_RESULTS_NUMBER, true);  
+            document.querySelector('#query').value = decodeURI(existing_query); 
+        }
 
         // EVENTS
         document.querySelector('#search-form').addEventListener('submit', event => {
@@ -93,7 +96,8 @@ class View {
             document.querySelector('#search-form').blur(); // try to hide keyboard on mobile device. Is it working ?
             const query = data.get('query'); 
             displaySearchResults(query, DEFAULT_RESULTS_NUMBER, true); 
-            window.location.hash = '#/add/' + query; 
+            // window.location.hash = '#/add/' + query; 
+            history.pushState(null, null, '#/add/' + query);
         })
     }
 
@@ -106,7 +110,9 @@ class View {
         
         const TEMPLATE = 
         `<h1>Holy 404 of God</h1>
-        <a href="#/wishlist">Ramenez-moi</a>🙏
+        <p>Rien n'a été trouvé avec le chemin de l'url que vous avez demandé ¯\\_(ツ)_/¯</p>
+        <p>(peut-être que vous devriez arrêter de bidouiller les URL n'importe comment, aussi)</p>
+        <a href="#/">Ramenez-moi</a>🙏
         `; 
 
         CONTAINER.innerHTML = TEMPLATE; 

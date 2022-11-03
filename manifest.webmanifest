@@ -10,17 +10,17 @@
     "categories": ["books", "lifestyle"], 
     "icons": [
       {
-        "src": "images/android/android-launchericon-48-48.png",
+        "src": "images/",
         "type": "image/png",
         "sizes": "48x48"
       },
       {
-        "src": "images/android/android-launchericon-96-96.png",
+        "src": "images/",
         "type": "image/png",
         "sizes": "96x96"
       },
       {
-        "src": "images/android/android-launchericon-192-192.png",
+        "src": "images/",
         "type": "image/png",
         "sizes": "192x192"
       }

@@ -34,30 +34,13 @@
 <body>
 
 	<header class="header">
-		<a href="#/" style="color: #fff; text-decoration: none;">
-			Header
+		<a href="#/" style="color: #fff; text-decoration: none; display: flex; ">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"></path><path d="M12 6v14"></path><path d="M8 8v12"></path><path d="M4 4v16"></path></svg>
+			Read List
 		</a>
 	</header>
 	<main id="app-container">
-		<!-- <div id="reading-list">
-			<h2>Livres à lire</h2>
-			<div id="reading-list-content">
-				<template id="book-item-template">
-					<article class="book-entry" id="book-0">
-						<div><img width="80" src="http://books.google.com/books/content?id=i_BcAAAAMAAJ&amp;printsec=frontcover&amp;img=1&amp;zoom=1&amp;source=gbs_api"></div>	
-						<div class="info-container">
-							<h3 class="title">TITLE</h3>
-							<h4 class="author">AUTHOR</h4>
-							<p class="description maxheight0">DESCRIPTION</p>
-							<p class="publisher"><strong>PUBLISHER</strong></p>
-						</div>
-						<div>
-							<button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-						</div>
-					</article>
-				</template>
-			</div>
-		</div> -->
+
 	</main>
 	<footer>
 		<button id="open-search-btn" class="main-button" onclick="toggleAddButton(this)">+</button>
@@ -99,6 +82,66 @@
 
 
 
+
+
+
+		/**
+		 * TEST handle images as base64
+		 */
+
+		function old_getBase64Image(img) {
+			var canvas = document.createElement("canvas");
+			canvas.width = img.width;
+			canvas.height = img.height;
+			var ctx = canvas.getContext("2d");
+			ctx.drawImage(img, 0, 0);
+			var dataURL = canvas.toDataURL("image/png");
+			return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+		}
+
+		function convert(oldImag, callback) {
+			var img = new Image();
+			img.onload = function(){
+				callback(img)
+			}
+			img.setAttribute('crossorigin', 'anonymous');
+			img.src = oldImag.src;
+		}
+		function getBase64Image(img,callback) {
+			convert(img, function(newImg){
+				var canvas = document.createElement("canvas");
+				canvas.width = newImg.width;
+				canvas.height = newImg.height;
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(newImg, 0, 0);
+				var base64=canvas.toDataURL("image/png");
+				callback(base64)
+			})
+		}
+
+
+
+		
+
+		imageToBase64 = (URL) => {
+			let image;
+			image = new Image();
+			image.crossOrigin = 'Anonymous';
+			image.addEventListener('load', function() {
+				let canvas = document.createElement('canvas');
+				let context = canvas.getContext('2d');
+				canvas.width = image.width;
+				canvas.height = image.height;
+				context.drawImage(image, 0, 0);
+				try {
+					localStorage.setItem('saved-image-example', canvas.toDataURL('image/png'));
+				} catch (err) {
+					console.error(err)
+				}
+			});
+			image.src = URL;
+		};
+
 	</script>
 
 	<script src="scripts/dom-manipulation.js"></script>
@@ -106,5 +149,18 @@
 	<!-- <script src="scripts/display-wishlist.js"></script> -->
 	
 
+
+	<script>
+		//install sw : 
+		if ("serviceWorker" in navigator) {
+			navigator.serviceWorker.register("sw.js", {scope: './'} ).then(registration => {
+				console.log("SW Registred!");
+				// console.log(registration);
+			}).catch(error => {
+				console.log("SW Failed!");
+				// console.log(error); 
+			}); 
+		} 
+	</script>
 </body>
 </html>
