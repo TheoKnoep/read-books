@@ -37,7 +37,7 @@ class QuickToast {
                     style="
                         position: fixed; 
                         z-index: 1; 
-                        width: calc(100% - 2em); 
+                        // width: calc(100% - 2em); 
                         bottom: 1em; 
                         left: 1em; 
                         background-color: var(--text); 

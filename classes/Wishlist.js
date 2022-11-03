@@ -41,9 +41,9 @@ class Wishlist {
 
 	remove(isbn) {
 		let index = this.getIndexOfSingleBookByISBN(isbn); 
+		if (!index) { return new Error('ISBN not found') }
 		this.books.splice(index, 1); 
 		this.saveWishlist(); 
-		new QuickToast('Supprimée avec succès').display(); 
 	}
 
 	saveWishlist() {
@@ -62,9 +62,9 @@ class Wishlist {
 		for (let i = 0; i < this.books.length; i++) {
 			if (this.books[i].isbn == isbn) {
 				return i; 
-			}
-			return null; 
+			} 
 		}
+		return null;
 	}
 
 	static testAlert(elt) {

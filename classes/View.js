@@ -52,12 +52,15 @@ class View {
 
         // Handle CTA : 
         const allDeleteBtn = document.querySelectorAll('#reading-list .book-entry button');
+        console.log(allDeleteBtn); 
         for (let i = 0 ; i < allDeleteBtn.length; i++ ) {
             allDeleteBtn[i].addEventListener('click', event => {
                 event.stopPropagation(); 
+                console.log(event.target); 
                 Utils.getParentOfClass(event.target, 'book-entry').remove(); 
-                wishlist.remove(Utils.getParentOfClass(event.target, 'delete-btn').id); 
-                new QuickToast("Supprimé !", 3000).display(); 
+                console.log( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
+                wishlist.remove( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
+                // new QuickToast('Supprimée avec succès').display(); 
             })
         }
 
