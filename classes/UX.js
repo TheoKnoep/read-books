@@ -157,7 +157,7 @@ class UserChoice {
                 reject(); 
             })
             document.querySelector('.popin-background').addEventListener('click', event => {
-                document.querySelector(`#${this.id}`).remove(); 
+                document.querySelector(`#popin-${this.id}`).remove(); 
                 reject(); 
             })
         })
