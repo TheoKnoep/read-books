@@ -1,4 +1,3 @@
-const searchForm = document.querySelector('#search-form'); 
 const DEFAULT_RESULTS_NUMBER = 10;
 
 
@@ -6,12 +5,12 @@ const DEFAULT_RESULTS_NUMBER = 10;
 // displaySearchResults("france sélection", 10, true); 
 // ****************
 
-searchForm.addEventListener('submit', event => {
-	event.preventDefault(); 
-	let data = new FormData(searchForm); 
-	const query = data.get('query'); 
-	displaySearchResults(query, DEFAULT_RESULTS_NUMBER, true); 
-})
+// document.querySelector('#search-form').addEventListener('submit', event => {
+// 	event.preventDefault(); 
+// 	let data = new FormData(document.querySelector('#search-form')); 
+// 	const query = data.get('query'); 
+// 	displaySearchResults(query, DEFAULT_RESULTS_NUMBER, true); 
+// })
 
 
 async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
@@ -26,7 +25,7 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 
 	if (document.getElementById('search-results')) { document.getElementById('search-results').remove() }
 
-	searchForm.insertAdjacentHTML('afterend', newBlock); 
+	document.querySelector('#search-form').insertAdjacentHTML('afterend', newBlock); 
 
 	const allEntries = document.querySelectorAll("#search-results .book-entry"); 
 	const allEntriesBtn = document.querySelectorAll("#search-results .book-entry button"); 
@@ -62,13 +61,23 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 			let b = data.items[i].volumeInfo; 
 			if (b.imageLinks) {
 				resultsBooks.push(new Book(
-					b.title,
-					b.authors ? b.authors.join(',') : '', 
-					b.publisher,  
-					b.description, 
-					b.imageLinks ? b.imageLinks.thumbnail : "images/empty.svg", 
-					b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '',
-					data.items[i].id
+					b.title, // title, 
+					b.authors ? b.authors.join(',') : '', // authors
+					b.publisher, // publisher, 
+					b.description, // description, 
+					b.imageLinks ? b.imageLinks.thumbnail : "images/empty.svg", // miniature_link, 
+					b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '', // isbn, 
+					null, // rate, 
+					null, // comment,
+					null, // format, 
+					data.items[i].id, // google_id, 
+					null, // series, 
+					null, // series_number, 
+					b.language ? b.language : null, // language, 
+					Date.now(), // added_date, 
+					'to-read', // status, 
+					null, // started_date, 
+					null, // finished_date
 				))
 			}
 			if (resultsBooks.length >= maxResults) { break; }

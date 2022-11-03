@@ -128,6 +128,11 @@ body::-webkit-scrollbar-thumb {
 	border: solid 1px;
 	padding: 2px 8px; 
 }
+
+.book-entry .added-date {
+	font-size: 12px; 
+	font-style: italic;
+}
 .book-entry .cta-container {
 	width: 40px; 
 	height: 40px;

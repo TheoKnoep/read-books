@@ -1,10 +1,29 @@
-const openSearchButton = document.querySelector('#open-search-btn'); 
-const HTMLform = document.querySelector('#search-form'); 
-const HTMLreadingList = document.querySelector('#reading-list'); 
 
-openSearchButton.addEventListener('click', event => {
-	HTMLform.classList.toggle('displaynone'); 
-	HTMLreadingList.classList.toggle('displaynone'); 
-	openSearchButton.classList.toggle('active'); 
-	if (document.querySelector("#search-results")) { document.querySelector("#search-results").remove() }
-})
+
+// Navigation Primary Button : 
+function toggleAddButton(elt) {
+	console.log(checkStateButton()); 
+	if (checkStateButton() === 1) {
+		disactivateButton(elt); 
+	} else {
+		activateButton(elt); 
+	}
+}
+
+function activateButton(elt) {
+	elt.classList.add('active');
+	window.location.hash = "#/add"; 
+}
+function disactivateButton(elt) {
+	elt.classList.remove('active');
+	window.location.hash = "#/"; 
+}
+
+function checkStateButton() {
+	let route = window.location.hash; 
+	if (route === '#/add') {
+		return 1; 
+	} else {
+		return 0; 
+	}
+}

@@ -13,10 +13,11 @@
 
 
 	<!-- Scripts Classes -->
-	<script src="scripts/Utils.js"></script>
-	<script src="scripts/QuickToast.js"></script>
-	<script src="scripts/Book.js"></script>
-	<script src="scripts/Wishlist.js"></script>
+	<script src="classes/Utils.js"></script>
+	<script src="classes/View.js"></script>
+	<script src="classes/QuickToast.js"></script>
+	<script src="classes/Book.js"></script>
+	<script src="classes/Wishlist.js"></script>
 	
 
 
@@ -26,14 +27,14 @@
 </head>
 <body>
 
-	<!-- <header class="header">Header</header> -->
+	<header class="header">
+		<a href="#/" style="color: #fff; text-decoration: none;">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M6 22.8787C4.34315 22.8787 3 21.5355 3 19.8787V9.87866C3 9.84477 3.00169 9.81126 3.00498 9.77823H3C3 9.20227 3.2288 8.64989 3.63607 8.24262L9.87868 2.00002C11.0502 0.828445 12.9497 0.828445 14.1213 2.00002L20.3639 8.24264C20.7712 8.6499 21 9.20227 21 9.77823H20.995C20.9983 9.81126 21 9.84477 21 9.87866V19.8787C21 21.5355 19.6569 22.8787 18 22.8787H6ZM12.7071 3.41423L19 9.70713V19.8787C19 20.4309 18.5523 20.8787 18 20.8787H15V15.8787C15 14.2218 13.6569 12.8787 12 12.8787C10.3431 12.8787 9 14.2218 9 15.8787V20.8787H6C5.44772 20.8787 5 20.4309 5 19.8787V9.7072L11.2929 3.41423C11.6834 3.02371 12.3166 3.02371 12.7071 3.41423Z" fill="currentColor"/></svg>
+			Header
+		</a>
+	</header>
 	<main id="app-container">
-		<form class="displaynone" action="" id="search-form">
-			<input type="text" name="query" id="query" >
-			<input type="submit" name="" id="submit-form" value="Chercher">
-		</form>
-
-		<div id="reading-list">
+		<!-- <div id="reading-list">
 			<h2>Livres à lire</h2>
 			<div id="reading-list-content">
 				<template id="book-item-template">
@@ -51,10 +52,10 @@
 					</article>
 				</template>
 			</div>
-		</div>
+		</div> -->
 	</main>
 	<footer>
-		<button id="open-search-btn" class="main-button">+</button>
+		<button id="open-search-btn" class="main-button" onclick="toggleAddButton(this)">+</button>
 	</footer>
 
 	
@@ -64,29 +65,42 @@
 		let wishlist = new Wishlist(); 
 	</script>
 
-	<script src="scripts/dom-manipulation.js"></script>
-	<script src="scripts/search-book.js"></script>
-	<script src="scripts/display-wishlist.js"></script>
 
-	
+
 
 	<script>
-		function checkSearchFormPosition() {
-			const searchForm = document.querySelector('#search-form'); 
-			// console.log("is in view port : ", isInViewport(searchForm)); 
-			if (isInViewport(searchForm)) {
-				searchForm.scrollIntoView(); 
-			}
+		// # Router 
+		window.addEventListener('load', RouteRequest); 
+		window.addEventListener('hashchange', RouteRequest); 
+
+		function RouteRequest() {
+			let route = window.location.hash.split('/'); 
+			console.log(route); 
+
+			switch (route[1]) {
+				case '':
+					View.wish_list(wishlist.books); 
+					break; 
+				case 'wishlist':
+					View.wish_list(wishlist.books); 
+					break; 
+				case 'add': 
+					View.search_form(); 
+					break; 
+				default: 
+					console.log('route non trouvée'); 
+					View.not_found(); 
+			} 
 		}
 
-		function isInViewport(element) {
-			const rect = element.getBoundingClientRect();
-			
-			let topIsVisible = rect.top >= 0 && rect.top <= (window.innerHeight || document.documentElement.clientHeight); 
-			let bottomIsVisible = rect.bottom >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight); 
 
-			return (topIsVisible || bottomIsVisible); 
-		}
+
 	</script>
+
+	<script src="scripts/dom-manipulation.js"></script>
+	<script src="scripts/search-book.js"></script>
+	<!-- <script src="scripts/display-wishlist.js"></script> -->
+	
+
 </body>
 </html>
