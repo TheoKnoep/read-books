@@ -10,33 +10,23 @@
     "categories": ["books", "lifestyle"], 
     "icons": [
       {
-        "src": "images/",
+        "src": "./images/icons/icon_512x512.png",
         "type": "image/png",
-        "sizes": "48x48"
-      },
+        "sizes": "512x512", 
+        "purpose": "any"
+      }, 
       {
-        "src": "images/",
+        "src": "./images/icons/icon_maskable.png",
         "type": "image/png",
-        "sizes": "96x96"
-      },
-      {
-        "src": "images/",
-        "type": "image/png",
-        "sizes": "192x192"
+        "sizes": "512x512", 
+        "purpose": "maskable"
       }
     ],
     "shortcuts": [
       {
         "name": "Ajouter un livre", 
         "description": "Chercher et ajouter un livre dans votre wishlist", 
-        "url": "./#/add", 
-        "icons": [
-          {
-            "src": "./images/empty.png", 
-            "type": "image/png", 
-            "purpose": "any"
-          }
-        ]
+        "url": "./#/add"
       }
     ]
   }
