@@ -52,6 +52,9 @@ h1, h2, h3, h4, h5, h6 {
 	padding: .2em;
 	text-align: left;
 }
+.header a {
+	color: var(--text); 
+}
 
 .main-button {
 	border-radius: 120px; 
