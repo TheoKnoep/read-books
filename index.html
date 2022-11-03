@@ -32,18 +32,19 @@
 
 </head>
 <body>
-
 	<header class="header">
 		<a href="#/" style="text-decoration: none; display: flex; ">
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"></path><path d="M12 6v14"></path><path d="M8 8v12"></path><path d="M4 4v16"></path></svg>
 			Read List
 		</a>
 	</header>
-	<main id="app-container">
 
+	<main id="app-container">
 	</main>
-	<footer>
+
+	<footer class="footer">
 		<button id="open-search-btn" class="main-button" onclick="toggleAddButton(this)">+</button>
+		<a href="#/about">À propos</a>
 	</footer>
 
 	
@@ -73,6 +74,9 @@
 					break; 
 				case 'add': 
 					View.search_form(route[2]); 
+					break; 
+				case 'about': 
+					View.about(); 
 					break; 
 				default: 
 					console.log('route non trouvée'); 
