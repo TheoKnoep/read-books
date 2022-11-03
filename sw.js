@@ -3,15 +3,16 @@
  */
 
 self.addEventListener("install", function (event) {
-    caches.open('clock').then(function(cache) {
+    caches.open('read-list').then(function(cache) {
         return cache.addAll([
-            './', 
+            './',
+            'style.css', 
+            'simplecss.css',  
             'classes/Cache.js',
             'classes/View.js',
             'classes/QuickToast.js',
             'classes/Book.js',
             'classes/Wishlist.js',
-            'https://cdn.jsdelivr.net/npm/showdown@2.0.3/dist/showdown.min.js',
             'scripts/dom-manipulation.js',
             'scripts/search-book.js',
             'manifest.webmanifest'
