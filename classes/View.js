@@ -17,10 +17,9 @@ class View {
 
 
 
-
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static wish_list(books_list) {
         const CONTAINER = document.querySelector('#app-container'); 
-        let counter = 0; 
         let HTMLcontent = ''; 
         
 
@@ -37,13 +36,12 @@ class View {
                 let flag = books_list[i].language ? `<img width="18" src="images/flags/4x3/${Utils.findFlag(books_list[i].language)}.svg" />` : '' ; 
     
                 let newEntry = `    <article class="book-entry" id="entry-${books_list.length-i}">
-                                        <div><img width="80" src="${books_list[i].miniature_link}"></div>	
+                                        <div><img class="cover-miniature" width="80" src="${books_list[i].miniature_link}"></div>	
                                         <div class="info-container">
                                             <h3 class="title">${books_list[i].title}</h3>
                                             <h4 class="author">${books_list[i].author}</h4>
                                             <p class="description maxheight0">${books_list[i].description}</p>
                                             <p class="publisher"><strong>${books_list[i].publisher}</strong></p>
-                                            ${ flag }
                                             ${ dateAdded }
                                         </div>
                                         <div class="more-actions-button" id="b-${books_list[i].isbn}">
@@ -177,7 +175,7 @@ class View {
 
 
 
-
+/* DISPLAY SEARCH FORM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static search_form(existing_query = "") {
         const CONTAINER = document.querySelector('#app-container'); 
 
@@ -220,7 +218,7 @@ class View {
 
 
 
-
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static single_book(book) {
 
     }
@@ -237,7 +235,7 @@ class View {
 
 
 
-
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static about() {
         const CONTAINER = this.config().main_container; 
         let HTMLcontent = `<div class="about-container">
@@ -297,7 +295,7 @@ class View {
 
 
 
-
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static not_found() {
         const CONTAINER = document.querySelector('#app-container'); 
         
