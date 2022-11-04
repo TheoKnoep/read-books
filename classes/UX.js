@@ -79,7 +79,7 @@ class MoreActions {
 
 
 class UserChoice {
-    constructor(message = "Voulez-vous continuer ?", confirm = "Confirmer", cancel = "Annuler") {
+    constructor(message = "Voulez-vous continuer ?", confirm = null, cancel = null) {
         this.id = this.createHash();  
         this.message = message; 
         this.confirm = confirm; 
@@ -140,8 +140,8 @@ class UserChoice {
             <div class="popin-content">
                 <p class="message__container">${this.message}</p>
                 <div class="btn-container">
-                    <button id="cancel-btn">${this.cancel}</button>
-                    <button id="confirm-btn">${this.confirm}</button>
+                    ${ this.cancel ? `<button id="cancel-btn">${this.cancel}</button>` : ''}
+                    ${ this.confirm ? `<button id="confirm-btn">${this.confirm}</button>` : ''}
                 </div>
             </div>
             <div class="popin-background"></div>
@@ -153,16 +153,20 @@ class UserChoice {
         this.applyStyle(); 
         document.body.insertAdjacentHTML('afterbegin', html); 
         return new Promise((resolve, reject) => {
-            document.querySelector(`#popin-${this.id} #confirm-btn`).addEventListener('click', event => {
-                document.querySelector(`#popin-${this.id}`).remove(); 
-                document.querySelector(`#style-for-${this.id}`).remove(); 
-                resolve(); 
-            })
-            document.querySelector(`#popin-${this.id} #cancel-btn`).addEventListener('click', event => {
-                document.querySelector(`#popin-${this.id}`).remove(); 
-                document.querySelector(`#style-for-${this.id}`).remove(); 
-                reject(); 
-            })
+            if (document.querySelector(`#popin-${this.id} #confirm-btn`)) {
+                document.querySelector(`#popin-${this.id} #confirm-btn`).addEventListener('click', event => {
+                    document.querySelector(`#popin-${this.id}`).remove(); 
+                    document.querySelector(`#style-for-${this.id}`).remove(); 
+                    resolve(); 
+                })
+            }
+            if (document.querySelector(`#popin-${this.id} #cancel-btn`)) {
+                document.querySelector(`#popin-${this.id} #cancel-btn`).addEventListener('click', event => {
+                    document.querySelector(`#popin-${this.id}`).remove(); 
+                    document.querySelector(`#style-for-${this.id}`).remove(); 
+                    reject(); 
+                })
+            }
             document.querySelector('.popin-background').addEventListener('click', event => {
                 document.querySelector(`#popin-${this.id}`).remove(); 
                 document.querySelector(`#style-for-${this.id}`).remove(); 

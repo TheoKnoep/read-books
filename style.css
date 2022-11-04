@@ -132,6 +132,12 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: #fff;
 }
 
+@media screen and (prefers-color-scheme: light) {
+	.main-button.active {
+		background-color: #000; 
+	}
+}
+
 
 /* Reading list */
 #app-container {

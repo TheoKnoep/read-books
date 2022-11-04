@@ -107,7 +107,7 @@ class View {
             allDeleteBtn[i].addEventListener('click', event => {
                 event.stopPropagation(); 
                 try {
-                    new UserChoice('Supprimer le livre de votre liste ? <br/>Cette action est irréversible', "Supprimer").waitFor()
+                    new UserChoice('Supprimer le livre de votre liste ? <br/>Cette action est irréversible', "Supprimer", "Annuler").waitFor()
                         .then(() => {
                             let book_isbn = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('-')[1] ;  
                             Utils.getParentOfClass(event.target, 'book-entry').remove(); 
@@ -131,7 +131,7 @@ class View {
         for (let i = 0 ; i < allShareBtn.length; i++ ) {
             allShareBtn[i].addEventListener('click', event => {
                 event.stopPropagation(); 
-                alert('🚧 à venir'); 
+                new UserChoice('🚧 Cette action n\'est pas encore disponible', null, "OK").waitFor();  
             })
         }
 
