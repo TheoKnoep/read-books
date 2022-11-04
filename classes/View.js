@@ -78,7 +78,7 @@ class View {
                 event.stopPropagation(); 
                 console.log(event.target); 
                 try {
-                    new UserChoice('Supprimer le livre de votre liste ? <br/>Cette action est irréversible').waitFor()
+                    new UserChoice('Supprimer le livre de votre liste ? <br/>Cette action est irréversible', "Supprimer").waitFor()
                         .then(() => {
                             Utils.getParentOfClass(event.target, 'book-entry').remove(); 
                             wishlist.remove( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
