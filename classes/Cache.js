@@ -16,6 +16,23 @@ class Cache {
             })
     }
 
+    static async svgID(arrayOfBooks) {
+        let idsList = []; 
+        arrayOfBooks.forEach(book => idsList.push(book.google_id)); 
+        let idsString = idsList.join(';'); 
+
+        console.log('./#?list=' + idsString); 
+
+        caches.open('svg-read-list')
+            .then(cache => {
+                cache.add('?list=' + idsString)
+                    .then(() => {
+                        cache.keys()
+                            .then(res => console.log(res)); 
+                    })
+            })
+    }
+
     static async debugCacheAddAll(array) {
         array.forEach(req => {
             fetch(req) 

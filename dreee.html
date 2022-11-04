@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+
+	<script src="scripts/search-book.js"></script>
+
+	<script>
+		// getSingleBookInformation('LVaGAQAAQBAJ')
+		// 	.then(data => console.log(data))
+		// 	.catch(err => console.log(err)); 
+
+		
+
+		let searchParam = new URLSearchParams(window.location.search); 
+
+		// open : dreee.html?import=LVaGAQAAQBAJ;WyBREAAAQBAJ;vVeGAQAAQBAJ
+		console.log(searchParam.get('import').split(';')); 
+
+		getBooksInfosThroughListOfIDs(searchParam.get('import').split(';'))
+			.then(res => console.log('ola', res)) // on reçoit un tableau de JSON pour chaque livre dont on a fourni l'ID
+			.catch(err => console.warn('ERR :: ', err)); 
+	</script>
+</body>
+</html>

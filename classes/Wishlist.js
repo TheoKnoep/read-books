@@ -89,6 +89,12 @@ class Wishlist {
 
 	}
 
+	getListOfIDs() {
+		let res = []; 
+		this.books.forEach(book => res.push(book.google_id));
+		return res; 
+	}
+
 	static empty() {
 		localStorage.setItem('wishlist', ''); 
 	}

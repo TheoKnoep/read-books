@@ -269,9 +269,25 @@ class View {
                     <li class="star">Recherche avancée dans les livres (par auteur, éditeur, etc.)</li>
                 </ul>
 
+
+                <h2>Partage</h2>
+                <p>Cette chaîne de caractère vous permet de partager vos livres avec une autre personne, ou bien de la sauvegarder dans vos documents</p>
+                <p>Elle vous permet de réimporter vos livres mémorisés dans la page d'import de l'application</p>
+                <button style="user-select: text; word-break: break-all; " class="copy-button">${wishlist.getListOfIDs().join(';')}</button>
             </div>`; 
 
         CONTAINER.innerHTML = HTMLcontent; 
+
+
+        // EVENTS HANDLER 
+        const copyButton = document.querySelector('.copy-button'); 
+        copyButton.addEventListener('click', (event) => {
+            let copyText = copyButton.textContent; 
+            navigator.clipboard.writeText(copyText); 
+            new QuickToast("Copié dans le presse-papier", 3500).display(); 
+        })
+
+
 
     }
 
