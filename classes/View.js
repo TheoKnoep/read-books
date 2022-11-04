@@ -93,7 +93,6 @@ class View {
             try {
                 console.log('medem',  Utils.getParentOfClass(event.target, 'openable') ); 
             } catch {
-                console.log('clicked elsewhere'); 
                 event.stopPropagation(); 
                 document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
             }

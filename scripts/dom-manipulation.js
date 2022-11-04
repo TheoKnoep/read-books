@@ -38,6 +38,19 @@ window.addEventListener('load', applyRightBtnStyle);
 window.addEventListener('hashchange', applyRightBtnStyle); 
 
 
+window.addEventListener('scroll', modifyPositionOfMainButton); 
+
+function modifyPositionOfMainButton() {
+	const btn = document.querySelector('#open-search-btn'); 
+	let ascending = this.oldScroll > this.scrollY;
+	if (ascending) {
+		btn.style.bottom = '.6em'; 
+	} else {
+		btn.style.bottom = '-2.6em'; 
+	}
+	this.oldScroll = this.scrollY;
+}
+
 
 
 
