@@ -29,20 +29,14 @@ class Book {
 		return transl[this.status]; 
 	}
 
-	testFunction() {
-		alert("Boom"); 
-	}
+	updateStatus(state) {
+		const lifeCycle = {
+			1: "to-read", 
+			2: "on-going", 
+			3: "finished"
+		}
+		this.status = lifeCycle[state]; 
 
-	updateStatus() {
-		const lifeCycle = [
-			"to-read", 
-			"on-going", 
-			"finished"
-		]
-		let currentStep = lifeCycle.indexOf(this.status); 
-
-		if (currentStep < 2 ) { 
-			this.status = lifeCycle[currentStep + 1 ]; 
-		} 
+		if (this.status === lifeCycle[state]) { return true } else { return false }
 	}
 }

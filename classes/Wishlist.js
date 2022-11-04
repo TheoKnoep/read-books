@@ -45,10 +45,10 @@ class Wishlist {
 		}
 	}
 
-	remove(isbn) {
-		let index = this.getIndexOfSingleBookByISBN(isbn); 
+	remove(ID) {
+		let index = this.getIndexOfSingleBookByID(ID); 
 
-		if (index === null) { throw Error('ISBN not found') }
+		if (index === null) { throw Error('ID not found') }
 		
 		this.books.splice(index, 1); 
 		this.saveWishlist(); 
@@ -61,9 +61,6 @@ class Wishlist {
 	getAllBooksByStatus(status) {
 		let output = []; 
 		this.books.forEach(book => {
-			console.log('viou', book.status); 
-			console.log('viou', status); 
-			console.log('viou', book.status === status); 
 			if (book.status === status) { output.push(book) }
 		})
 		return output; 
@@ -72,6 +69,15 @@ class Wishlist {
 	getIndexOfSingleBookByISBN(isbn) {
 		for (let i = 0; i < this.books.length; i++) {
 			if (this.books[i].isbn == isbn) {
+				return i; 
+			} 
+		}
+		return null;
+	}
+
+	getIndexOfSingleBookByID(ID) {
+		for (let i = 0; i < this.books.length; i++) {
+			if (this.books[i].google_id == ID) {
 				return i; 
 			} 
 		}
