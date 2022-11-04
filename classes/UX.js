@@ -98,14 +98,15 @@ class UserChoice {
                 position: absolute;
                 width: 100%;
                 height: 100%;
-                background: #002450;
-                opacity: .8;
+                background: #282828;
+                opacity: .6;
             }
             .popin-content {
                 position: absolute;
                 max-width: 95%;
                 z-index: 1;
                 padding: 1em; 
+                border-radius: 4px;
                 padding-bottom: 0; 
                 background: var(--bg);
                 box-shadow: 4px 4px 24px rgb(0 0 0 / 40%);
@@ -146,7 +147,7 @@ class UserChoice {
     waitFor() {
         let html = this.returnTemplate(); 
         this.applyStyle(); 
-        document.body.insertAdjacentHTML('beforeend', html); 
+        document.body.insertAdjacentHTML('afterbegin', html); 
         return new Promise((resolve, reject) => {
             document.querySelector(`#popin-${this.id} #confirm-btn`).addEventListener('click', event => {
                 document.querySelector(`#popin-${this.id}`).remove(); 

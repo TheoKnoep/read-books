@@ -78,11 +78,13 @@ class View {
                 event.stopPropagation(); 
                 console.log(event.target); 
                 try {
-                    Utils.getParentOfClass(event.target, 'book-entry').remove(); 
-                    console.log( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
-                    wishlist.remove( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
-                    new QuickToast('Supprimé avec succès').display(); 
-                    if (wishlist.books.length === 0 ) { this.wish_list(wishlist.books) }
+                    new UserChoice('Supprimer le livre de votre liste ? <br/>Cette action est irréversible').waitFor()
+                        .then(() => {
+                            Utils.getParentOfClass(event.target, 'book-entry').remove(); 
+                            wishlist.remove( Utils.getParentOfClass(event.target, 'delete-btn').id ); 
+                            new QuickToast('Supprimé avec succès').display(); 
+                            if (wishlist.books.length === 0 ) { this.wish_list(wishlist.books) }
+                        }) 
                 } catch(err) {
                     new QuickToast(err).display(); 
                 }
