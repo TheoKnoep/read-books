@@ -2,12 +2,15 @@
  * Outil qui permet d'afficher à la volée une boite de notification à l'utilisateur de type "toast"
  * Utilisation : 
  * - charger le code dans le fichier HTML : 
- * `<script src="/path/to/file/QuickToast.js"></script>`
+ * `<script src="/path/to/file/UX.js"></script>`
  * 
- * - afficher un message : 
- * `new QuickToast("Le texte du message à afficher", 5000).display();`
- * 
- * - instancier un objet : 
+ * -> QuickToast : affichage discret d'un message pour valider un feedback suite à une action utilisateur
+ * -> UserChoice : un remplacement personnalisable à la boite de dialogue native "Confirm"
+ */
+
+
+/** 
+ * QuickToast 
  * `let toast = new QuickToast("Message par défaut", 5000); `
  * `toast.display("Le texte à afficher"); `
  */
@@ -126,6 +129,7 @@ class UserChoice {
             `; 
 
         let moreStyle = document.createElement('style'); 
+        moreStyle.id = `style-for-${this.id}`; 
         moreStyle.textContent = style; 
         document.head.append(moreStyle); 
     }
@@ -151,14 +155,17 @@ class UserChoice {
         return new Promise((resolve, reject) => {
             document.querySelector(`#popin-${this.id} #confirm-btn`).addEventListener('click', event => {
                 document.querySelector(`#popin-${this.id}`).remove(); 
+                document.querySelector(`#style-for-${this.id}`).remove(); 
                 resolve(); 
             })
             document.querySelector(`#popin-${this.id} #cancel-btn`).addEventListener('click', event => {
                 document.querySelector(`#popin-${this.id}`).remove(); 
+                document.querySelector(`#style-for-${this.id}`).remove(); 
                 reject(); 
             })
             document.querySelector('.popin-background').addEventListener('click', event => {
                 document.querySelector(`#popin-${this.id}`).remove(); 
+                document.querySelector(`#style-for-${this.id}`).remove(); 
                 reject(); 
             })
         })

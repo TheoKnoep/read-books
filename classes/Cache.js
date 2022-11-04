@@ -1,7 +1,7 @@
 class Cache {
     static config() {
         return {
-            cache_name: "svg-read-list"
+            cache_name: "read-list"
         }
     }
 
