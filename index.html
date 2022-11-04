@@ -74,7 +74,10 @@
 					View.wish_list(wishlist.books); 
 					break; 
 				case 'wishlist':
-					View.wish_list(wishlist.books); 
+					View.wish_list(wishlist.getAllBooksByStatus('to-read')); 
+					break; 
+				case 'reading':
+					View.wish_list(wishlist.getAllBooksByStatus('reading')); 
 					break; 
 				case 'add': 
 					View.search_form(route[2]); 

@@ -14,7 +14,7 @@ class Book {
 		this.series_number = series_number; 
 		this.language = language; 
 		this.added_date = added_date; 
-		this.status = 'to-read'; 
+		this.status = status; 
 		this.started_date = started_date; 
 		this.finished_date = finished_date; 
 	}

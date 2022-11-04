@@ -61,6 +61,9 @@ class Wishlist {
 	getAllBooksByStatus(status) {
 		let output = []; 
 		this.books.forEach(book => {
+			console.log('viou', book.status); 
+			console.log('viou', status); 
+			console.log('viou', book.status === status); 
 			if (book.status === status) { output.push(book) }
 		})
 		return output; 
