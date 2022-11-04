@@ -94,6 +94,7 @@ class View {
                 console.log('medem',  Utils.getParentOfClass(event.target, 'openable') ); 
             } catch {
                 console.log('clicked elsewhere'); 
+                event.stopPropagation(); 
                 document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
             }
             
@@ -275,7 +276,6 @@ class View {
         const TEMPLATE = 
         `<h1>Holy 404 of God</h1>
         <p>Rien n'a été trouvé avec le chemin de l'url que vous avez demandé ¯\\_(ツ)_/¯</p>
-        <p>(peut-être que vous devriez arrêter de bidouiller les URL n'importe comment, aussi)</p>
         <a href="#/">Ramenez-moi</a>🙏
         `; 
 
