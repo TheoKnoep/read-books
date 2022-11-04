@@ -126,12 +126,30 @@ class View {
             })
         }
 
-        // Handle SHARE : 
+        // Handle SHARE : see : https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API 
         const allShareBtn = document.querySelectorAll('#reading-list .book-entry button.share-btn');
         for (let i = 0 ; i < allShareBtn.length; i++ ) {
+            //get parent element book entry : 
+            let parentBookEntry = Utils.getParentOfClass(allShareBtn[i], "book-entry"); 
+            console.log(parentBookEntry); 
+
+
+            const shareData = {
+                title: "Livre : " + parentBookEntry.querySelector('.title').textContent, 
+                content: parentBookEntry.querySelector('.description').textContent.substring(0, 250) + '…',
+                url: "https://theoknoep.github.io/read-books/#/add/" + parentBookEntry.querySelector('.more-actions-button').id.split('-')[1]
+            }
+
             allShareBtn[i].addEventListener('click', event => {
                 event.stopPropagation(); 
-                new UserChoice('🚧 Cette action n\'est pas encore disponible', null, "OK").waitFor();  
+                console.log(shareData); 
+
+                try {
+                    navigator.share(shareData); 
+                } catch(err) {
+                    new UserChoice(err, null, "OK").waitFor();  
+                }
+                // new UserChoice('🚧 Cette action n\'est pas encore disponible', null, "OK").waitFor();  
             })
         }
 
