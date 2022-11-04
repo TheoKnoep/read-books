@@ -1,4 +1,10 @@
 class Utils {
+	/**
+	 * Return the first parent element which has the requested className
+	 * @param { HTMLElement } elt 
+	 * @param { String } className 
+	 * @returns 
+	 */
 	static getParentOfClass(elt, className) {
 		if (elt.classList.contains(className)) {
 			return elt; 

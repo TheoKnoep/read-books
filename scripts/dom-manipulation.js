@@ -37,3 +37,15 @@ function applyRightBtnStyle() {
 window.addEventListener('load', applyRightBtnStyle); 
 window.addEventListener('hashchange', applyRightBtnStyle); 
 
+
+
+
+
+
+// More Actions btn
+function getAllButtons() {
+	let res = document.querySelectorAll('.more-actions-btn'); 
+	return res; 
+}
+
+
