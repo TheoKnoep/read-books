@@ -339,3 +339,60 @@ textarea, select, input {
 li.star {
 	list-style-type: '★ ';
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Animated icon CSS */
+.animated-validation {
+	width: 48px; 
+	height: 48px;
+	border-radius: 100px; 
+	border: green solid 4px;
+	position: relative; 
+}
+.animated-validation::before {
+    content: '';
+    position: relative;
+    height: 4px;
+    background-color: green;
+    width: 18px;
+    border-radius: 100px;
+    transform: rotate(45deg);
+    top: 22px;
+    left: 9px;
+    display: block;
+}
+.animated-validation::after {
+	content: '';
+	display: block;
+	position: relative; 
+	width: 21px;
+	height: 4px;
+	border-radius: 100px;
+	background: green;
+	transform: rotate(-45deg);
+	left: 14px;
+    top: 16px;
+}

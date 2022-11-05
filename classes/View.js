@@ -190,12 +190,16 @@ class View {
         const b = wishlist.books[indexOfBook]; 
 
         HTMLContent = `
-            <button class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
+        <div style="display: flex; flex-wrap: wrap; ">
+            <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
+            <p class="message message--warning">🚧 Cette page est en cours de construction</p>
+        </div>
+
             <div class="single-book__container">
-                <p class="message message--warning">🚧 Cette page est en cours de construction</p>
+            
                 <div class="infos_container">
                     <h1>${b.title} </h1>
-                    <img class="miniature-cover" src="${b.miniature_link}" width="120" / >
+                    <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; "/ >
                     <p>${b.description}</p>
                 </div>
                 <div class="custom_section">
@@ -213,7 +217,8 @@ class View {
 
         //set correct height for text area : 
         let txtArea = document.getElementById('comment_container'); 
-        txtArea.style.height = txtArea.scrollHeight + 20 + "px"; 
+        let heightToSet = Math.max(txtArea.value.split('\n').length*22, 72);  
+        txtArea.style.height = heightToSet + "px";  
 
 
 
@@ -229,8 +234,7 @@ class View {
             console.log(txtArea.rows*22); 
             console.log(txtArea.value.split('\n').length);
             let heightToSet = Math.max(txtArea.value.split('\n').length*22, 72);  
-
-                txtArea.style.height = heightToSet + "px"; 
+            txtArea.style.height = heightToSet + "px"; 
             
         })
 
@@ -258,6 +262,7 @@ class View {
         </form>`; 
 
         CONTAINER.innerHTML = HTMLContent; 
+        // CONTAINER.insertAdjacentHTML('beforeend', HTMLContent); 
 
         document.querySelector('#query').focus(); 
 

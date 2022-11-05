@@ -15,7 +15,7 @@ function activateButton(elt) {
 }
 function disactivateButton(elt) {
 	elt.classList.remove('active');
-	window.location.hash = "#/"; 
+	history.go(-1); 
 }
 
 function checkStateButton() {

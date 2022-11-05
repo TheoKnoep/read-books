@@ -35,6 +35,8 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 			allEntriesBtn[i].addEventListener('click', event => {
 				event.stopPropagation(); 
 				if (wishlist.add(resultsBooks[event.target.id])) {
+					// console.log(allEntriesBtn[i]); 
+					allEntriesBtn[i].remove();
 					new QuickToast("Livre ajouté à la wishlist", 3000).display();
 				} else {
 					new QuickToast('Ce livre est déjà votre wishlist', 3000).display(); 
