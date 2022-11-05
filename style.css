@@ -262,6 +262,31 @@ textarea, select, input {
 
 
 
+/* SINGLE BOOK */
+
+.back-navigation_btn {
+	background: var(--accent-bg);
+	color: var(--text-light); 
+}
+
+.single-book__container .miniature-cover {
+	float: left; 
+	margin-right: 18px;
+}
+
+
+
+
+.single-book__container .custom_section {
+	clear: both; 
+	margin-top: 1em; 
+} 
+
+
+
+
+
+
 
 
 

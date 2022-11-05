@@ -79,6 +79,9 @@
 				case 'reading':
 					View.wish_list(wishlist.getAllBooksByStatus('on-going')); 
 					break; 
+				case 'book':
+					View.single_book(route[2]); 
+					break; 
 				case 'add': 
 					View.search_form(route[2]); 
 					break; 
@@ -94,7 +97,7 @@
 
 
 /* !dev-only : */
-Cache.svgID(wishlist.books); 
+// Cache.svgID(wishlist.books); 
 
 
 		/**

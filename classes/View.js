@@ -17,7 +17,7 @@ class View {
 
 
 
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static wish_list(books_list) {
         const CONTAINER = document.querySelector('#app-container'); 
         let HTMLcontent = ''; 
@@ -151,13 +151,75 @@ class View {
         for (let i = 0 ; i < allDetailsBtn.length; i++ ) {
             allDetailsBtn[i].addEventListener('click', event => {
                 event.stopPropagation(); 
-                new UserChoice('🚧 Cette action n\'est pas encore disponible', null, "OK").waitFor();  
+                // new UserChoice('🚧 Cette action n\'est pas encore disponible', null, "OK").waitFor();  
+                let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('-')[1] ; 
+                window.location.hash = '#/book/' +  book_id; 
             })
         }
 
         return 'displayed'; 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    static single_book(book_id) {
+        const CONTAINER = document.querySelector('#app-container'); 
+        let HTMLContent = ''; 
+        //parse book ID : 
+        let indexOfBook = wishlist.getIndexOfSingleBookByID(book_id); 
+
+        console.log('Requested book :: ', wishlist.books[indexOfBook]); 
+
+        const b = wishlist.books[indexOfBook]; 
+
+        HTMLContent = `
+            <button class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
+            <div class="single-book__container">
+                <p class="message message--warning">🚧 Cette page est en cours de construction</p>
+                <div class="infos_container">
+                    <h1>${b.title} </h1>
+                    <img class="miniature-cover" src="${b.miniature_link}" width="120" / >
+                    <p>${b.description}</p>
+                </div>
+                <div class="custom_section">
+                    <h2>Notes : </h2>
+                    <textarea id="comment_container" placeholder="Vous pouvez ajouter ici des notes personnalisées sur un ouvrage">${b.comment || ''}</textarea>
+                </div>
+            </div>
+            <button class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
+            
+            `; 
+
+
+        CONTAINER.innerHTML = HTMLContent; 
+
+
+
+        // EVENTS HANDLER :
+
+        //svg comment : 
+        let txtArea = document.getElementById('comment_container'); 
+        txtArea.addEventListener('input', event => {
+            console.log(txtArea.value); 
+            console.log(b); 
+            b.comment = txtArea.value; 
+            wishlist.saveWishlist();     
+        })
+    }
 
 
 
@@ -211,10 +273,7 @@ class View {
 
 
 
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-    static single_book(book) {
 
-    }
 
 
 
