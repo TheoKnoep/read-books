@@ -82,8 +82,9 @@ class View {
             btn.addEventListener('click', event => {
                 event.stopPropagation(); 
                 document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
-                let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('-')[1] ; 
-                document.querySelector(`#id-${book_id} .openable`).classList.add('opened'); 
+                let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
+                console.log(book_id); 
+                document.querySelector(`#id${book_id} .openable`).classList.add('opened'); 
             })
         })
         window.addEventListener('click', event => {
@@ -106,14 +107,14 @@ class View {
                 try {
                     new UserChoice('Supprimer le livre de votre liste ? <br/>Cette action est irréversible', "Supprimer", "Annuler").waitFor()
                         .then(() => {
-                            let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('-')[1] ;  
+                            let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ;  
                             Utils.getParentOfClass(event.target, 'book-entry').remove(); 
                             wishlist.remove( book_id ); 
                             new QuickToast('Livre supprimé').display(); 
                             if (wishlist.books.length === 0 ) { this.wish_list(wishlist.books) }
                         })
                         .catch(() => {
-                            let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('-')[1] ; 
+                            let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
                             console.log(book_id); 
                         });
                 } catch(err) {
@@ -250,6 +251,14 @@ class View {
 
 
 
+
+
+
+
+
+
+
+
 /* DISPLAY SEARCH FORM ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static search_form(existing_query = "") {
         const CONTAINER = document.querySelector('#app-container'); 
@@ -258,7 +267,8 @@ class View {
         <form class="" action="" id="search-form">
             <input type="text" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
             <input type="submit" name="" id="submit-form" value="Chercher">
-        </form>`; 
+        </form>
+        <div id="search-results"></div>`; 
 
         CONTAINER.innerHTML = HTMLContent; 
         // CONTAINER.insertAdjacentHTML('beforeend', HTMLContent); 
@@ -273,6 +283,7 @@ class View {
         // EVENTS
         document.querySelector('#search-form').addEventListener('submit', event => {
             event.preventDefault(); 
+            document.querySelector('#search-results').innerHTML = '<p style="text-align: center; ">● ● ●</p>'; 
             let data = new FormData(document.querySelector('#search-form')); 
             document.querySelector('#query').blur(); // try to hide keyboard on mobile device. Is it working ?
             const query = data.get('query'); 

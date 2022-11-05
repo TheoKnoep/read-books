@@ -13,11 +13,7 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 			newInsert += writeBookCard(resultsBooks[i], i); 
 		}
 
-		let newBlock = `<div id="search-results">${newInsert}</div>`; 
-
-		if (document.getElementById('search-results')) { document.getElementById('search-results').remove() }
-
-		document.querySelector('#search-form').insertAdjacentHTML('afterend', newBlock); 
+		document.getElementById('search-results').innerHTML = newInsert; 
 
 		const allEntries = document.querySelectorAll("#search-results .book-entry"); 
 		const allEntriesBtn = document.querySelectorAll("#search-results .book-entry button"); 
@@ -46,7 +42,7 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 		}
 	} catch(err) {
 		console.log('OMG cé la mérde', err); 
-		new QuickToast('❌ la recherche a échoué, vérifiez votre connexion internet', 6000).display(); 
+		new QuickToast('❌ désolé, la recherche a échoué', 6000).display(); 
 	}
 }
 
