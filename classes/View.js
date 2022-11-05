@@ -276,6 +276,7 @@ class View {
         document.querySelector('#query').focus(); 
 
         if (existing_query) { 
+            existing_query = decodeURI(existing_query); 
             displaySearchResults(existing_query, DEFAULT_RESULTS_NUMBER, true);  
             document.querySelector('#query').value = decodeURI(existing_query); 
         }
