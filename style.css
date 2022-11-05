@@ -97,6 +97,28 @@ textarea, select, input {
 
 
 
+
+
+
+
+
+
+
+
+.message--warning {
+	background: var(--accent-bg);
+    padding: 1em;
+    border-radius: 4px;
+    font-family: var(--mono-font);
+    font-size: .8em;
+}
+
+
+
+
+
+
+
 /*  HEADER */
 .header {
 	position: sticky; 
@@ -281,6 +303,10 @@ textarea, select, input {
 	clear: both; 
 	margin-top: 1em; 
 } 
+
+.single-book__container #comment_container {
+	min-height: 72px; 
+}
 
 
 

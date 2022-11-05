@@ -70,7 +70,10 @@ class View {
         const allBooks = document.querySelectorAll('#reading-list .book-entry'); 
         for (let i = 0 ; i < allBooks.length; i++ ) {
             allBooks[i].addEventListener('click', event => {
-                allBooks[i].querySelector('.description').classList.toggle('maxheight0'); 
+                let book_id = allBooks[i].querySelector('.more-actions-button').id.split('-')[1]; 
+                console.log(book_id); 
+                window.location.hash = '#/book/' + book_id; 
+                // allBooks[i].querySelector('.description').classList.toggle('maxheight0'); 
             })
         }
 
@@ -208,20 +211,34 @@ class View {
         CONTAINER.innerHTML = HTMLContent; 
 
 
+        //set correct height for text area : 
+        let txtArea = document.getElementById('comment_container'); 
+        txtArea.style.height = txtArea.scrollHeight + 20 + "px"; 
+
+
 
         // EVENTS HANDLER :
 
         //svg comment : 
-        let txtArea = document.getElementById('comment_container'); 
         txtArea.addEventListener('input', event => {
-            console.log(txtArea.value); 
-            console.log(b); 
             b.comment = txtArea.value; 
-            wishlist.saveWishlist();     
+            wishlist.saveWishlist();
+
+            console.log(txtArea.scrollHeight); 
+            console.log(txtArea.rows);
+            console.log(txtArea.rows*22); 
+            console.log(txtArea.value.split('\n').length);
+            let heightToSet = Math.max(txtArea.value.split('\n').length*22, 72);  
+
+                txtArea.style.height = heightToSet + "px"; 
+            
         })
+
+        txtArea.addEventListener('blur', event => {
+            if (txtArea.value) { new QuickToast('Note sauvegardée').display(); }
+        })
+
     }
-
-
 
 
 
