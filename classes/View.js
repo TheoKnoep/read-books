@@ -44,7 +44,7 @@ class View {
                                             <p class="publisher"><strong>${books_list[i].publisher}</strong></p>
                                             ${ dateAdded }
                                         </div>
-                                        <div class="more-actions-button" id="id-${books_list[i].google_id}">
+                                        <div class="more-actions-button" id="id${books_list[i].google_id}">
                                             <div class="visible"> ⁝ </div>
                                             <div class="openable">
                                                 <button class="details-btn">Détails</button>
@@ -57,7 +57,6 @@ class View {
             }
             HTMLcontent = `
                 <div id="reading-list">
-                    <!-- <h2>Livres à lire</h2> -->
                     ${booksList}
                 </div>`; 
         }
@@ -70,7 +69,7 @@ class View {
         const allBooks = document.querySelectorAll('#reading-list .book-entry'); 
         for (let i = 0 ; i < allBooks.length; i++ ) {
             allBooks[i].addEventListener('click', event => {
-                let book_id = allBooks[i].querySelector('.more-actions-button').id.split('-')[1]; 
+                let book_id = allBooks[i].querySelector('.more-actions-button').id.split('id')[1]; 
                 console.log(book_id); 
                 window.location.hash = '#/book/' + book_id; 
                 // allBooks[i].querySelector('.description').classList.toggle('maxheight0'); 
@@ -133,7 +132,7 @@ class View {
             const shareData = {
                 title: "Livre : " + parentBookEntry.querySelector('.title').textContent, 
                 content: parentBookEntry.querySelector('.description').textContent.substring(0, 250) + '…',
-                url: "https://theoknoep.github.io/read-books/#/add/" + parentBookEntry.querySelector('.more-actions-button').id.split('-')[1]
+                url: "https://theoknoep.github.io/read-books/#/add/" + parentBookEntry.querySelector('.more-actions-button').id.split('id')[1]
             }
 
             allShareBtn[i].addEventListener('click', event => {
@@ -190,7 +189,7 @@ class View {
         const b = wishlist.books[indexOfBook]; 
 
         HTMLContent = `
-        <div style="display: flex; flex-wrap: wrap; ">
+        <div style="display: flex; ">
             <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
             <p class="message message--warning">🚧 Cette page est en cours de construction</p>
         </div>
@@ -275,7 +274,7 @@ class View {
         document.querySelector('#search-form').addEventListener('submit', event => {
             event.preventDefault(); 
             let data = new FormData(document.querySelector('#search-form')); 
-            document.querySelector('#search-form').blur(); // try to hide keyboard on mobile device. Is it working ?
+            document.querySelector('#query').blur(); // try to hide keyboard on mobile device. Is it working ?
             const query = data.get('query'); 
             displaySearchResults(query, DEFAULT_RESULTS_NUMBER, true); 
             // window.location.hash = '#/add/' + query; 
