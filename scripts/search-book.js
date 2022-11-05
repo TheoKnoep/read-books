@@ -32,7 +32,8 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 				event.stopPropagation(); 
 				if (wishlist.add(resultsBooks[event.target.id])) {
 					// console.log(allEntriesBtn[i]); 
-					allEntriesBtn[i].remove();
+					// allEntriesBtn[i].remove();
+					allEntriesBtn[i].outerHTML = '<div style="display: flex; justify-content: center; align-items: center; color: var(--accent);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>'; 
 					new QuickToast("Livre ajouté à la wishlist", 3000).display();
 				} else {
 					new QuickToast('Ce livre est déjà votre wishlist', 3000).display(); 
