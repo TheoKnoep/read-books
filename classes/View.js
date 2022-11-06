@@ -155,7 +155,7 @@ class View {
             allDetailsBtn[i].addEventListener('click', event => {
                 event.stopPropagation(); 
                 // new UserChoice('🚧 Cette action n\'est pas encore disponible', null, "OK").waitFor();  
-                let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('-')[1] ; 
+                let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
                 window.location.hash = '#/book/' +  book_id; 
             })
         }
@@ -264,14 +264,14 @@ class View {
         const CONTAINER = document.querySelector('#app-container'); 
 
         let HTMLContent = `
-        <form class="" action="" id="search-form">
+        <form class="focus" action="" id="search-form" >
             <input type="text" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
+            <input type="button" name="clear" id="clear" value="×">
             <input type="submit" name="" id="submit-form" value="Chercher">
         </form>
         <div id="search-results"></div>`; 
 
         CONTAINER.innerHTML = HTMLContent; 
-        // CONTAINER.insertAdjacentHTML('beforeend', HTMLContent); 
 
         document.querySelector('#query').focus(); 
 
@@ -291,6 +291,18 @@ class View {
             displaySearchResults(query, DEFAULT_RESULTS_NUMBER, true); 
             // window.location.hash = '#/add/' + query; 
             history.pushState(null, null, '#/add/' + query);
+        })
+
+
+        document.querySelector('#query').addEventListener('focus', () => {
+            document.querySelector('#search-form').classList.add('focus'); 
+        })
+        document.querySelector('#query').addEventListener('blur', () => {
+            document.querySelector('#search-form').classList.remove('focus'); 
+        })
+
+        document.querySelector('#clear').addEventListener('click', event => {
+            document.querySelector('#query').value = ''; 
         })
     }
 

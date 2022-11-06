@@ -205,7 +205,41 @@ textarea, select, input {
 /* Books search results  */
 #search-form {
 	scroll-snap-align: start;
+	display: flex;
+    border: solid 1px var(--border);
+    border-radius: 5px;
+    align-items: center;
+    max-width: 580px;
 }
+#search-form:focus {
+	outline: 2px red solid; 
+}
+#search-form.focus {
+	outline: -webkit-focus-ring-color auto 1px;; 
+}
+#search-form  #query {
+	background: transparent;
+    border: none;
+	margin-bottom: 0; 
+	width: 100%;
+}
+#search-form  #query:focus {
+	outline: none;
+	border: none; 
+}
+#search-form #clear {
+	background: none;
+    color: white;
+    width: 38px;
+	font-size: 22px;
+	font-weight: 300;
+	line-height: 0;
+}
+#search-form #submit-form {
+	width: 92px; 
+	margin:0; 
+}
+
 
 
 .book-entry {
