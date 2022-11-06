@@ -229,7 +229,7 @@ textarea, select, input {
 }
 #search-form #clear {
 	background: none;
-    color: white;
+    color: var(--text);
     width: 38px;
 	font-size: 22px;
 	font-weight: 300;
