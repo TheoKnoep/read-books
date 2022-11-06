@@ -303,6 +303,7 @@ class View {
 
         document.querySelector('#clear').addEventListener('click', event => {
             document.querySelector('#query').value = ''; 
+            document.querySelector('#query').focus();
         })
     }
 
