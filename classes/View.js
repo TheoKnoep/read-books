@@ -471,7 +471,6 @@ class View {
         // EVENTS 
         const textArea = document.getElementById('import-json'); 
         textArea.addEventListener('change', event => {
-            console.log(event.target.value); 
             if (event.target.value !== '') {
                 document.getElementById('import-btn').removeAttribute('disabled'); 
             }
