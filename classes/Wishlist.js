@@ -108,4 +108,12 @@ class Wishlist {
 		})
 		return res; 
 	}
+	checkForDoublonByID(new_book) {
+		if (!Book.prototype.isPrototypeOf(new_book)) { return new Error('Parameter is not Book type') }
+		let res = false; 
+		this.books.forEach(existing_book => {; 
+			if (new_book.google_id === existing_book.google_id) { res = true }
+		})
+		return res; 
+	}
 }

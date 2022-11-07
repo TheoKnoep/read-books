@@ -85,13 +85,23 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 		for (let i = 0; i < maxResults; i++) {
 			let b = data.items[i].volumeInfo; 
 			resultsBooks.push(new Book(
-				b.title,
-				b.authors ? b.authors.join(',') : '', 
-				b.publisher,  
-				b.description, 
-				b.imageLinks ? b.imageLinks.thumbnail : "images/empty.svg", 
-				b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '',
-				data.items[i].id
+				b.title, // title, 
+					b.authors ? b.authors.join(',') : '', // authors
+					b.publisher, // publisher, 
+					b.description, // description, 
+					b.imageLinks ? b.imageLinks.thumbnail : "images/empty.svg", // miniature_link, 
+					b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '', // isbn, 
+					null, // rate, 
+					null, // comment,
+					null, // format, 
+					data.items[i].id, // google_id, 
+					null, // series, 
+					null, // series_number, 
+					b.language ? b.language : null, // language, 
+					Date.now(), // added_date, 
+					'to-read', // status, 
+					null, // started_date, 
+					null, // finished_date
 			))
 		}
 	}
@@ -101,8 +111,11 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 	
 }
 
-function writeBookCard(book, index) {
-	let template = `<article class="book-entry" id="book-${index}">
+function writeBookCard(book, index) { 
+	let cta_container = `<button id="${index}">+</button>`; 
+	if (wishlist.checkForDoublonByID(book)) { cta_container = `<div style="display: flex; justify-content: center; align-items: center; color: var(--accent);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>` }; 
+	
+	let template = `<article class="book-entry" id="id${book.google_id}">
 		<div><img width="80" src="${book.miniature_link}" /></div>	
 		<div class="info-container">
 			<h3 class="title">${book.title}</h3>
@@ -111,7 +124,7 @@ function writeBookCard(book, index) {
 			<p class="publisher"><strong>${book.publisher || '?'}</strong></p>
 		</div>
 		<div class="cta-container">
-			<button id="${index}">+</button>
+			${ cta_container }
 		</div>
 	</article>`; 
 
