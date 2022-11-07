@@ -42,17 +42,34 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 			})
 		}
 	} catch(err) {
-		console.log('OMG cé la mérde', err); 
-		new QuickToast('❌ désolé, la recherche a échoué', 6000).display(); 
+		console.log('OMG cé la mérde /', err); 
+		console.log(err.toString().split(': ')); 
+		if (err.toString().includes('Failed to fetch')) {
+			new QuickToast('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M8.5 16.5a5 5 0 0 1 7 0"></path><path d="M2 8.82a15 15 0 0 1 4.17-2.65"></path><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"></path><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"></path><path d="M5 13a10 10 0 0 1 5.24-2.76"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>&nbsp;Pas de connexion internet pour effectuer cette recherche', 6000).display();
+			document.getElementById('search-results').innerHTML = ''; 
+		} else {
+			new QuickToast('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>&nbsp;' + err.toString(), 6000).display();
+			document.getElementById('search-results').innerHTML = `<p><em>${err.toString()}</em></p>`;
+		}
 	}
 }
 
+
+/**
+ * Convert a query into an Array of Books prototypes : 
+ * @param { String } query 
+ * @param { Integer } maxResults 
+ * @param { Boolean } onlyThumbnails 
+ * @returns 
+ */
 async function fetchBooksInformations(query, maxResults, onlyThumbnails = false) {
 	const url = "https://www.googleapis.com/books/v1/volumes?q="; 
 
 	const response = await fetch(url + query + "&maxResults=40"); 
 	const data = await response.json(); 
 	// console.log("data items : ", data.items); 
+
+	if (!data.items) { throw 'Pas de résultat trouvé pour cette recherche' }
 
 	let resultsBooks = []; 
 	if (onlyThumbnails) {
@@ -111,6 +128,13 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 	
 }
 
+
+/**
+ * Transform a Book prototype into an HTML article ready to be added to the DOM : 
+ * @param { Book } book 
+ * @param { Integer } index 
+ * @returns 
+ */
 function writeBookCard(book, index) { 
 	let cta_container = `<button id="${index}">+</button>`; 
 	if (wishlist.checkForDoublonByID(book)) { cta_container = `<div style="display: flex; justify-content: center; align-items: center; color: var(--accent);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>` }; 
@@ -140,6 +164,10 @@ function sanitizeQuery(query) {
 }
 
 
+
+/**
+ * Reference for Object returned by fetching Google API for single book :
+ */
 let singleBookJSON = {
 	"volumeInfo": {
 		"title": "Alexandre le Grand et les Aigles de Rome",
@@ -253,6 +281,12 @@ function getISBNofSingleBook(singleBook) {
 	return null; 
 }
 
+
+/**
+ * Return an JS Object of requested book : 
+ * @param { String } google_id 
+ * @returns 
+ */
 async function getSingleBookInformation(google_id) {
 	const base_url = 'https://www.googleapis.com/books/v1/volumes/'; 
 	const response = await fetch(base_url + google_id); 
@@ -265,6 +299,12 @@ async function getSingleBookInformation(google_id) {
 	}
 }
 
+
+/**
+ * Return several Object for several requested ID :
+ * @param { Array } listOfIDs as an Array fo single books IDs
+ * @returns 
+ */
 async function getBooksInfosThroughListOfIDs(listOfIDs) {
 	let arrayOfPromises = []; 
 	listOfIDs.forEach(id => {
