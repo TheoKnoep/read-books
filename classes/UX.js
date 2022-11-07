@@ -99,8 +99,8 @@ class UserChoice {
             }
             .popin-background {
                 position: absolute;
-                width: 100%;
-                height: 100%;
+                width: 300%;
+                height: 300%;
                 background: #282828;
                 opacity: .6;
             }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="classes/UX.js"></script>
+
+	<style>
+		.user-choice-popin .popin-content {
+			background-color: white;
+		}
+	</style>
+</head>
+<body>
+	
+
+	<button onclick="new QuickToast('Le message est affiché ici', 3000).display(); ">Afficher un message d'info</button>
+	<button onclick="new UserChoice('Ici le message', 'Continuer', 'Annuler').waitFor().then(()=>alert('L\'utilisateur a accepté')); ">Fenêtre de confirmation</button>
+
+	<div>
+		<img src="images/check-circle-2.svg">
+	</div>
+
+	<script src="scripts/search-book.js"></script>
+
+	<script>
+		function displayBox() {
+			new UserChoice('Ici le message', 'Continuer', 'Annuler').waitFor().then(()=>alert('L\'utilisateur a accepté')); 
+		}
+		// getSingleBookInformation('LVaGAQAAQBAJ')
+		// 	.then(data => console.log(data))
+		// 	.catch(err => console.log(err)); 
+
+		
+
+		// let searchParam = new URLSearchParams(window.location.search); 
+
+		// open : dreee.html?import=LVaGAQAAQBAJ;WyBREAAAQBAJ;vVeGAQAAQBAJ
+		// console.log(searchParam.get('import').split(';')); 
+
+		// getBooksInfosThroughListOfIDs(searchParam.get('import').split(';'))
+		// 	.then(res => console.log('ola', res)) // on reçoit un tableau de JSON pour chaque livre dont on a fourni l'ID
+		// 	.catch(err => console.warn('ERR :: ', err)); 
+	</script>
+</body>
+</html>
