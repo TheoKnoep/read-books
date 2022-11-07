@@ -351,8 +351,25 @@ Book entry :
 	float: left; 
 	margin-right: 18px;
 }
+.single-book__container .description-content, .single-book__container .meta-container {
+	max-width: 920px; 
+}
 
-
+.single-book__container .description-content {
+	padding: 1em; 
+	font-size: 16px;
+}
+.single-book__container .meta-container {
+	display: flex;
+	background: var(--accent-bg);
+	font-size: 14px;
+}
+.single-book__container .meta-container .column {
+	width: 50%;
+}
+.single-book__container li {
+	list-style: '⏵ '; 
+}
 
 
 .single-book__container .custom_section {

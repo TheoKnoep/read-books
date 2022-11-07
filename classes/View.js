@@ -196,11 +196,25 @@ class View {
         </div>
 
             <div class="single-book__container">
-            
                 <div class="infos_container">
                     <h1>${b.title} </h1>
                     <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; "/ >
-                    <p>${b.description}</p>
+                    <p class="description-content">${b.description}</p>
+                    <div class="meta-container">
+                        <div class="column">
+                            <ul>
+                                <li>Auteur : <strong>${b.author}</strong></li>
+                                <li>Édition : <strong>${b.publisher}</strong></li>
+                                <li>Langue : <strong>${b.language}</strong></li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <ul>
+                                <li>ISBN : <strong>${b.isbn}</strong></li>
+                                <li>Google ID : <strong>${b.google_id}</strong></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="custom_section">
                     <h2>Notes : </h2>
