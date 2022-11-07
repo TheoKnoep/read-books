@@ -303,8 +303,10 @@ class View {
             document.querySelector('#query').blur(); // try to hide keyboard on mobile device. Is it working ?
             const query = data.get('query'); 
             displaySearchResults(query, DEFAULT_RESULTS_NUMBER, true); 
-            // window.location.hash = '#/add/' + query; 
-            history.pushState(null, null, '#/add/' + query);
+            
+            let newSearchStep = 1; 
+            if (history.state) { newSearchStep = history.state.step + 1 }
+            history.pushState({step: newSearchStep}, null, '#/add/' + query);
         })
 
 

@@ -1,6 +1,7 @@
 
 
 // Navigation Primary Button : 
+
 function toggleAddButton(elt) {
 	if (checkStateButton() === 1) {
 		disactivateButton(elt); 
@@ -15,7 +16,12 @@ function activateButton(elt) {
 }
 function disactivateButton(elt) {
 	elt.classList.remove('active');
-	history.go(-1); 
+	
+	// return to the page right before all the searches : 
+	let searchSteps = 1; 
+    if (history.state) { searchSteps = history.state.step + 1 }
+	history.go(-searchSteps); 
+	history.state = null; 
 }
 
 function checkStateButton() {
