@@ -440,7 +440,7 @@ class View {
                 navigator.share({ 
                     title: document.getElementById('export-container').textContent, 
                     content: document.getElementById('export-container').textContent, 
-                    url: '#/import/?method=ids&list=' + wishlist.getListOfIDs().join(';')
+                    url: '#/import/ids/' + wishlist.getListOfIDs().join(';')
                 }); 
             } catch(err) {
                 new UserChoice(err, null, "Compris").waitFor();  
@@ -450,6 +450,16 @@ class View {
 
 
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -465,20 +475,13 @@ class View {
             ${list ? `<p>IDs list : ${list}</p>` : ''}
 
             <textarea id="import-json" placeholder="Coller ici les données à importer au format JSON"></textarea>
-            <button id="import-btn" disabled>Importer</button>
+            <button id="import-btn">Importer</button>
             `; 
 
 
         CONTAINER.innerHTML = HTMLContent; 
 
         // EVENTS 
-        const textArea = document.getElementById('import-json'); 
-        textArea.addEventListener('change', event => {
-            if (event.target.value !== '') {
-                document.getElementById('import-btn').removeAttribute('disabled'); 
-            }
-        })
-
         // Import json 
         const importBtn = document.getElementById('import-btn'); 
         importBtn.addEventListener('click', event => {
