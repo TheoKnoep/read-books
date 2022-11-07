@@ -78,7 +78,8 @@ class QuickToast {
                 color: var(--bg); 
                 user-select: none;
                 display: flex;
-                align-items: center; `, 
+                align-items: center; 
+                `, 
             topFull: `position: fixed; 
                 width: calc(100% - 16px); 
                 top: 16px; 

@@ -122,4 +122,37 @@ class Wishlist {
 	exportToCSV() {
 		let head = `Titre;Auteurs;Edition`; 
 	}
+
+	importFromJSON(stringifiedJSON) {
+		let data = JSON.parse(stringifiedJSON); 
+		console.log(data); 
+
+		// Verify input : 
+		/// . . . TO DO . . .
+		
+
+		// execute import : 
+		data.forEach(book => {
+			let newBook = new Book(
+				book.title, 
+				book.author, 
+				book.publisher, 
+				book.description, 
+				book.miniature_link, 
+				book.isbn, 
+				book.rate, 
+				book.comment, 
+				book.format, 
+				book.google_id, 
+				book.series, 
+				book.series_number, 
+				book.language, 
+				book.added_date, 
+				book.status, 
+				book.started_date, 
+				book.finished_date
+			); 
+			this.add(newBook); 
+		})
+	}
 }

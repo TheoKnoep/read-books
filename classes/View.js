@@ -406,7 +406,8 @@ class View {
                     <h3>Export de vos données au format JSON : </h3>
                     <p>Si vous souhaitez inclure vos notes personnelles dans l'export :</p>
                     <div id="export-container" class="versions-container" contenteditable="false">${JSON.stringify(wishlist.books)}</div>
-                    <button id="copy-json">Copier</button>
+                    <button id="copy-json" style="">Copier</button>
+                    <button id="export-json" style="">Exporter</button>
                 </div>`; 
 
         CONTAINER.innerHTML = HTMLcontent; 
@@ -423,13 +424,20 @@ class View {
         //Copy JSON 
         const copyJSON = document.getElementById('copy-json'); 
         copyJSON.addEventListener('click', event => {
+            let copyText = document.getElementById('export-container').textContent; 
+            navigator.clipboard.writeText(copyText); 
+            new QuickToast("Copié dans le presse-papier", 3500).display({style: 'topFull'}); 
+        })
+
+        //export JSON 
+        const exportJSON = document.getElementById('export-json'); 
+        exportJSON.addEventListener('click', event => {
             try {
                 navigator.share({ 
                     title: document.getElementById('export-container').textContent, 
                     content: document.getElementById('export-container').textContent, 
                     url: '#/import/?method=ids&list=' + wishlist.getListOfIDs().join(';')
                 }); 
-                new QuickToast().display({message: 'Ok export', style: 'topFull'})
             } catch(err) {
                 new UserChoice(err, null, "Compris").waitFor();  
             } 
@@ -440,6 +448,48 @@ class View {
     }
 
 
+
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    static import(method = 'json', list = '' ) {
+        const CONTAINER = document.querySelector('#app-container'); 
+
+        
+
+
+        let HTMLContent = `
+            <p>Méthode d'import : ${method}</p>
+            ${list ? `<p>IDs list : ${list}</p>` : ''}
+
+            <textarea id="import-json" placeholder="Coller ici les données à importer au format JSON"></textarea>
+            <button id="import-btn" disabled>Importer</button>
+            `; 
+
+
+        CONTAINER.innerHTML = HTMLContent; 
+
+        // EVENTS 
+        const textArea = document.getElementById('import-json'); 
+        textArea.addEventListener('change', event => {
+            console.log(event.target.value); 
+            if (event.target.value !== '') {
+                document.getElementById('import-btn').removeAttribute('disabled'); 
+            }
+        })
+
+        // Import json 
+        const importBtn = document.getElementById('import-btn'); 
+        importBtn.addEventListener('click', event => {
+            try {
+                wishlist.importFromJSON(textArea.value); 
+                new QuickToast().display({message: 'Import des données réussi', delay: 3000 }); 
+                location.href = '#/'; 
+            } catch(err) {
+                console.log(err); 
+                new QuickToast().display({message: err, delay: 10000, style: 'topFull'})
+            }
+        })
+    }
 
 
 

@@ -89,6 +89,9 @@
 				case 'about': 
 					View.about(); 
 					break; 
+				case 'import': 
+					View.import(route[2], route[3]); 
+					break; 
 				default: 
 					console.log('route non trouvée'); 
 					View.not_found(); 
