@@ -368,7 +368,8 @@ Book entry :
 	width: 50%;
 }
 .single-book__container li {
-	list-style: '⏵ '; 
+	/* list-style: '⏵ ';  */
+	list-style: '\25B8\0020';
 }
 
 
