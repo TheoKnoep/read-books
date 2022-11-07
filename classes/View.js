@@ -482,6 +482,7 @@ class View {
         CONTAINER.innerHTML = HTMLContent; 
 
         // EVENTS 
+        const textArea = document.getElementById('import-json'); 
         // Import json 
         const importBtn = document.getElementById('import-btn'); 
         importBtn.addEventListener('click', event => {
