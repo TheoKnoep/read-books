@@ -21,9 +21,16 @@ class QuickToast {
         this.delay = delay; 
     }
 
-    display(txt = this.msg, delay = this.delay) {
+    display(options = {}) {
+        //handle options : 
+        let message = options.message || this.msg; 
+        let delay = options.delay || this.delay; 
+        let style = options.style || 'bottomLeft'; 
+
+
+        // display : 
         let id = Math.floor(Math.random() * 1000000); 
-        let template = this.fillTemplate(id, txt); 
+        let template = this.fillTemplate(id, message, style); 
         document.body.insertAdjacentHTML('beforeend', template); 
         const removeNotification = () => {
             // document.getElementById(`notif-${id}`).remove()
@@ -33,25 +40,13 @@ class QuickToast {
         document.getElementById(`notif-${id}`).addEventListener('click', (removeNotification)); 
     }
 
-    fillTemplate(id, txt) {
+    fillTemplate(id, txt, style) {
         let successColor = "#20a779"; 
         return  `<div 
+                    class="quick-notification"
                     id="notif-${id}" 
                     style="
-                        position: fixed; 
-                        z-index: 1; 
-                        // width: calc(100% - 2em); 
-                        bottom: 1em; 
-                        left: 1em; 
-                        background-color: var(--text); 
-                        padding: .8em 2em; 
-                        box-shadow: 1px 1px 4px rgba(0,0,0,.4); 
-                        border-radius: 4px; 
-                        border-left: solid var(--accent) 4px; 
-                        color: var(--bg); 
-                        user-select: none;
-                        display: flex;
-                        align-items: center; 
+                        ${ this.listOfStyles(style) }
                     ">
                     ${txt}
                 </div>`; 
@@ -67,6 +62,53 @@ class QuickToast {
         }, speed);
     }
 
+
+    listOfStyles(specificStyle) {
+        let list = {
+            bottomLeft: `position: fixed; 
+                z-index: 1; 
+                // width: calc(100% - 2em); 
+                bottom: 1em; 
+                left: 1em; 
+                background-color: var(--text); 
+                padding: .8em 2em; 
+                box-shadow: 1px 1px 4px rgba(0,0,0,.4); 
+                border-radius: 4px; 
+                border-left: solid var(--accent) 4px; 
+                color: var(--bg); 
+                user-select: none;
+                display: flex;
+                align-items: center; `, 
+            topFull: `position: fixed; 
+                width: calc(100% - 16px); 
+                top: 16px; 
+                left: 8px; 
+                z-index: 1000; 
+                background: var(--text); 
+                color: var(--bg);
+                padding: .8em 2em;
+                box-shadow: 1px 1px 4px rgba(0,0,0,.4); 
+                border-radius: 4px; 
+                solid 1px var(--border);
+                `, 
+            smallBottomCenter: `
+                position: fixed; 
+                bottom: 16px; 
+                z-index: 1000; 
+                margin: auto; 
+                border-radius: 120px; 
+                background: var(--text); 
+                color: var(--bg);
+                padding: .4em 1em; 
+                box-shadow: 1px 1px 4px rgba(0,0,0,.4); 
+                opacity: .7; 
+                font-size: 16px;
+                text-align: center; 
+                `
+        }
+
+        return list[specificStyle]; 
+    }
 }
 
 

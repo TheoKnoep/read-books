@@ -192,7 +192,7 @@ class View {
         HTMLContent = `
         <div style="display: flex; ">
             <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
-            <p class="message message--warning">🚧 Cette page est en cours de construction</p>
+            <!-- <p class="message message--warning">🚧 Cette page est en cours de construction</p> -->
         </div>
 
             <div class="single-book__container">
@@ -253,7 +253,7 @@ class View {
         })
 
         txtArea.addEventListener('blur', event => {
-            if (txtArea.value) { new QuickToast('Note sauvegardée').display(); }
+            if (txtArea.value) { new QuickToast('Note sauvegardée').display({style: 'topFull'}); }
         })
 
     }
@@ -369,6 +369,14 @@ class View {
                 <h2>Versions : </h2>
                 <div class="versions-container">
                     <p>
+                        <strong>2022-11-07</strong> | V.0.9.2<br/>
+                        - ouverture du détail d'un livre<br/>
+                        - ajout de note personnelle sur la fiche d'un livre<br/>
+                        - amélioration de l'expérience de recherche et d'ajout de livre à la liste
+                    </p>
+                </div>
+                <div class="versions-container">
+                    <p>
                         <strong>2022-11-03</strong> | V.0.9.1<br/>
                         - recherche de livre dans l'API de Google Books<br/>
                         - ajout des livres à la liste de lecture<br/>
@@ -378,7 +386,6 @@ class View {
 
                 
                 <h2>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
                     Fonctionnalités à venir :
                 </h2>
                 <ul>
@@ -391,11 +398,16 @@ class View {
                 </ul>
 
 
-                <h2>Partage</h2>
-                <p>Cette chaîne de caractère vous permet de partager vos livres avec une autre personne, ou bien de la sauvegarder dans vos documents</p>
-                <p>Elle vous permet de réimporter vos livres mémorisés dans la page d'import de l'application</p>
-                <button style="user-select: text; word-break: break-all; " class="copy-button">${wishlist.getListOfIDs().join(';')}</button>
-            </div>`; 
+                <h2>Export des données :</h2>
+                    <p>Cette chaîne de caractère vous permet de partager vos livres avec une autre personne, ou bien de la sauvegarder dans vos documents <em>(cliquez pour copier le code)</em> :</p>
+                    <button style="user-select: text; word-break: break-all; " class="copy-button">${wishlist.getListOfIDs().join(';')}</button>
+                    <p>Elle vous permet de réimporter vos livres mémorisés dans la page d'import de l'application.</p>
+
+                    <h3>Export de vos données au format JSON : </h3>
+                    <p>Si vous souhaitez inclure vos notes personnelles dans l'export :</p>
+                    <div id="export-container" class="versions-container" contenteditable="false">${JSON.stringify(wishlist.books)}</div>
+                    <button id="copy-json">Copier</button>
+                </div>`; 
 
         CONTAINER.innerHTML = HTMLcontent; 
 
@@ -408,9 +420,32 @@ class View {
             new QuickToast("Copié dans le presse-papier", 3500).display(); 
         })
 
+        //Copy JSON 
+        const copyJSON = document.getElementById('copy-json'); 
+        copyJSON.addEventListener('click', event => {
+            try {
+                navigator.share({ 
+                    title: document.getElementById('export-container').textContent, 
+                    content: document.getElementById('export-container').textContent, 
+                    url: '#/import/?method=ids&list=' + wishlist.getListOfIDs().join(';')
+                }); 
+                new QuickToast().display({message: 'Ok export', style: 'topFull'})
+            } catch(err) {
+                new UserChoice(err, null, "Compris").waitFor();  
+            } 
+        })
+
 
 
     }
+
+
+
+
+
+
+
+
 
 
 

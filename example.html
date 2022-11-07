@@ -8,27 +8,61 @@
 	<script src="classes/UX.js"></script>
 
 	<style>
+		html {
+			background: #222;
+		}
+		.user-choice-popin {
+			
+		}
 		.user-choice-popin .popin-content {
-			background-color: white;
+			max-width: 100%;
+			width: 520px; 
+			background-color: #fff;
+			padding: 0 !important; 
+		}
+		.user-choice-popin .btn-container {
+			padding: 0 1em;
+		}
+		.user-choice-popin .btn-container:hover {
+			background: #f6f6f6; 
+		}
+		.user-choice-popin button {
+			cursor: pointer;
+		}
+		.user-choice-popin #cancel-btn {
+			border: none; 
+			text-decoration: underline;
+		}
+		.user-choice-popin #confirm-btn {
+			margin: 1em;
+			border: none;
+			padding: 1em;
+			border-radius: 5px;
+			transition: background-color ease 320ms; 
+		}
+		.user-choice-popin #confirm-btn:hover {
+			background: #333; 
+			color: #ddd; 
+		}
+
+		.quick-notification {
+			background-color: #F9A825 !important;
 		}
 	</style>
 </head>
 <body>
 	
 
-	<button onclick="new QuickToast('Le message est affiché ici', 3000).display(); ">Afficher un message d'info</button>
-	<button onclick="new UserChoice('Ici le message', 'Continuer', 'Annuler').waitFor().then(()=>alert('L\'utilisateur a accepté')); ">Fenêtre de confirmation</button>
+	<button onclick="new QuickToast('Le message est affiché ici pendant 3 secondes', 3000).display(); ">Afficher un message d'info</button>
+	<button onclick="new UserChoice(`<span style='font-weight: bold; font-size: 1.6em; line-height: 2; '>Ici le message :</span><br/>Êtes-vous sûr de vouloir continuer ?`, 'Continuer', 'Annuler').waitFor().then(()=>alert('L\'utilisateur a accepté')); ">Fenêtre de confirmation</button>
 
-	<div>
-		<img src="images/check-circle-2.svg">
-	</div>
 
 	<script src="scripts/search-book.js"></script>
 
 	<script>
-		function displayBox() {
-			new UserChoice('Ici le message', 'Continuer', 'Annuler').waitFor().then(()=>alert('L\'utilisateur a accepté')); 
-		}
+		
+		
+		
 		// getSingleBookInformation('LVaGAQAAQBAJ')
 		// 	.then(data => console.log(data))
 		// 	.catch(err => console.log(err)); 

@@ -78,7 +78,7 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 			if (b.imageLinks) {
 				resultsBooks.push(new Book(
 					b.title, // title, 
-					b.authors ? b.authors.join(',') : '', // authors
+					b.authors ? b.authors.join(', ') : '', // authors
 					b.publisher, // publisher, 
 					b.description, // description, 
 					b.imageLinks ? b.imageLinks.thumbnail : "images/empty.svg", // miniature_link, 

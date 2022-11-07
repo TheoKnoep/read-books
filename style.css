@@ -399,11 +399,16 @@ Book entry :
 	font-size: 1.25em; 
 	margin-top: 2em; 
 }
+.about-container h3 {
+	font-size: 1.125em;
+	margin-top: 1.6em;
+}
 
 .about-container .versions-container {
 	font-family: var(--mono-font);
 	background-color: var(--accent-bg);
     /* border: 1px solid var(--border); */
+	margin-bottom: 2px;
 }
 .about-container .versions-container p {
 	margin: 0; 
@@ -414,6 +419,12 @@ li.star {
 	list-style-type: '★ ';
 }
 
+.about-container #export-container {
+	padding: 1em;
+	max-height: 220px;
+	overflow: auto;
+	user-select: text;
+}
 
 
 

@@ -116,4 +116,10 @@ class Wishlist {
 		})
 		return res; 
 	}
+
+
+
+	exportToCSV() {
+		let head = `Titre;Auteurs;Edition`; 
+	}
 }
