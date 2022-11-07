@@ -352,7 +352,8 @@ class View {
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static about() {
         const CONTAINER = this.config().main_container; 
-        let HTMLcontent = `<div class="about-container">
+        let HTMLcontent = `
+            <div class="about-container">
                 <h1>À propos : Web application de gestion de liste de lecture</h1>
                 <blockquote>Cherchez et ajoutez des livres à votre liste de lecture pour les garder en mémoire</blockquote>
 
@@ -408,7 +409,10 @@ class View {
                     <div id="export-container" class="versions-container" contenteditable="false">${JSON.stringify(wishlist.books)}</div>
                     <button id="copy-json" style="">Copier</button>
                     <button id="export-json" style="">Exporter</button>
-                </div>`; 
+
+                <h2>Import des données :</h2>
+                <p>★&nbsp;<a href="#/import">Formulaire d'import des données</a></p>
+            </div>`; 
 
         CONTAINER.innerHTML = HTMLcontent; 
 
@@ -456,9 +460,8 @@ class View {
 
         
 
-
         let HTMLContent = `
-            <p>Méthode d'import : ${method}</p>
+            <p>Méthode d'import : ${method.toUpperCase()}</p>
             ${list ? `<p>IDs list : ${list}</p>` : ''}
 
             <textarea id="import-json" placeholder="Coller ici les données à importer au format JSON"></textarea>
