@@ -354,6 +354,9 @@ textarea, select, input {
 #current-reading.single-current h2 {
 	padding: 0 2.5%; 
 }
+#current-reading.single-current .current-reading__container {
+	border-radius: 0; 
+}
 #current-reading.single-current .current-reading__scroller {
 	width: 100% !important;
 }
