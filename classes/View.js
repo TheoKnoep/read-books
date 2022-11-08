@@ -405,8 +405,9 @@ class View {
                 <div class="versions-container">
                     <p>
                         <strong>2022-11-08</strong> | V.0.9.3<br/>
-                        - ajout des statuts d electure modifiable pour un livre : à lire, commencé, terminé<br/>
-                        - ajout possibilité d'exporter/importer sa liste de lecture au format JSON
+                        - ajout des statuts de lecture modifiable pour un livre : à lire, commencé, terminé<br/>
+                        - ajout possibilité d'exporter/importer sa liste de lecture au format JSON<br/>
+                        - ajout des lectures en cours en ouverture de la page d'accueil
                     </p>
                 </div>
                 <div class="versions-container">
@@ -453,6 +454,10 @@ class View {
 
                 <h2>Import des données :</h2>
                 <p>★&nbsp;<a href="#/import">Formulaire d'import des données</a></p>
+
+                <h2>Suppression des données :</h2>
+                <p><strong>ATTENTION : opération irréversible ! </strong</p>
+                <button onlick="new UserChoice('Nuke the data ?', 'Destroy all', 'Cancel').waitFor().then(() => { localStorage.setItem('wishlist', ''); wishlist.books = []; }); ">SUPPRIMER TOUTES LES DONNÉES</button>
             </div>`; 
 
         CONTAINER.innerHTML = HTMLcontent; 
@@ -482,9 +487,11 @@ class View {
                     title: document.getElementById('export-container').textContent, 
                     content: document.getElementById('export-container').textContent, 
                     url: '#/import/ids/' + wishlist.getListOfIDs().join(';')
-                }); 
+                })
+                .catch(err => console.log('Mééé : ', new UserChoice(err.toString(), null, "Compris").waitFor())); 
             } catch(err) {
-                new UserChoice(err, null, "Compris").waitFor();  
+                console.log('Mééé : ', err.toString()); 
+                new UserChoice(err.toString(), null, "Compris").waitFor();  
             } 
         })
 
