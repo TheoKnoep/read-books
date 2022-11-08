@@ -185,7 +185,7 @@ class View {
             <!-- <p class="message message--warning">🚧 Cette page est en cours de construction</p> -->
         </div>
 
-            <div class="single-book__container">
+            <div class="single-book__container" id="id${b.google_id}">
                 <div class="infos_container">
                     <h1>${b.title} </h1>
                     <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; "/ >
@@ -206,9 +206,23 @@ class View {
                         </div>
                     </div>
                 </div>
+                <div>
+                    <label for="reading-status">Statut de lecture :</label>
+                    <select id="reading-status" name="reading-status" data-bookid=${b.google_id}>
+                        <option value="to-read" ${b.status === 'to-read' ? 'selected' : '' }>À lire</option>
+                        <option value="started" ${b.status === 'started' ? 'selected' : '' }>Commencé</option>
+                        <option value="finished" ${b.status === 'finished' ? 'selected' : '' }>Terminé</option>
+                    </select>
+                    <div class="status-log">
+                        <div class="started">${b.started_date ? `<p>Commencé le ${new Date(b.started_date).toLocaleDateString() }</p>` : '' }</div>
+                        <div class="finished">${b.finished_date ? `<p>Terminé le ${new Date(b.finished_date).toLocaleDateString() }</p>` : '' }</div>
+                    </div>
+                </div>
                 <div class="custom_section">
                     <h2>Avis : </h2>
                     <textarea contenteditable="false" id="comment_container" placeholder="Ajoutez des notes personnalisées sur le livre">${b.comment || ''}</textarea>
+
+                    
                 </div>
             </div>
             <button class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
@@ -240,6 +254,37 @@ class View {
 
         txtArea.addEventListener('blur', event => {
             if (txtArea.value) { new QuickToast('Note sauvegardée').display({style: 'topFull'}); }
+        })
+
+        //update reading status : 
+        const selecStatus = document.querySelector('#reading-status'); 
+        selecStatus.addEventListener('change', event => {
+            let action = event.target.value;  
+            let book_id = event.target.dataset.bookid; 
+            let index = wishlist.getIndexOfSingleBookByID(book_id); 
+
+            console.log(index); 
+            if (action === "to-read") {
+                new UserChoice('Vous allez réinitialiser les date de lecture<br/>Cette opération est irréversible<br/>Êtes-vous sûr ?', 'Réinitaliser', "Annuler").waitFor()
+                    .then(() => {
+                        document.querySelector('.status-log').innerHTML = ''; 
+                        wishlist.books[index].reinitReading(); 
+                        wishlist.saveWishlist(); 
+                        new QuickToast('Statut de lecture mis à jour').display(); 
+                    }); 
+            }
+            if (action === "started") {
+                wishlist.books[index].startTheReading(); 
+                wishlist.saveWishlist(); 
+                document.querySelector('.status-log .started').innerHTML = `<p>Commencé le ${new Date(b.started_date).toLocaleDateString() }</p>`; 
+                new QuickToast('Statut de lecture mis à jour').display(); 
+            }
+            if (action === "finished") {
+                wishlist.books[index].finishTheReading(); 
+                wishlist.saveWishlist(); 
+                document.querySelector('.status-log .finished').innerHTML = `<p>Terminé le ${new Date(b.finished_date).toLocaleDateString() }</p>`; 
+                new QuickToast('Statut de lecture mis à jour').display(); 
+            }
         })
 
     }
@@ -436,6 +481,12 @@ class View {
 
 
     }
+
+
+
+
+
+
 
 
 

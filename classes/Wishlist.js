@@ -84,10 +84,6 @@ class Wishlist {
 		return null;
 	}
 
-	static testAlert(elt) {
-		console.log(elt);  
-
-	}
 
 	getListOfIDs() {
 		let res = []; 
