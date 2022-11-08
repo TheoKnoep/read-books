@@ -601,9 +601,10 @@ TEMPLATES
 ===================================================================================== */
 
     static template_current_reading() {
-        const books_list = wishlist.getAllBooksByStatus('started').sort((a,b) => {
-            return (a.started_date - b.started_date); 
-        }); 
+        // const books_list = wishlist.getAllBooksByStatus('started').sort((a,b) => {
+        //     return (a.started_date - b.started_date); 
+        // }); 
+        const books_list = Utils.shuffleArray(wishlist.getAllBooksByStatus('started')); 
 
         if (books_list.length === 0) { return '' }
 
