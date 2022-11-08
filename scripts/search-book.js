@@ -8,7 +8,7 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 	try {
 		const resultsBooks = await fetchBooksInformations(sanitizeQuery(query), maxResults, onlyThumbnails); 
 
-		let newInsert = ''; 
+		let newInsert = '<p class="small-info">Résultats de recherche fournis par Google Books API</p>'; 
 		for (let i in resultsBooks) {
 			newInsert += writeBookCard(resultsBooks[i], i); 
 		}
@@ -21,7 +21,6 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 		// Handle view description : 
 		for (let i = 0 ; i < allEntries.length; i++ ) {
 			allEntries[i].addEventListener('click', event => {
-				// allEntries[i].querySelector('.description').classList.toggle('displaynone'); 
 				allEntries[i].querySelector('.description').classList.toggle('maxheight0'); 
 			})
 		}
@@ -31,21 +30,16 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 			allEntriesBtn[i].addEventListener('click', event => {
 				event.stopPropagation(); 
 				if (wishlist.add(resultsBooks[event.target.id])) {
-					// console.log(allEntriesBtn[i]); 
-					// allEntriesBtn[i].remove();
 					allEntriesBtn[i].outerHTML = '<div style="display: flex; justify-content: center; align-items: center; color: var(--accent);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>'; 
 					new QuickToast("Livre ajouté à la wishlist", 3000).display();
 				} else {
 					new QuickToast('Ce livre est déjà votre wishlist', 3000).display(); 
 				}
-				
 			})
 		}
 	} catch(err) {
-		console.log('OMG cé la mérde /', err); 
-		console.log(err.toString().split(': ')); 
+		console.log("Searching books failed ::: ", err); 
 		if (err.toString().includes('Failed to fetch')) {
-			// new QuickToast('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M8.5 16.5a5 5 0 0 1 7 0"></path><path d="M2 8.82a15 15 0 0 1 4.17-2.65"></path><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"></path><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"></path><path d="M5 13a10 10 0 0 1 5.24-2.76"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>&nbsp;Pas de connexion internet pour effectuer cette recherche', 6000).display();
 			document.getElementById('search-results').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M8.5 16.5a5 5 0 0 1 7 0"></path><path d="M2 8.82a15 15 0 0 1 4.17-2.65"></path><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"></path><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"></path><path d="M5 13a10 10 0 0 1 5.24-2.76"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>&nbsp;Pas de connexion internet pour effectuer cette recherche<br/><a href="javascript:document.getElementById('submit-form').click();">Réessayer ?</a>`; 
 		} else {
 			new QuickToast('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>&nbsp;' + err.toString(), 6000).display();
