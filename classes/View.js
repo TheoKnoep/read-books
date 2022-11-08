@@ -206,8 +206,8 @@ class View {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <label for="reading-status">Statut de lecture :</label>
+                <div class="reading-status__container">
+                    <label for="reading-status" class="new-feature">Statut de lecture :</label>
                     <select id="reading-status" name="reading-status" data-bookid=${b.google_id}>
                         <option value="to-read" ${b.status === 'to-read' ? 'selected' : '' }>À lire</option>
                         <option value="started" ${b.status === 'started' ? 'selected' : '' }>Commencé</option>
@@ -263,7 +263,6 @@ class View {
             let book_id = event.target.dataset.bookid; 
             let index = wishlist.getIndexOfSingleBookByID(book_id); 
 
-            console.log(index); 
             if (action === "to-read") {
                 new UserChoice('Vous allez réinitialiser les date de lecture<br/>Cette opération est irréversible<br/>Êtes-vous sûr ?', 'Réinitaliser', "Annuler").waitFor()
                     .then(() => {
@@ -399,6 +398,13 @@ class View {
                 </div>
                 
                 <h2>Versions : </h2>
+                <div class="versions-container">
+                    <p>
+                        <strong>2022-11-08</strong> | V.0.9.3<br/>
+                        - ajout des statuts d electure modifiable pour un livre : à lire, commencé, terminé<br/>
+                        - ajout possibilité d'exporter/importer sa liste de lecture au format JSON
+                    </p>
+                </div>
                 <div class="versions-container">
                     <p>
                         <strong>2022-11-07</strong> | V.0.9.2<br/>

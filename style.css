@@ -49,6 +49,24 @@ textarea, select, input {
 }
 
 
+.new-feature {
+	color: var(--accent); 
+}
+.new-feature:before {
+	content: '\2022'; 
+	color: var(--accent); 
+	font-size: 1.6em;
+	position: relative;
+    bottom: 5px;
+}
+
+
+
+
+
+
+
+
 .delete-btn {
 	background-color: var(--text-light);
 }
@@ -378,6 +396,33 @@ Book entry :
 	/* list-style: '⏵ ';  */
 	list-style: '\25B8\0020';
 }
+
+
+
+
+.reading-status__container {
+	margin-top: 2em; 
+	margin-bottom: 2em; 
+}
+
+.reading-status__container label {
+	font-weight: bold;
+	font-size: 1.2em; 
+}
+
+.reading-status__container .status-log {
+
+}
+.reading-status__container .status-log p {
+	margin: 0; 
+	font-size: 16px;
+	font-style: italic;
+}
+
+
+
+
+
 
 
 .single-book__container .custom_section {
