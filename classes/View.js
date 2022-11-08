@@ -600,7 +600,7 @@ TEMPLATES
 
         console.log(books_list); 
 
-        let HTMLContent = `<h2>Lecture${books_list.length > 1 ? 's' : ''} en cours :</h2>`; 
+        let HTMLContent = `<h2 class="new-feature">Lecture${books_list.length > 1 ? 's' : ''} en cours :</h2>`; 
 
         const writeCard = (b) => {
             return `
