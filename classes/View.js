@@ -57,7 +57,7 @@ class View {
                 booksList += newEntry; 
             }
             HTMLcontent = `
-                <div id="current-reading">${ this.template_current_reading() }</div>
+                ${ this.template_current_reading() }
                 <div id="reading-list">
                     ${booksList}
                 </div>`; 
@@ -629,11 +629,13 @@ TEMPLATES
         })
 
         HTMLContent += `
+        <div id="current-reading" ${books_list.length === 1 ? `class="single-current"` : '' }>
             <div class="current-reading__container" >
                 <div class="current-reading__scroller" style="width: ${books_list.length * 90}%;">
                     ${booksCards}
                 </div>
-            </div>`
+            </div>
+        </div>`
 
         return HTMLContent; 
     }

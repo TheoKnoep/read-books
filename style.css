@@ -32,6 +32,11 @@ body::-webkit-scrollbar-thumb {
 h1, h2, h3, h4, h5, h6 {
 	margin: 1.2em 0 1em 0; 
 	font-size: 1.4em; 
+
+}
+
+h1, h2 {
+	font-weight: 300;
 }
 
 
@@ -287,10 +292,16 @@ textarea, select, input {
 	box-shadow: 4px 4px 18px rgba(0,0,0,.25);
 	text-decoration: none;
 	position: relative; 
-	background-image: url('images/bg-featured.png');
+	/* background-image: url('images/bg-featured.png'); */
+	/* background-image: url('images/lines-w.png'); */
     background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center right;
+    background-size: 235px;
+    background-position: top right;
+}
+@media screen and (prefers-color-scheme: light) {
+	#current-reading a.current-reading__card {
+		/* background-image: url('images/lines-b.png'); */
+	}
 }
 #current-reading a.current-reading__card img {
 	height: 100%;
@@ -337,8 +348,15 @@ textarea, select, input {
 	
 }
 
-
-
+#current-reading.single-current {
+	padding: 0; 
+}
+#current-reading.single-current h2 {
+	padding: 0 2.5%; 
+}
+#current-reading.single-current .current-reading__scroller {
+	width: 100% !important;
+}
 
 /* Books search results  */
 #search-form {
