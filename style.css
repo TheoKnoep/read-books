@@ -227,6 +227,8 @@ textarea, select, input {
 	height: 180px; 
 	margin-bottom: 2em; 
 	padding: 12px;
+	background-color: var(--accent-bg);
+	border-radius: 5px;
 }
 
 /** Scroll bar style **/
@@ -257,11 +259,15 @@ textarea, select, input {
 	display: flex;
 	align-items: center;
     scroll-snap-align: center;
-	border-radius: 5px;
-	background-color: var(--accent-bg);
+	border-radius: 12px;
+	background-color: var(--bg);
 	box-shadow: 4px 4px 18px rgba(0,0,0,.25);
 	text-decoration: none;
 	position: relative; 
+	background-image: url('images/bg-featured.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center right;
 }
 #current-reading a.current-reading__card img {
 	height: 100%;

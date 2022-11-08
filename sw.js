@@ -19,7 +19,8 @@ self.addEventListener("install", function (event) {
             'manifest.webmanifest', 
             'images/icons/icon_512x512.png',
             'images/icons/icon_maskable.png', 
-            'images/empty-cover.png'
+            'images/empty-cover.png',
+            'images/bg-featured.png'
         ]);
     });
 });
