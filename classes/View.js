@@ -495,10 +495,6 @@ class View {
             } 
         })
 
-        const destroyAllData = () => {
-            new UserChoice('Nuke the data ?', 'Destroy all', 'Cancel').waitFor().then(() => { localStorage.setItem('wishlist', ''); wishlist.books = []; }); 
-        }
-
 
 
     }
