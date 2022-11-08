@@ -265,7 +265,7 @@ class View {
 
         let HTMLContent = `
         <form class="focus" action="" id="search-form" >
-            <input type="text" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
+            <input type="search" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
             <input type="button" name="clear" id="clear" value="×">
             <input type="submit" name="" id="submit-form" value="Chercher">
         </form>
