@@ -457,7 +457,7 @@ class View {
 
                 <h2>Suppression des données :</h2>
                 <p><strong>ATTENTION : opération irréversible ! </strong</p>
-                <button onlick="new UserChoice('Nuke the data ?', 'Destroy all', 'Cancel').waitFor().then(() => { localStorage.setItem('wishlist', ''); wishlist.books = []; }); ">SUPPRIMER TOUTES LES DONNÉES</button>
+                <button onclick="new UserChoice('Nuke the data ?', 'Destroy all', 'Cancel').waitFor().then(() => { localStorage.setItem('wishlist', ''); wishlist.books = []; }); ">SUPPRIMER TOUTES LES DONNÉES</button>
             </div>`; 
 
         CONTAINER.innerHTML = HTMLcontent; 
@@ -494,6 +494,10 @@ class View {
                 new UserChoice(err.toString(), null, "Compris").waitFor();  
             } 
         })
+
+        const destroyAllData = () => {
+            new UserChoice('Nuke the data ?', 'Destroy all', 'Cancel').waitFor().then(() => { localStorage.setItem('wishlist', ''); wishlist.books = []; }); 
+        }
 
 
 
