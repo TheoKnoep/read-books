@@ -265,7 +265,7 @@ textarea, select, input {
 }
 #current-reading a.current-reading__card img {
 	height: 100%;
-	object-fit: contain;
+	object-fit: cover;
 }
 #current-reading a.current-reading__card h3 {
 	margin-left: 1em; 
@@ -277,6 +277,35 @@ textarea, select, input {
 	bottom: 12px; 
 	right: 12px;
 	z-index: 1;
+	animation: gling 6000ms ease infinite both ;
+}
+
+@keyframes gling {
+	0% {
+		transform: rotate(12deg);
+	}
+	2% {
+		transform: rotate(-12deg);
+	}
+	4% {
+		transform: rotate(12deg);
+	}
+	6% {
+		transform: rotate(-12deg);
+	}
+	8% {
+		transform: rotate(12deg);
+	}
+	10% {
+		transform: rotate(-12deg);
+	}
+	11% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(0)
+	}
+	
 }
 
 
