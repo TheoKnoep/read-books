@@ -70,7 +70,6 @@ class View {
         for (let i = 0 ; i < allBooks.length; i++ ) {
             allBooks[i].addEventListener('click', event => {
                 let book_id = allBooks[i].querySelector('.more-actions-button').id.split('id')[1]; 
-                console.log(book_id); 
                 window.location.hash = '#/book/' + book_id; 
                 // allBooks[i].querySelector('.description').classList.toggle('maxheight0'); 
             })
@@ -83,7 +82,6 @@ class View {
                 event.stopPropagation(); 
                 document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
                 let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
-                console.log(book_id); 
                 document.querySelector(`#id${book_id} .openable`).classList.add('opened'); 
             })
         })
@@ -112,10 +110,6 @@ class View {
                             wishlist.remove( book_id ); 
                             new QuickToast('Livre supprimé').display(); 
                             if (wishlist.books.length === 0 ) { this.wish_list(wishlist.books) }
-                        })
-                        .catch(() => {
-                            let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
-                            console.log(book_id); 
                         });
                 } catch(err) {
                     new QuickToast(err).display(); 
@@ -138,8 +132,6 @@ class View {
 
             allShareBtn[i].addEventListener('click', event => {
                 event.stopPropagation(); 
-                console.log(shareData); 
-
                 try {
                     navigator.share(shareData); 
                 } catch(err) {
@@ -185,13 +177,11 @@ class View {
         //parse book ID : 
         let indexOfBook = wishlist.getIndexOfSingleBookByID(book_id); 
 
-        console.log('Requested book :: ', wishlist.books[indexOfBook]); 
-
         const b = wishlist.books[indexOfBook]; 
 
         HTMLContent = `
         <div style="display: flex; ">
-            <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
+            <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="location.href='#/'; "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
             <!-- <p class="message message--warning">🚧 Cette page est en cours de construction</p> -->
         </div>
 
@@ -217,8 +207,8 @@ class View {
                     </div>
                 </div>
                 <div class="custom_section">
-                    <h2>Notes : </h2>
-                    <textarea id="comment_container" placeholder="Vous pouvez ajouter ici des notes personnalisées sur un ouvrage">${b.comment || ''}</textarea>
+                    <h2>Avis : </h2>
+                    <textarea contenteditable="false" id="comment_container" placeholder="Ajoutez des notes personnalisées sur le livre">${b.comment || ''}</textarea>
                 </div>
             </div>
             <button class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
@@ -243,10 +233,6 @@ class View {
             b.comment = txtArea.value; 
             wishlist.saveWishlist();
 
-            console.log(txtArea.scrollHeight); 
-            console.log(txtArea.rows);
-            console.log(txtArea.rows*22); 
-            console.log(txtArea.value.split('\n').length);
             let heightToSet = Math.max(txtArea.value.split('\n').length*22, 72);  
             txtArea.style.height = heightToSet + "px"; 
             
@@ -291,7 +277,7 @@ class View {
 
         if (existing_query) { 
             existing_query = decodeURI(existing_query); 
-            displaySearchResults(existing_query, DEFAULT_RESULTS_NUMBER, true);  
+            displaySearchResults(existing_query, DEFAULT_RESULTS_NUMBER, false);  
             document.querySelector('#query').value = decodeURI(existing_query); 
         }
 
@@ -302,7 +288,7 @@ class View {
             let data = new FormData(document.querySelector('#search-form')); 
             document.querySelector('#query').blur(); // try to hide keyboard on mobile device. Is it working ?
             const query = data.get('query'); 
-            displaySearchResults(query, DEFAULT_RESULTS_NUMBER, true); 
+            displaySearchResults(query, DEFAULT_RESULTS_NUMBER, false); 
             
             let newSearchStep = 1; 
             if (history.state) { newSearchStep = history.state.step + 1 }

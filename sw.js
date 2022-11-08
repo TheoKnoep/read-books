@@ -1,5 +1,5 @@
 /**
- * Last update: 202211071452
+ * Last update: 202211081024
  */
 
 self.addEventListener("install", function (event) {
@@ -18,7 +18,8 @@ self.addEventListener("install", function (event) {
             'scripts/search-book.js',
             'manifest.webmanifest', 
             'images/icons/icon_512x512.png',
-            'images/icons/icon_maskable.png'
+            'images/icons/icon_maskable.png', 
+            'images/empty-cover.png'
         ]);
     });
 });

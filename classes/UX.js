@@ -195,6 +195,7 @@ class UserChoice {
         let html = this.returnTemplate(); 
         this.applyStyle(); 
         document.body.insertAdjacentHTML('afterbegin', html); 
+        document.querySelector(`#popin-${this.id} #cancel-btn`).focus();
         return new Promise((resolve, reject) => {
             if (document.querySelector(`#popin-${this.id} #confirm-btn`)) {
                 document.querySelector(`#popin-${this.id} #confirm-btn`).addEventListener('click', event => {

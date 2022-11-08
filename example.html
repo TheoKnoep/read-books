@@ -77,6 +77,17 @@
 		// getBooksInfosThroughListOfIDs(searchParam.get('import').split(';'))
 		// 	.then(res => console.log('ola', res)) // on reçoit un tableau de JSON pour chaque livre dont on a fourni l'ID
 		// 	.catch(err => console.warn('ERR :: ', err)); 
+
+
+		function removeDuplicates(array) {
+			let output = []; 
+			array.forEach(item => {
+				if (output.indexOf(item) < 0) {
+					output.push(item); 
+				}
+			});
+			return output; 
+		}
 	</script>
 </body>
 </html>
