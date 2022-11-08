@@ -586,6 +586,11 @@ class View {
 
 
 
+
+/* =====================================================================================
+TEMPLATES 
+===================================================================================== */
+
     static template_current_reading() {
         const books_list = wishlist.getAllBooksByStatus('started').sort((a,b) => {
             return (a.started_date - b.started_date); 
@@ -600,7 +605,9 @@ class View {
         const writeCard = (b) => {
             return `
             <a href="#/book/${b.google_id}" id="id${b.google_id}" class="current-reading__card" style="width: calc(${ 100 / books_list.length }% - ${(books_list.length-1) * 12}px); ">
-                <h3>⭐ ${b.title}</h3>
+                <div class="fav-star"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg></div>    
+                <img src="${b.miniature_link}" width="84"/>
+                <h3>${b.title}</h3>
             </a>`
         }
 

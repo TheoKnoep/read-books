@@ -226,10 +226,11 @@ textarea, select, input {
     scroll-snap-type: x mandatory;
 	height: 180px; 
 	margin-bottom: 2em; 
+	padding: 12px;
 }
 
 /** Scroll bar style **/
-#current-reading .current-reading__container::-webkit-scrollbar {
+/* #current-reading .current-reading__container::-webkit-scrollbar {
 	height: 12px;
 	border-radius: 12px;
 }
@@ -241,7 +242,7 @@ textarea, select, input {
 	background-color: #6f6f6f;
 	border-radius: 20px;
 	border: 2px solid #3d3d3d;
-}
+} */
 /** END **/
 
 #current-reading .current-reading__scroller {
@@ -258,8 +259,24 @@ textarea, select, input {
     scroll-snap-align: center;
 	border-radius: 5px;
 	background-color: var(--accent-bg);
-	box-shadow: 2px 2px 12px rgba(0,0,0,.4);
+	box-shadow: 4px 4px 18px rgba(0,0,0,.25);
 	text-decoration: none;
+	position: relative; 
+}
+#current-reading a.current-reading__card img {
+	height: 100%;
+	object-fit: contain;
+}
+#current-reading a.current-reading__card h3 {
+	margin-left: 1em; 
+}
+
+#current-reading a.current-reading__card .fav-star {
+	position: absolute; 
+	font-size: 1.8em;
+	bottom: 12px; 
+	right: 12px;
+	z-index: 1;
 }
 
 
