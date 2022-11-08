@@ -30,7 +30,8 @@ body::-webkit-scrollbar-thumb {
 
 
 h1, h2, h3, h4, h5, h6 {
-	margin: .1em 0; 
+	margin: 2em 0 1em 0; 
+	font-size: 1.4em; 
 }
 
 
@@ -216,6 +217,50 @@ textarea, select, input {
 	font-size: 18px;
 }
 
+
+
+
+
+#current-reading .current-reading__container {
+	overflow-x: auto;
+    scroll-snap-type: x mandatory;
+	height: 180px; 
+	margin-bottom: 2em; 
+}
+
+/** Scroll bar style **/
+#current-reading .current-reading__container::-webkit-scrollbar {
+	height: 12px;
+	border-radius: 12px;
+}
+#current-reading .current-reading__container::-webkit-scrollbar-track {
+	background: #3d3d3d;
+	border-radius: 12px;
+}
+#current-reading .current-reading__container::-webkit-scrollbar-thumb {
+	background-color: #6f6f6f;
+	border-radius: 20px;
+	border: 2px solid #3d3d3d;
+}
+/** END **/
+
+#current-reading .current-reading__scroller {
+    display: flex;
+    flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	height: 92%;
+}
+#current-reading a.current-reading__card {
+	height: 100%;
+	display: flex;
+	align-items: center;
+    scroll-snap-align: center;
+	border-radius: 5px;
+	background-color: var(--accent-bg);
+	box-shadow: 2px 2px 12px rgba(0,0,0,.4);
+	text-decoration: none;
+}
 
 
 

@@ -19,6 +19,7 @@ class View {
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static wish_list(books_list) {
+        books_list = wishlist.getAllBooksByStatus('to-read'); 
         const CONTAINER = document.querySelector('#app-container'); 
         let HTMLcontent = ''; 
         
@@ -30,7 +31,7 @@ class View {
                 <p><a href="#/add" style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path><line x1="12" x2="12" y1="7" y2="13"></line><line x1="15" x2="9" y1="10" y2="10"></line></svg>&nbsp;Ajouter un livre ?</a></p>
             </div>`; 
         } else {
-            let booksList = ''; 
+            let booksList = `<h2>Liste de lecture :</h2>`; 
             for (let i = books_list.length-1; i >= 0; i--) {
                 let dateAdded = books_list[i].added_date ? `<span class="added-date">Ajouté le ${ new Date(books_list[i].added_date).toLocaleDateString() }</span>` : ''; 
                 let flag = books_list[i].language ? `<img width="18" src="images/flags/4x3/${Utils.findFlag(books_list[i].language)}.svg" />` : '' ; 
@@ -56,6 +57,7 @@ class View {
                 booksList += newEntry; 
             }
             HTMLcontent = `
+                <div id="current-reading">${ this.template_current_reading() }</div>
                 <div id="reading-list">
                     ${booksList}
                 </div>`; 
@@ -570,5 +572,50 @@ class View {
         `; 
 
         CONTAINER.innerHTML = TEMPLATE; 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    static template_current_reading() {
+        const books_list = wishlist.getAllBooksByStatus('started').sort((a,b) => {
+            return (a.started_date - b.started_date); 
+        }); 
+
+        if (books_list.length === 0) { return '' }
+
+        console.log(books_list); 
+
+        let HTMLContent = `<h2>Lecture${books_list.length > 1 ? 's' : ''} en cours :</h2>`; 
+
+        const writeCard = (b) => {
+            return `
+            <a href="#/book/${b.google_id}" id="id${b.google_id}" class="current-reading__card" style="width: calc(${ 100 / books_list.length }% - ${(books_list.length-1) * 12}px); ">
+                <h3>⭐ ${b.title}</h3>
+            </a>`
+        }
+
+        let booksCards = ''; 
+        books_list.forEach(book => {
+            booksCards += writeCard(book); 
+        })
+
+        HTMLContent += `
+            <div class="current-reading__container" >
+                <div class="current-reading__scroller" style="width: ${books_list.length * 90}%;">
+                    ${booksCards}
+                </div>
+            </div>`
+
+        return HTMLContent; 
     }
 }
