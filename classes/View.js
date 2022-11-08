@@ -185,11 +185,12 @@ class View {
         <div style="display: flex; ">
             <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="location.href='#/'; "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
             <!-- <p class="message message--warning">🚧 Cette page est en cours de construction</p> -->
+            <h1>${b.title} </h1>
         </div>
 
             <div class="single-book__container" id="id${b.google_id}">
                 <div class="infos_container">
-                    <h1>${b.title} </h1>
+                    
                     <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; "/ >
                     <p class="description-content">${b.description}</p>
                     <div class="meta-container">
@@ -226,8 +227,9 @@ class View {
 
                     
                 </div>
+                <button class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
             </div>
-            <button class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
+            
             
             `; 
 

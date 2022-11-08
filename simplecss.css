@@ -57,7 +57,7 @@
   html {
     /* Set the font globally */
     font-family: var(--sans-font);
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
   }
   
   /* Make the body a nice central block */

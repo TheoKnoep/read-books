@@ -30,7 +30,7 @@ body::-webkit-scrollbar-thumb {
 
 
 h1, h2, h3, h4, h5, h6 {
-	margin: 2em 0 1em 0; 
+	margin: 1.2em 0 1em 0; 
 	font-size: 1.4em; 
 }
 
@@ -188,18 +188,38 @@ textarea, select, input {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Reading list */
 #app-container {
-	width:95%; 
-	max-width: 1280px;
+	width:100%; 
+	max-width: 840px;
 	margin: auto; 
 	margin-top: 0; 
 	z-index: 0;
 }
+#app-container > * {
+	padding: 0 2.5%; 
+}
 #app-container.centered-content {
 	margin-top: auto;
-}
-.reading-list {
 }
 
 .reading-list.empty-list {
@@ -221,7 +241,9 @@ textarea, select, input {
 
 
 
-
+#current-reading {
+	padding-right: 0;
+}
 #current-reading .current-reading__container {
 	overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -229,7 +251,7 @@ textarea, select, input {
 	margin-bottom: 2em; 
 	padding: 12px;
 	background-color: var(--accent-bg);
-	border-radius: 5px;
+	border-radius: 5px 0 0 5px;
 }
 
 /** Scroll bar style **/
