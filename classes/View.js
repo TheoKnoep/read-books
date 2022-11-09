@@ -184,8 +184,6 @@ class View {
 
         const b = wishlist.books[indexOfBook]; 
 
-        console.log(b.owned); 
-
         HTMLContent = `
         <div style="display: flex; ">
             <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="location.href='#/'; "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
@@ -198,7 +196,7 @@ class View {
                     
                     <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; "/ >
                     <div class="owned-checkbox" >
-                        <label for="owned" >Dans votre bibliothèque : </label>
+                        <label class="new-feature" for="owned" >Dans votre bibliothèque : </label>
                         <input type="checkbox" name="owned" id="owned-checkbox" ${b.owned ? 'checked="true"' : ''}  data-book-id="${b.google_id}">
                     </div>
                     <p class="description-content">${b.description}</p>
@@ -304,7 +302,6 @@ class View {
         ownedCheckbox.addEventListener('change', event => {
             const index = wishlist.getIndexOfSingleBookByID(event.target.dataset.bookId); 
             const b = wishlist.books[index]; 
-            console.log(wishlist.getIndexOfSingleBookByID(event.target.dataset.bookId), event.target.checked); 
             if (event.target.checked) {
                 b.changeOwnedInfo(true); 
                 wishlist.saveWishlist(); 
@@ -515,9 +512,9 @@ class View {
                     content: document.getElementById('export-container').textContent, 
                     url: '#/import/ids/' + wishlist.getListOfIDs().join(';')
                 })
-                .catch(err => console.log('Mééé : ', new UserChoice(err.toString(), null, "Compris").waitFor())); 
+                .catch(err => console.log('Oups : ', new UserChoice(err.toString(), null, "Compris").waitFor())); 
             } catch(err) {
-                console.log('Mééé : ', err.toString()); 
+                console.log('Oups : ', err.toString()); 
                 new UserChoice(err.toString(), null, "Compris").waitFor();  
             } 
         })
@@ -634,8 +631,6 @@ TEMPLATES
         const books_list = Utils.shuffleArray(wishlist.getAllBooksByStatus('started')); 
 
         if (books_list.length === 0) { return '' }
-
-        console.log(books_list); 
 
         let HTMLContent = `<h2 class="new-feature">Lecture${books_list.length > 1 ? 's' : ''} en cours :</h2>`; 
 
