@@ -42,8 +42,7 @@ async function displaySearchResults(query, maxResults, onlyThumbnails = false) {
 		if (err.toString().includes('Failed to fetch')) {
 			document.getElementById('search-results').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M8.5 16.5a5 5 0 0 1 7 0"></path><path d="M2 8.82a15 15 0 0 1 4.17-2.65"></path><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"></path><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"></path><path d="M5 13a10 10 0 0 1 5.24-2.76"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>&nbsp;Pas de connexion internet pour effectuer cette recherche<br/><a href="javascript:document.getElementById('submit-form').click();">Réessayer ?</a>`; 
 		} else {
-			new QuickToast('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>&nbsp;' + err.toString(), 6000).display();
-			document.getElementById('search-results').innerHTML = `<p><em>${err.toString()}</em></p>`;
+			document.getElementById('search-results').innerHTML = `<p><em>. . . ${err.toString()}</em></p>`;
 		}
 	}
 }

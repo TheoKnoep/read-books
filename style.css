@@ -382,20 +382,19 @@ main {
 
 /* Books search results  */
 #search-form {
-	scroll-snap-align: start;
+	/* scroll-snap-align: start;
 	display: flex;
     border: solid 1px var(--border);
     border-radius: 5px;
     align-items: center;
-    max-width: 580px;
+    max-width: 580px; */
+	margin-top: 1em; 
 }
-#search-form:focus {
-	outline: 2px red solid; 
-}
+/* 
 #search-form.focus {
 	outline: -webkit-focus-ring-color auto 1px;; 
 }
-#search-form  #query {
+#search-form #query {
 	background: transparent;
     border: none;
 	margin-bottom: 0; 
@@ -404,7 +403,7 @@ main {
 #search-form  #query:focus {
 	outline: none;
 	border: none; 
-}
+} */
 #search-form #clear {
 	background: none;
     color: var(--text);
@@ -414,8 +413,8 @@ main {
 	line-height: 0;
 }
 #search-form #submit-form {
-	width: 92px; 
-	margin:0; 
+	/* width: 92px; 
+	margin:0;  */
 }
 
 

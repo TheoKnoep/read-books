@@ -220,7 +220,7 @@ class View {
                     </div>
                 </div>
                 <div class="reading-status__container">
-                    <label for="reading-status" class="new-feature">Statut de lecture :</label>
+                    <label for="reading-status" class="">Statut de lecture :</label>
                     <select id="reading-status" name="reading-status" data-bookid=${b.google_id}>
                         <option value="to-read" ${b.status === 'to-read' ? 'selected' : '' }>À lire</option>
                         <option value="started" ${b.status === 'started' ? 'selected' : '' }>Commencé</option>
@@ -346,7 +346,7 @@ class View {
         <div>
         <form class="focus" action="" id="search-form" >
             <input type="search" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
-            <input type="button" name="clear" id="clear" value="×">
+            <!-- <input type="button" name="clear" id="clear" value="×"> -->
             <input type="submit" name="" id="submit-form" value="Chercher">
         </form>
         <div id="search-results"></div>
@@ -680,7 +680,7 @@ TEMPLATES
         HTMLContent = `
         
         <div id="current-reading" ${books_list.length === 1 ? `class="single-current"` : '' }>
-            <h2 class="new-feature">Lecture${books_list.length > 1 ? 's' : ''} en cours :</h2>
+            <h2 class="">Lecture${books_list.length > 1 ? 's' : ''} en cours :</h2>
             <div class="current-reading__container" >
                 <div class="current-reading__scroller" style="width: ${books_list.length * 90}%;">
                     ${booksCards}
