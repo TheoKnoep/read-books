@@ -41,4 +41,11 @@ class Utils {
 		
 		return values;
 	}
+
+
+
+	static isVisibleInViewport(elt) {
+		let rect = elt.getBoundingClientRect();
+		return (rect.top < window.innerHeight && rect.bottom > 0); 
+	}
 }

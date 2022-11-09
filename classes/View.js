@@ -157,6 +157,18 @@ class View {
             })
         }
 
+
+        setInterval(() => {
+            let isVisible = Utils.isVisibleInViewport(document.querySelector("#current-reading")); 
+            if (isVisible) {
+                window.scrollTo({
+                    behavior: 'smooth', 
+                    top: 0,
+                    left: 0
+                })
+            }
+        }, 300); 
+
         return 'displayed'; 
     }
 
