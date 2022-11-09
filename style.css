@@ -44,6 +44,25 @@ textarea, select, input {
 	font-size: 16px; 
 }
 
+main {
+	padding-top: 0; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* UTILS */
 .displaynone {
@@ -525,11 +544,32 @@ Book entry :
 	background: var(--accent-bg);
 	padding: 1em;
 	font-variant: small-caps;
+	display: flex;
+	align-items: flex-end;
 }
 
 .single-book__container .owned-checkbox label {
 	display: inline;
 }
+.single-book__container .owned-checkbox label.owned-label {
+	color: var(--accent); 
+}
+.single-book__container .owned-checkbox #owned-checkbox {
+	height: 24px;
+	width: 24px;
+    position: relative;
+    top: 5px;
+	margin-left: 8px;
+}
+.single-book__container .owned-checkbox #owned-checkbox::after {
+	font-size: 38px;
+	top: 4px;
+    left: 8px;
+}
+
+
+
+
 
 .single-book__container .description-content {
 	padding: 1em; 

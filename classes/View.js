@@ -158,16 +158,7 @@ class View {
         }
 
 
-        setInterval(() => {
-            let isVisible = Utils.isVisibleInViewport(document.querySelector("#current-reading")); 
-            if (isVisible) {
-                window.scrollTo({
-                    behavior: 'smooth', 
-                    top: 0,
-                    left: 0
-                })
-            }
-        }, 300); 
+
 
         return 'displayed'; 
     }
@@ -208,7 +199,7 @@ class View {
                     
                     <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; "/ >
                     <div class="owned-checkbox" >
-                        <label class="new-feature" for="owned" >Dans votre bibliothèque : </label>
+                        <label class="${b.owned ? 'owned-label' : ''}" for="owned" >Dans votre bibliothèque&nbsp;: </label>
                         <input type="checkbox" name="owned" id="owned-checkbox" ${b.owned ? 'checked="true"' : ''}  data-book-id="${b.google_id}">
                     </div>
                     <p class="description-content">${b.description}</p>
@@ -317,15 +308,19 @@ class View {
             if (event.target.checked) {
                 b.changeOwnedInfo(true); 
                 wishlist.saveWishlist(); 
-                new QuickToast(`<em>${b.title}</em> ajouté à votre bibliothèque`).display();
+                document.querySelector('.owned-checkbox label').classList.toggle('owned-label')
+                new QuickToast(`<span><em>${b.title}</em> ajouté à votre bibliothèque</span>`).display();
             } else {
                 b.changeOwnedInfo(false); 
                 wishlist.saveWishlist(); 
-                new QuickToast(`<em>${b.title}</em> retiré de votre bibliothèque`).display();
+                document.querySelector('.owned-checkbox label').classList.toggle('owned-label')
+                new QuickToast(`<span><em>${b.title}</em> retiré de votre bibliothèque</span>`).display();
             }
              
         })
-
+        document.querySelector("div.owned-checkbox > label").addEventListener('click', () => {
+            ownedCheckbox.click(); 
+        })
     }
 
 
@@ -636,6 +631,22 @@ class View {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* =====================================================================================
 TEMPLATES 
 ===================================================================================== */
@@ -648,7 +659,7 @@ TEMPLATES
 
         if (books_list.length === 0) { return '' }
 
-        let HTMLContent = `<h2 class="new-feature">Lecture${books_list.length > 1 ? 's' : ''} en cours :</h2>`; 
+        let HTMLContent = ``; 
 
         const writeCard = (b) => {
             return `
@@ -666,8 +677,10 @@ TEMPLATES
             booksCards += writeCard(book); 
         })
 
-        HTMLContent += `
+        HTMLContent = `
+        
         <div id="current-reading" ${books_list.length === 1 ? `class="single-current"` : '' }>
+            <h2 class="new-feature">Lecture${books_list.length > 1 ? 's' : ''} en cours :</h2>
             <div class="current-reading__container" >
                 <div class="current-reading__scroller" style="width: ${books_list.length * 90}%;">
                     ${booksCards}
