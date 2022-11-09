@@ -336,12 +336,14 @@ class View {
         const CONTAINER = document.querySelector('#app-container'); 
 
         let HTMLContent = `
+        <div>
         <form class="focus" action="" id="search-form" >
             <input type="search" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
             <input type="button" name="clear" id="clear" value="×">
             <input type="submit" name="" id="submit-form" value="Chercher">
         </form>
-        <div id="search-results"></div>`; 
+        <div id="search-results"></div>
+        </div>`; 
 
         CONTAINER.innerHTML = HTMLContent; 
 
@@ -549,11 +551,13 @@ class View {
         
 
         let HTMLContent = `
+            <div>
             <p>Méthode d'import : ${method.toUpperCase()}</p>
             ${list ? `<p>IDs list : ${list}</p>` : ''}
 
             <textarea id="import-json" placeholder="Coller ici les données à importer au format JSON"></textarea>
             <button id="import-btn">Importer</button>
+            </div>
             `; 
 
 
