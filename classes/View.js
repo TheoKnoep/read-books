@@ -21,10 +21,13 @@ class View {
     static wish_list(books_list) {
         //sort books by added_date order : 
         books_list = wishlist.getAllBooksByStatus('to-read').sort((a, b) => {
-            return a.added_date - b.added_date; 
+            return b.added_date - a.added_date; 
         }); 
         const CONTAINER = document.querySelector('#app-container'); 
         let HTMLcontent = ''; 
+
+        const owned_icon = `
+            <span style="color: var(--accent);position: relative;top: 6px;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H2v15h7c1.7 0 3 1.3 3 3V7c0-2.2-1.8-4-4-4Z"></path><path d="m16 12 2 2 4-4"></path><path d="M22 6V3h-6c-2.2 0-4 1.8-4 4v14c0-1.7 1.3-3 3-3h7v-2.3"></path></svg></span>`; 
         
 
         if (books_list.length === 0) {
@@ -35,11 +38,11 @@ class View {
             </div>`; 
         } else {
             let booksList = `<h2>Liste de lecture :</h2>`; 
-            for (let i = books_list.length-1; i >= 0; i--) {
+            for (let i in books_list) {
                 let dateAdded = books_list[i].added_date ? `<span class="added-date">Ajouté le ${ new Date(books_list[i].added_date).toLocaleDateString() }</span>` : ''; 
                 let flag = books_list[i].language ? `<img width="18" src="images/flags/4x3/${Utils.findFlag(books_list[i].language)}.svg" />` : '' ; 
     
-                let newEntry = `    <article class="book-entry" id="entry-${books_list.length-i}">
+                let newEntry = `    <article class="book-entry" id="entry-${i}">
                                         <div><img class="cover-miniature" width="80" src="${books_list[i].miniature_link}"></div>	
                                         <div class="info-container">
                                             <h3 class="title">${books_list[i].title}</h3>
@@ -47,6 +50,7 @@ class View {
                                             <p class="description maxheight0">${books_list[i].description}</p>
                                             <p class="publisher"><strong>${books_list[i].publisher}</strong></p>
                                             ${ dateAdded }
+                                            ${books_list[i].owned ? owned_icon + ' ' : ''}
                                         </div>
                                         <div class="more-actions-button" id="id${books_list[i].google_id}">
                                             <div class="visible"> ⁝ </div>
