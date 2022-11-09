@@ -88,6 +88,7 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 					'to-read', // status, 
 					null, // started_date, 
 					null, // finished_date
+					false // owned
 				))
 			}
 			if (resultsBooks.length >= maxResults) { break; }
@@ -113,6 +114,7 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 					'to-read', // status, 
 					null, // started_date, 
 					null, // finished_date
+					false // owned
 			))
 		}
 	}

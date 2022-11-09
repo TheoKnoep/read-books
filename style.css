@@ -521,6 +521,16 @@ Book entry :
 	max-width: 920px; 
 }
 
+.single-book__container .owned-checkbox {
+	background: var(--accent-bg);
+	padding: 1em;
+	font-variant: small-caps;
+}
+
+.single-book__container .owned-checkbox label {
+	display: inline;
+}
+
 .single-book__container .description-content {
 	padding: 1em; 
 	font-size: 16px;

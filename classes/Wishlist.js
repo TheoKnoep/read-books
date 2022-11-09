@@ -27,7 +27,8 @@ class Wishlist {
 				book.added_date, 
 				book.status, 
 				book.started_date, 
-				book.finished_date
+				book.finished_date, 
+				book.owned
 			); 
 			output.push(newBook); 
 		})
@@ -176,7 +177,8 @@ class Wishlist {
 				book.added_date, 
 				book.status, 
 				book.started_date, 
-				book.finished_date
+				book.finished_date, 
+				book.owned
 			); 
 			this.add(newBook); 
 		})

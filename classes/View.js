@@ -19,7 +19,10 @@ class View {
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     static wish_list(books_list) {
-        books_list = wishlist.getAllBooksByStatus('to-read'); 
+        //sort books by added_date order : 
+        books_list = wishlist.getAllBooksByStatus('to-read').sort((a, b) => {
+            return a.added_date - b.added_date; 
+        }); 
         const CONTAINER = document.querySelector('#app-container'); 
         let HTMLcontent = ''; 
         
@@ -181,6 +184,8 @@ class View {
 
         const b = wishlist.books[indexOfBook]; 
 
+        console.log(b.owned); 
+
         HTMLContent = `
         <div style="display: flex; ">
             <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="location.href='#/'; "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
@@ -192,6 +197,10 @@ class View {
                 <div class="infos_container">
                     
                     <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; "/ >
+                    <div class="owned-checkbox" >
+                        <label for="owned" >Dans votre bibliothèque : </label>
+                        <input type="checkbox" name="owned" id="owned-checkbox" ${b.owned ? 'checked="true"' : ''}  data-book-id="${b.google_id}">
+                    </div>
                     <p class="description-content">${b.description}</p>
                     <div class="meta-container">
                         <div class="column">
@@ -288,6 +297,24 @@ class View {
                 document.querySelector('.status-log .finished').innerHTML = `<p>Terminé le ${new Date(b.finished_date).toLocaleDateString() }</p>`; 
                 new QuickToast('Statut de lecture mis à jour').display(); 
             }
+        })
+
+        // Add book to personnal shelve : 
+        const ownedCheckbox = document.querySelector('#owned-checkbox'); 
+        ownedCheckbox.addEventListener('change', event => {
+            const index = wishlist.getIndexOfSingleBookByID(event.target.dataset.bookId); 
+            const b = wishlist.books[index]; 
+            console.log(wishlist.getIndexOfSingleBookByID(event.target.dataset.bookId), event.target.checked); 
+            if (event.target.checked) {
+                b.changeOwnedInfo(true); 
+                wishlist.saveWishlist(); 
+                new QuickToast(`<em>${b.title}</em> ajouté à votre bibliothèque`).display();
+            } else {
+                b.changeOwnedInfo(false); 
+                wishlist.saveWishlist(); 
+                new QuickToast(`<em>${b.title}</em> retiré de votre bibliothèque`).display();
+            }
+             
         })
 
     }

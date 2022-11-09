@@ -1,5 +1,5 @@
 class Book {
-	constructor(title, author, publisher, description, miniature_link, isbn, rate, comment, format, google_id, series, series_number, language, added_date, status, started_date, finished_date) {
+	constructor(title, author, publisher, description, miniature_link, isbn, rate, comment, format, google_id, series, series_number, language, added_date, status, started_date, finished_date, owned) {
 		this.title = title; 
 		this.author = author; 
 		this.publisher = publisher; 
@@ -17,6 +17,7 @@ class Book {
 		this.status = this.verifyStatus(status); // "to-read", "started" or "finished"
 		this.started_date = started_date; 
 		this.finished_date = finished_date; 
+		this.owned = owned; 
 	}
 
 
@@ -66,5 +67,14 @@ class Book {
 		this.status = 'to-read';
 		this.started_date = null;
 		this.finished_date = null;  
+	}
+
+	changeOwnedInfo(bool) {
+		if (!typeof bool === "boolean") { throw new Error('Invalid paramter format :: requires Boolean') }
+		if (bool) {
+			this.owned = true; 
+		} else {
+			this.owned = false; 
+		}
 	}
 }
