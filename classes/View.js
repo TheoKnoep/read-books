@@ -227,8 +227,8 @@ VIEWS
                         <option value="finished" ${b.status === 'finished' ? 'selected' : '' }>Terminé</option>
                     </select>
                     <div class="status-log">
-                        <div class="started">${b.started_date ? `<p>Commencé le ${new Date(b.started_date).toLocaleDateString() }</p>` : '' }</div>
-                        <div class="finished">${b.finished_date ? `<p>Terminé le ${new Date(b.finished_date).toLocaleDateString() }</p>` : '' }</div>
+                        <div class="started">${b.started_date ? `<p>Commencé le <span id="started_date--info">${new Date(b.started_date).toLocaleDateString() }</span><button class="edit-date" data-book-id="${b.google_id}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><line x1="18" y1="2" x2="22" y2="6"></line><path d="M7.5 20.5 19 9l-4-4L3.5 16.5 2 22z"></path></svg></button></p>` : '' }</div>
+                        <div class="finished">${b.finished_date ? `<p>Terminé le <span id="finished_date--info">${new Date(b.finished_date).toLocaleDateString() }</span><button class="edit-date" data-book-id="${b.google_id}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><line x1="18" y1="2" x2="22" y2="6"></line><path d="M7.5 20.5 19 9l-4-4L3.5 16.5 2 22z"></path></svg></button></p>` : '' }</div>
                     </div>
                 </div>
                 <div class="custom_section">
@@ -320,6 +320,35 @@ VIEWS
         })
         document.querySelector("div.owned-checkbox > label").addEventListener('click', () => {
             ownedCheckbox.click(); 
+        })
+
+
+        // Edit dates 
+        const allBtnEditDate = document.querySelectorAll('button.edit-date'); 
+        console.log(allBtnEditDate); 
+        allBtnEditDate.forEach(btn => {
+            btn.addEventListener('click', event => {
+                console.log(event.currentTarget.previousSibling); 
+                let spanToChange = event.currentTarget.previousSibling; 
+                let action = event.currentTarget.previousSibling.id.split('--')[0]; 
+                console.log(action); 
+                console.log(event.currentTarget.dataset.bookId); 
+                let indexToChange = wishlist.getIndexOfSingleBookByID(event.currentTarget.dataset.bookId); 
+                let bookToChange = wishlist.books[indexToChange]; 
+                console.log(wishlist.books[indexToChange]); 
+                new UserChoice('Mettre la date à jour : ', "Valider", "Annuler", true).waitFor()
+                    .then(res => {
+                        console.log(res); 
+                        if (res === '') { throw new Error('Undefined date') }
+                        spanToChange.textContent = new Date(res).toLocaleDateString(); 
+                        console.log(bookToChange[action]); 
+                        bookToChange[action] = new Date(res).getTime(); 
+                        wishlist.saveWishlist(); 
+                    })
+                    .catch(err => {
+                        console.log(err); 
+                    }); 
+            })
         })
     }
 

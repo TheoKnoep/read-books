@@ -122,11 +122,12 @@ class MoreActions {
 
 
 class UserChoice {
-    constructor(message = "Voulez-vous continuer ?", confirm = null, cancel = null) {
+    constructor(message = "Voulez-vous continuer ?", confirm = null, cancel = null, input = null) {
         this.id = this.createHash();  
         this.message = message; 
         this.confirm = confirm; 
         this.cancel = cancel; 
+        this.input = input; 
     }
 
     applyStyle() {
@@ -181,7 +182,8 @@ class UserChoice {
         return `
         <div id="popin-${this.id}" class="user-choice-popin" >
             <div class="popin-content">
-                <p class="message__container">${this.message}</p>
+                <p class="message__container" id="choice-text">${this.message}</p>
+                ${this.input ? `<input type="date" id="date" >` : '' }
                 <div class="btn-container">
                     ${ this.cancel ? `<button id="cancel-btn">${this.cancel}</button>` : ''}
                     ${ this.confirm ? `<button id="confirm-btn">${this.confirm}</button>` : ''}
@@ -199,9 +201,13 @@ class UserChoice {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`#popin-${this.id} #confirm-btn`)) {
                 document.querySelector(`#popin-${this.id} #confirm-btn`).addEventListener('click', event => {
+                    let response = ''; 
+                    if(document.getElementById('date')) { response = document.getElementById('date').value }; 
+                    
                     document.querySelector(`#popin-${this.id}`).remove(); 
                     document.querySelector(`#style-for-${this.id}`).remove(); 
-                    resolve(); 
+                    
+                    resolve(response); 
                 })
             }
             if (document.querySelector(`#popin-${this.id} #cancel-btn`)) {

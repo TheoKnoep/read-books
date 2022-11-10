@@ -44,7 +44,8 @@
 
 	<footer class="footer">
 		<button id="open-search-btn" class="main-button" onclick="toggleAddButton(this)">+</button>
-		<a href="#/about">À propos</a>
+		<a href="#/about">À propos</a>&nbsp;&nbsp;|&nbsp;
+		<a href="#/finished">Archives</a>
 	</footer>
 
 	
@@ -69,7 +70,7 @@
 
 		function RouteRequest() {
 			let route = window.location.hash.split('/'); 
-			console.log(route); 
+			// console.log(route); 
 
 			if (route[0] !== '#') {
 				View.display_list(wishlist.books.filter(item => { return item.status === 'finished'}), "Livres terminés");

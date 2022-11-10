@@ -685,6 +685,12 @@ Book entry :
 	font-style: italic;
 }
 
+.reading-status__container .edit-date {
+	background-color: transparent;
+	color: var(--text-light); 
+	padding: 0 1em; 
+}
+
 
 
 
