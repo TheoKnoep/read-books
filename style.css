@@ -626,6 +626,44 @@ Book entry :
 }
 
 
+.single-book__container .purchase-link {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2em 0;
+    border-radius: 100px;
+}
+
+
+.single-book__container .purchase-icon {
+	background: var(--accent-bg);
+    border-radius: 100px;
+    padding: 4px;
+    display: block;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    margin-right: -49px;
+    height: 48px;
+    align-items: center;
+    color: var(--accent);
+	z-index: 1;
+}
+
+.single-book__container .button {
+	border: solid 1px var(--accent-bg);
+    border-radius: 100px;
+    border-left: none;
+    padding: 12px;
+    padding-left: 63px;
+	text-decoration: none;
+	transition: background-color ease 240ms; 
+}
+.single-book__container .button:hover {
+	background-color: var(--code); 
+	color: var(--text);
+}
+
 
 
 .reading-status__container {

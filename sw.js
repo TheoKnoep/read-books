@@ -1,5 +1,5 @@
 /**
- * Last update: 202211091055
+ * Last update: 202211091838
  */
 
 self.addEventListener("install", function (event) {
@@ -20,7 +20,9 @@ self.addEventListener("install", function (event) {
             'images/icons/icon_512x512.png',
             'images/icons/icon_maskable.png', 
             'images/empty-cover.png',
-            'images/bg-featured.png'
+            'images/bg-featured.png', 
+            'images/bg-grain-l.png', 
+            'images/bg-grain-d.png'
         ]);
     });
 });

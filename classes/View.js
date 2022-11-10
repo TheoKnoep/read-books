@@ -179,11 +179,18 @@ VIEWS
 
         const b = wishlist.books[indexOfBook]; 
 
+        let purchase_link = ''; 
+        if (!b.owned) {
+            purchase_link = `<div class="purchase-link">
+                <span class="purchase-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg></span>
+                <a class="button" href="https://www.placedeslibraires.fr/livre/${b.isbn}" target="_blank">Acheter le livre</a>
+            </div>`; 
+        }
+
         HTMLContent = `
         <div style="display: flex; ">
             <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
-            <!-- <p class="message message--warning">🚧 Cette page est en cours de construction</p> -->
-            <h1>${b.title} </h1>
+            <h1>${b.title}</h1>
         </div>
 
             <div class="single-book__container" id="id${b.google_id}">
@@ -210,6 +217,7 @@ VIEWS
                             </ul>
                         </div>
                     </div>
+                    ${ purchase_link }
                 </div>
                 <div class="reading-status__container">
                     <label for="reading-status" class="">Statut de lecture :</label>
