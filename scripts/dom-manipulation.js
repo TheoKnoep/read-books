@@ -47,12 +47,15 @@ window.addEventListener('hashchange', applyRightBtnStyle);
 window.addEventListener('scroll', modifyPositionOfMainButton); 
 
 function modifyPositionOfMainButton() {
-	const btn = document.querySelector('#open-search-btn'); 
+	const btn = document.querySelector('#open-search-btn');
+	const header = document.querySelector('header');  
 	let ascending = this.oldScroll > this.scrollY;
 	if (ascending) {
 		btn.style.bottom = '.6em'; 
+		header.style.transform = `translateY(0px)`;
 	} else {
 		btn.style.bottom = '-2.6em'; 
+		header.style.transform = `translateY(-${header.offsetHeight}px)`;
 	}
 	this.oldScroll = this.scrollY;
 }

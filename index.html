@@ -63,39 +63,51 @@
 
 
 	<script>
-		// # Router 
+		// # Router =======================================
 		window.addEventListener('load', RouteRequest); 
 		window.addEventListener('hashchange', RouteRequest); 
 
 		function RouteRequest() {
 			let route = window.location.hash.split('/'); 
+			console.log(route); 
 
-			switch (route[1]) {
-				case '':
-					View.wish_list(wishlist.books); 
-					break; 
-				case 'wishlist':
-					View.wish_list(wishlist.getAllBooksByStatus('to-read')); 
-					break; 
-				case 'reading':
-					View.wish_list(wishlist.getAllBooksByStatus('started')); 
-					break; 
-				case 'book':
-					View.single_book(route[2]); 
-					break; 
-				case 'add': 
-					View.search_form(route[2]); 
-					break; 
-				case 'about': 
-					View.about(); 
-					break; 
-				case 'import': 
-					View.import(route[2], route[3]); 
-					break; 
-				default: 
-					console.log('route non trouvée'); 
-					View.not_found(); 
-			} 
+			if (route[0] !== '#') {
+				View.display_list(wishlist.books.filter(item => { return item.status === 'finished'}), "Livres terminés");
+				return; 
+			}
+			try {
+				switch (route[1]) {
+					case '':
+						View.home(true); 
+						break; 
+					case 'wishlist':
+						View.display_list(wishlist.getAllBooksByStatus('to-read'), 'À lire'); 
+						break; 
+					case 'reading':
+						View.display_list(wishlist.getAllBooksByStatus('started'), 'En cours de lecture'); 
+						break; 
+					case 'finished':
+						View.display_list(wishlist.getAllBooksByStatus('finished'), 'Livres terminés'); 
+						break; 
+					case 'book':
+						View.single_book(route[2]); 
+						break; 
+					case 'add': 
+						View.search_form(route[2]); 
+						break; 
+					case 'about': 
+						View.about(); 
+						break; 
+					case 'import': 
+						View.import(route[2], route[3]); 
+						break; 
+					default: 
+						throw new Error('route non trouvée');
+				} 
+			} catch(err) {
+				console.log('errrrrrrrr', err); 
+				View.not_found(err.toString());
+			}
 		}
 
 

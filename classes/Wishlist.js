@@ -93,6 +93,7 @@ class Wishlist {
 	}
 
 	static empty() {
+		this.books = []; 
 		localStorage.setItem('wishlist', ''); 
 	}
 
@@ -143,7 +144,8 @@ class Wishlist {
 				'added_date' in book &&
 				'status' in book &&
 				'started_date' in book &&
-				'finished_date' in book
+				'finished_date' in book && 
+				'owned' in book
 			) {
 				// all keys are ok : continue
 			} else {
@@ -183,4 +185,13 @@ class Wishlist {
 			this.add(newBook); 
 		})
 	}
+
+
+
+
+
+
+
+
+	
 }

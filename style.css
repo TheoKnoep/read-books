@@ -170,6 +170,7 @@ main {
 	z-index: 1;
 	padding: .2em;
 	text-align: left;
+	transition: all ease 140ms;
 }
 .header a {
 	color: var(--text); 

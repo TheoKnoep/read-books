@@ -11,161 +11,136 @@ class View {
         }
     }
 
+/* 
+- les méthode de type 'template' retournent du HTML brut 
+- les méthode de type 'events_handler' gèrent les événements liés au HTML générés dans les 'templates'
+- les méthodes autre gèrent assemblent les 'templates' et les 'events_handlers' pour retourner une vue interactive au router
+
+(les templates et event_handlers interviennet s'il y a besoin de factoriser du code réutilisé dans plusieurs views); 
+*/
 
 
 
 
-
-
+/* ===================================================================================================
+VIEWS
+=================================================================================================== */
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-    static wish_list(books_list) {
-        //sort books by added_date order : 
-        books_list = wishlist.getAllBooksByStatus('to-read').sort((a, b) => {
-            return b.added_date - a.added_date; 
-        }); 
-        const CONTAINER = document.querySelector('#app-container'); 
-        let HTMLcontent = ''; 
+    static home(order) {
 
-        const owned_icon = `
-            <span style="color: var(--accent);position: relative;top: 6px;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H2v15h7c1.7 0 3 1.3 3 3V7c0-2.2-1.8-4-4-4Z"></path><path d="m16 12 2 2 4-4"></path><path d="M22 6V3h-6c-2.2 0-4 1.8-4 4v14c0-1.7 1.3-3 3-3h7v-2.3"></path></svg></span>`; 
-        
-
-        if (books_list.length === 0) {
-            HTMLcontent = `<div class="reading-list empty-list">
-                <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path><path d="m12 13-1-1 2-2-3-2.5 2.77-2.92"></path></svg>&nbsp;Rien à lire !</h2>
-                <p><em>Il semblerait que votre liste est vide&hellip;</em></p>
-                <p><a href="#/add" style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path><line x1="12" x2="12" y1="7" y2="13"></line><line x1="15" x2="9" y1="10" y2="10"></line></svg>&nbsp;Ajouter un livre ?</a></p>
-            </div>`; 
-        } else {
-            let booksList = `<h2>Liste de lecture :</h2>`; 
-            for (let i in books_list) {
-                let dateAdded = books_list[i].added_date ? `<span class="added-date">Ajouté le ${ new Date(books_list[i].added_date).toLocaleDateString() }</span>` : ''; 
-                let flag = books_list[i].language ? `<img width="18" src="images/flags/4x3/${Utils.findFlag(books_list[i].language)}.svg" />` : '' ; 
-    
-                let newEntry = `    <article class="book-entry" id="entry-${i}">
-                                        <div><img class="cover-miniature" width="80" src="${books_list[i].miniature_link}"></div>	
-                                        <div class="info-container">
-                                            <h3 class="title">${books_list[i].title}</h3>
-                                            <h4 class="author">${books_list[i].author}</h4>
-                                            <p class="description maxheight0">${books_list[i].description}</p>
-                                            <p class="publisher"><strong>${books_list[i].publisher}</strong></p>
-                                            ${ dateAdded }
-                                            ${books_list[i].owned ? owned_icon + ' ' : ''}
-                                        </div>
-                                        <div class="more-actions-button" id="id${books_list[i].google_id}">
-                                            <div class="visible"> ⁝ </div>
-                                            <div class="openable">
-                                                <button class="details-btn">Détails</button>
-                                                <button class="share-btn">Partager</button>
-                                                <button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>&nbsp;Supprimer</button>
-                                            </div>
-                                        </div>
-                                    </article>`; 
-                booksList += newEntry; 
-            }
-            HTMLcontent = `
-                ${ this.template_current_reading() }
-                <div id="reading-list">
-                    ${booksList}
-                </div>`; 
+        let sort_order = order; 
+        const sort_by_date = (arr) => {
+            arr.sort((a, b) => {
+                if (sort_order) {
+                    return b.added_date - a.added_date; 
+                } else {
+                    return a.added_date - b.added_date; 
+                } 
+            }); 
         }
 
+        const next_reading = wishlist.getAllBooksByStatus('to-read').filter(item => { return item.owned }); 
+        const wish_list = wishlist.getAllBooksByStatus('to-read').filter(item => { return !item.owned });; 
+
+        sort_by_date(next_reading); 
+        sort_by_date(wish_list); 
+
+        const CONTAINER = document.querySelector('#app-container'); 
+
+
+        let HTMLcontent = `
+        ${ this.template_current_reading() }
+        ${ this.template_list(next_reading, 'next-reading', 'Prochaines lectures') }
+        ${ wish_list.length ? this.template_list(wish_list, 'wish-list', 'Liste d\'achat') : '' }`; 
         
 
         CONTAINER.innerHTML = HTMLcontent; 
 
-        // Handle view description : 
-        const allBooks = document.querySelectorAll('#reading-list .book-entry'); 
-        for (let i = 0 ; i < allBooks.length; i++ ) {
-            allBooks[i].addEventListener('click', event => {
-                let book_id = allBooks[i].querySelector('.more-actions-button').id.split('id')[1]; 
-                window.location.hash = '#/book/' + book_id; 
-                // allBooks[i].querySelector('.description').classList.toggle('maxheight0'); 
-            })
-        }
+    
 
-        // Handle More Action Button
-        const allMoreActionsBtn = document.querySelectorAll('#reading-list .book-entry .more-actions-button'); 
-        allMoreActionsBtn.forEach(btn => {
-            btn.addEventListener('click', event => {
-                event.stopPropagation(); 
-                document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
-                let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
-                document.querySelector(`#id${book_id} .openable`).classList.add('opened'); 
-            })
-        })
-        window.addEventListener('click', event => {
-            try {
-                let elt_to_create = Utils.getParentOfClass(event.target, 'openable') ; 
-            } catch {
-                event.stopPropagation(); 
-                document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
-            }
-            
-        })
+        this.list_events_handler(); 
+    }
 
 
 
-        // Handle DELETE : 
-        const allDeleteBtn = document.querySelectorAll('#reading-list .book-entry button.delete-btn');
-        for (let i = 0 ; i < allDeleteBtn.length; i++ ) {
-            allDeleteBtn[i].addEventListener('click', event => {
-                event.stopPropagation(); 
-                try {
-                    new UserChoice('Supprimer le livre de votre liste ? <br/>Cette action est irréversible', "Supprimer", "Annuler").waitFor()
-                        .then(() => {
-                            let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ;  
-                            Utils.getParentOfClass(event.target, 'book-entry').remove(); 
-                            wishlist.remove( book_id ); 
-                            new QuickToast('Livre supprimé').display(); 
-                            if (wishlist.books.length === 0 ) { this.wish_list(wishlist.books) }
-                        });
-                } catch(err) {
-                    new QuickToast(err).display(); 
-                }
-                
-            })
-        }
-
-        // Handle SHARE : see : https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API 
-        const allShareBtn = document.querySelectorAll('#reading-list .book-entry button.share-btn');
-        for (let i = 0 ; i < allShareBtn.length; i++ ) {
-            //get parent element book entry : 
-            let parentBookEntry = Utils.getParentOfClass(allShareBtn[i], "book-entry"); 
-
-            const shareData = {
-                title: "Livre : " + parentBookEntry.querySelector('.title').textContent, 
-                content: parentBookEntry.querySelector('.description').textContent.substring(0, 250) + '…',
-                url: "https://theoknoep.github.io/read-books/#/add/" + parentBookEntry.querySelector('.more-actions-button').id.split('id')[1]
-            }
-
-            allShareBtn[i].addEventListener('click', event => {
-                event.stopPropagation(); 
-                try {
-                    navigator.share(shareData); 
-                } catch(err) {
-                    new UserChoice(err, null, "OK").waitFor();  
-                } 
-            })
-        }
 
 
-        // Handle DETAILS 
-        const allDetailsBtn = document.querySelectorAll('#reading-list .book-entry button.details-btn');
-        for (let i = 0 ; i < allDetailsBtn.length; i++ ) {
-            allDetailsBtn[i].addEventListener('click', event => {
-                event.stopPropagation(); 
-                // new UserChoice('🚧 Cette action n\'est pas encore disponible', null, "OK").waitFor();  
-                let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
-                window.location.hash = '#/book/' +  book_id; 
-            })
-        }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    static display_list(books_list, list_name) {
+        //sort books by added_date order : 
+        const CONTAINER = document.querySelector('#app-container'); 
+        let HTMLcontent = ''; 
+
+
+        HTMLcontent = this.template_list(books_list, list_name); 
+
+        CONTAINER.innerHTML = HTMLcontent; 
+
+        
+        this.list_events_handler(); 
 
 
         return 'displayed'; 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -193,7 +168,7 @@ class View {
 
         HTMLContent = `
         <div style="display: flex; ">
-            <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="location.href='#/'; "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
+            <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
             <!-- <p class="message message--warning">🚧 Cette page est en cours de construction</p> -->
             <h1>${b.title} </h1>
         </div>
@@ -350,7 +325,6 @@ class View {
         <div>
         <form class="focus" action="" id="search-form" >
             <input type="search" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
-            <!-- <input type="button" name="clear" id="clear" value="×"> -->
             <input type="submit" name="" id="submit-form" value="Chercher">
         </form>
         <div id="search-results"></div>
@@ -388,10 +362,7 @@ class View {
             document.querySelector('#search-form').classList.remove('focus'); 
         })
 
-        document.querySelector('#clear').addEventListener('click', event => {
-            document.querySelector('#query').value = ''; 
-            document.querySelector('#query').focus();
-        })
+
     }
 
 
@@ -610,17 +581,23 @@ class View {
 
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-    static not_found() {
+    static not_found(message = null) {
         const CONTAINER = document.querySelector('#app-container'); 
         
         const TEMPLATE = 
         `<h1>Holy 404 of God</h1>
         <p>Rien n'a été trouvé avec le chemin de l'url que vous avez demandé ¯\\_(ツ)_/¯</p>
-        <a href="#/">Ramenez-moi</a>🙏
+        <a href="#/">Ramenez-moi</a><span>🙏</span>
+
+        ${message ? `<pre>${message}</pre>`: '' }
         `; 
 
         CONTAINER.innerHTML = TEMPLATE; 
     }
+
+
+
+
 
 
 
@@ -694,4 +671,173 @@ TEMPLATES
 
         return HTMLContent; 
     }
+
+
+
+    static template_list(list, id, list_name) {
+        let HTMLcontent = ''; 
+
+        let books_list = list; 
+
+        const owned_icon = `
+            <span style="color: var(--accent);position: relative;top: 6px;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H2v15h7c1.7 0 3 1.3 3 3V7c0-2.2-1.8-4-4-4Z"></path><path d="m16 12 2 2 4-4"></path><path d="M22 6V3h-6c-2.2 0-4 1.8-4 4v14c0-1.7 1.3-3 3-3h7v-2.3"></path></svg></span>`; 
+        
+
+        if (books_list.length === 0) {
+            HTMLcontent = `<div class="reading-list empty-list">
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path><path d="m12 13-1-1 2-2-3-2.5 2.77-2.92"></path></svg>&nbsp;${list_name}&nbsp;: rien à afficher !</h2>
+                <p><em>Il semblerait que votre liste est vide&hellip;</em></p>
+                <p><a href="#/add" style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path><line x1="12" x2="12" y1="7" y2="13"></line><line x1="15" x2="9" y1="10" y2="10"></line></svg>&nbsp;Ajouter un livre ?</a></p>
+            </div>`; 
+        } else {
+            let booksList = `<h2>${list_name} :</h2>`; 
+            for (let i in books_list) {
+                let dateAdded = books_list[i].added_date ? `<span class="added-date">Ajouté le ${ new Date(books_list[i].added_date).toLocaleDateString() }</span>` : ''; 
+                let flag = books_list[i].language ? `<img width="18" src="images/flags/4x3/${Utils.findFlag(books_list[i].language)}.svg" />` : '' ; 
+    
+                let newEntry = `    <article class="book-entry" id="entry-${i}">
+                                        <div><img class="cover-miniature" width="80" src="${books_list[i].miniature_link}"></div>	
+                                        <div class="info-container">
+                                            <h3 class="title">${books_list[i].title}</h3>
+                                            <h4 class="author">${books_list[i].author}</h4>
+                                            <p class="description maxheight0">${books_list[i].description}</p>
+                                            <p class="publisher"><strong>${books_list[i].publisher}</strong></p>
+                                            ${books_list[i].owned ? owned_icon + ' ' : ''}
+                                            ${ dateAdded }
+                                            
+                                        </div>
+                                        <div class="more-actions-button" id="id${books_list[i].google_id}">
+                                            <div class="visible"> ⁝ </div>
+                                            <div class="openable">
+                                                <button class="details-btn">Détails</button>
+                                                <button class="share-btn">Partager</button>
+                                                <button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>&nbsp;Supprimer</button>
+                                            </div>
+                                        </div>
+                                    </article>`; 
+                booksList += newEntry; 
+            }
+            HTMLcontent = `
+                <div id="${id}" class="reading-list"> 
+                    ${booksList}
+                </div>`; 
+        }
+
+        
+
+        return HTMLcontent; 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===================================================================================================
+EVENTS HANDLERS
+=================================================================================================== */
+ static list_events_handler() {
+    // Handle view description : 
+    const allBooks = document.querySelectorAll('.reading-list .book-entry'); 
+    for (let i = 0 ; i < allBooks.length; i++ ) {
+        allBooks[i].addEventListener('click', event => {
+            let book_id = allBooks[i].querySelector('.more-actions-button').id.split('id')[1]; 
+            window.location.hash = '#/book/' + book_id; 
+            // allBooks[i].querySelector('.description').classList.toggle('maxheight0'); 
+        })
+    }
+
+    // Handle More Action Button
+    const allMoreActionsBtn = document.querySelectorAll('.reading-list .book-entry .more-actions-button'); 
+    allMoreActionsBtn.forEach(btn => {
+        btn.addEventListener('click', event => {
+            event.stopPropagation(); 
+            document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
+            let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
+            document.querySelector(`#id${book_id} .openable`).classList.add('opened'); 
+        })
+    })
+    window.addEventListener('click', event => {
+        try {
+            let elt_to_create = Utils.getParentOfClass(event.target, 'openable') ; 
+        } catch {
+            event.stopPropagation(); 
+            document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
+        }
+        
+    })
+
+
+
+    // Handle DELETE : 
+    const allDeleteBtn = document.querySelectorAll('.reading-list .book-entry button.delete-btn');
+    for (let i = 0 ; i < allDeleteBtn.length; i++ ) {
+        allDeleteBtn[i].addEventListener('click', event => {
+            event.stopPropagation(); 
+            try {
+                new UserChoice('Supprimer le livre de votre liste ? <br/>Cette action est irréversible', "Supprimer", "Annuler").waitFor()
+                    .then(() => {
+                        let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ;  
+                        Utils.getParentOfClass(event.target, 'book-entry').remove(); 
+                        wishlist.remove( book_id ); 
+                        new QuickToast('Livre supprimé').display(); 
+                        if (wishlist.books.length === 0 ) { this.wish_list(wishlist.books) }
+                    });
+            } catch(err) {
+                new QuickToast(err).display(); 
+            }
+            
+        })
+    }
+
+    // Handle SHARE : see : https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API 
+    const allShareBtn = document.querySelectorAll('.reading-list .book-entry button.share-btn');
+    for (let i = 0 ; i < allShareBtn.length; i++ ) {
+        //get parent element book entry : 
+        let parentBookEntry = Utils.getParentOfClass(allShareBtn[i], "book-entry"); 
+
+        const shareData = {
+            title: "Livre : " + parentBookEntry.querySelector('.title').textContent, 
+            content: parentBookEntry.querySelector('.description').textContent.substring(0, 250) + '…',
+            url: "https://theoknoep.github.io/read-books/#/add/" + parentBookEntry.querySelector('.more-actions-button').id.split('id')[1]
+        }
+
+        allShareBtn[i].addEventListener('click', event => {
+            event.stopPropagation(); 
+            try {
+                navigator.share(shareData); 
+            } catch(err) {
+                new UserChoice(err, null, "OK").waitFor();  
+            } 
+        })
+    }
+
+
+    // Handle DETAILS 
+    const allDetailsBtn = document.querySelectorAll('.reading-list .book-entry button.details-btn');
+    for (let i = 0 ; i < allDetailsBtn.length; i++ ) {
+        allDetailsBtn[i].addEventListener('click', event => {
+            event.stopPropagation(); 
+            // new UserChoice('🚧 Cette action n\'est pas encore disponible', null, "OK").waitFor();  
+            let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
+            window.location.hash = '#/book/' +  book_id; 
+        })
+    }
 }
+
+
+
+
+
+
+}
+
