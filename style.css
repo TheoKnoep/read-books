@@ -313,13 +313,15 @@ main {
 	position: relative; 
 	/* background-image: url('images/bg-featured.png'); */
 	/* background-image: url('images/lines-w.png'); */
+	background-image: url(images/bg-grain-d.png);
     background-repeat: no-repeat;
-    background-size: 235px;
-    background-position: top right;
+    background-size: 270px;
+    background-position: bottom right;
 }
 @media screen and (prefers-color-scheme: light) {
 	#current-reading a.current-reading__card {
 		/* background-image: url('images/lines-b.png'); */
+		background-image: url(images/bg-grain-l.png);
 	}
 }
 #current-reading a.current-reading__card img {
