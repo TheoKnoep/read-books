@@ -77,4 +77,21 @@ class Book {
 			this.owned = false; 
 		}
 	}
+
+
+	getPurchaseLink() {
+		let url = "https://www.placedeslibraires.fr";
+
+		const formatString = (string) => {
+			let regex = new RegExp(',| |, '); 
+			return encodeURI( string.split(regex).join('+').replaceAll('++', '+')); 
+		}
+
+
+		if (this.isbn[0].toString() === '9') {
+			return url + '/livre/' + this.isbn; 
+		} 
+
+		return `${url}/listeliv.php?form_recherche_avancee=ok&base=allbooks&titre=${formatString(this.title)}&titre1=${formatString(this.title)}&auteurs=${formatString(this.author)}&auteurs1=${formatString(this.author)}&dispo=1%2C2&select_tri_recherche=pertinence`; 
+	}
 }
