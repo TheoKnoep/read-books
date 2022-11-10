@@ -50,12 +50,25 @@ VIEWS
 
         let HTMLcontent = `
         ${ this.template_current_reading() }
-        ${ this.template_list(next_reading, 'next-reading', 'Prochaines lectures') }
-        ${ wish_list.length ? this.template_list(wish_list, 'wish-list', 'Liste d\'achat') : '' }`; 
+        ${ next_reading.length || !wish_list.length ? this.template_list(next_reading, { id:'next-reading', name:'Prochaines lectures'}) : '' } 
+        ${ wish_list.length ? this.template_list(wish_list, {id:'wish-list', name:'Liste d\'achat'}) : '' }`; 
         
 
         CONTAINER.innerHTML = HTMLcontent; 
 
+
+
+        // Apply icons to title of custom lists : 
+        if (next_reading.length) {
+            document.querySelector('#next-reading h2').outerHTML = '<h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg> ' + document.querySelector('#next-reading h2').innerHTML + '</h2>'; 
+            document.querySelector('#next-reading h2').setAttribute('style', `display: flex; align-items: center;`);
+        }
+        
+        if (wish_list.length) {
+            document.querySelector('#wish-list h2').outerHTML = '<h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> ' + document.querySelector('#wish-list h2').innerHTML + '</h2>'; 
+            document.querySelector('#wish-list h2').setAttribute('style', `display: flex; align-items: center;`); 
+        }
+        
     
 
         this.list_events_handler(); 
@@ -114,7 +127,7 @@ VIEWS
         let HTMLcontent = ''; 
 
 
-        HTMLcontent = this.template_list(books_list, list_name); 
+        HTMLcontent = this.template_list(books_list,{name:list_name}); 
 
         CONTAINER.innerHTML = HTMLcontent; 
 
@@ -674,8 +687,11 @@ TEMPLATES
 
 
 
-    static template_list(list, id, list_name) {
+    static template_list(list, options) {
         let HTMLcontent = ''; 
+
+        let id = options.id || ''; 
+        let list_name = options.name || ''; 
 
         let books_list = list; 
 
