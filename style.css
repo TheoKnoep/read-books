@@ -706,6 +706,16 @@ Book entry :
 	min-height: 72px; 
 }
 
+.single-book__container #rating-selector span {
+	color: var(--text);
+}
+/* .single-book__container #rating-selector span:hover {
+	color: var(--accent); 
+} */
+.single-book__container #rating-selector span.rated {
+	color: var(--accent); 
+}
+
 
 
 

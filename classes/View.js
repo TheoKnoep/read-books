@@ -187,6 +187,16 @@ VIEWS
             </div>`; 
         }
 
+        const applyRating = (rate) => {
+            document.querySelectorAll('#rating-selector span').forEach(elt => {
+                elt.classList.remove('rated'); 
+                if (rate >= elt.dataset.rating) { elt.classList.add('rated') }
+            })
+        }
+
+
+
+
         HTMLContent = `
         <div style="display: flex; ">
             <button style="margin: 1em; margin-left: 0; " class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
@@ -233,8 +243,16 @@ VIEWS
                 </div>
                 <div class="custom_section">
                     <h2>Avis : </h2>
-                    <textarea contenteditable="false" id="comment_container" placeholder="Ajoutez des notes personnalisées sur le livre">${b.comment || ''}</textarea>
-
+                    <div id="rating-selector" class="rating-container" data-book-id="${b.google_id}">
+                        <span data-rating="1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                        <span data-rating="2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                        <span data-rating="3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                        <span data-rating="4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                        <span data-rating="5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                    </div>
+                    <div class="annotation-container">
+                        <textarea id="comment_container" placeholder="Ajoutez des notes personnalisées sur le livre">${b.comment || ''}</textarea>
+                    </div>
                     
                 </div>
                 <button class="back-navigation_btn" onclick="history.go(-1); "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
@@ -244,7 +262,17 @@ VIEWS
             `; 
 
 
+
+        
+
+
+
         CONTAINER.innerHTML = HTMLContent; 
+
+
+
+
+        applyRating(b.rate); 
 
 
         //set correct height for text area : 
@@ -350,6 +378,28 @@ VIEWS
                     }); 
             })
         })
+
+
+        // Select rating 
+        const rating_selector = document.getElementById('rating-selector'); 
+        const rating_item = document.querySelectorAll('#rating-selector span'); 
+        rating_item.forEach(elt => {
+            elt.addEventListener('click', event => {
+                let newRating = event.currentTarget.dataset.rating; 
+                applyRating(event.currentTarget.dataset.rating); 
+                let index = wishlist.getIndexOfSingleBookByID( event.currentTarget.parentElement.dataset.bookId ); 
+                console.log(index, ' : ', newRating); 
+                wishlist.books[index].rate = newRating; 
+                wishlist.saveWishlist(); 
+                new QuickToast('Note mise à jour').display(); 
+            })
+            // elt.addEventListener('mouseover', event => {
+            //     applyRating(event.currentTarget.dataset.rating); 
+            // })
+        })
+
+        
+        
     }
 
 
@@ -818,7 +868,6 @@ EVENTS HANDLERS
             if (btn.querySelector('.openable').classList.contains('opened')) {
                 btn.querySelector('.openable').classList.remove('opened'); 
             } else {
-                // reset : 
                 document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
                 btn.querySelector('.openable').classList.add('opened'); 
             }            
