@@ -389,9 +389,15 @@ VIEWS
                 applyRating(event.currentTarget.dataset.rating); 
                 let index = wishlist.getIndexOfSingleBookByID( event.currentTarget.parentElement.dataset.bookId ); 
                 console.log(index, ' : ', newRating); 
-                wishlist.books[index].rate = newRating; 
-                wishlist.saveWishlist(); 
-                new QuickToast('Note mise à jour').display(); 
+                if (wishlist.books[index].rate == newRating) { 
+                    wishlist.books[index].rate = 0;  
+                    wishlist.saveWishlist(); 
+                    applyRating(0); 
+                } else {
+                    wishlist.books[index].rate = newRating; 
+                    wishlist.saveWishlist(); 
+                    new QuickToast('Note mise à jour').display(); 
+                }  
             })
             // elt.addEventListener('mouseover', event => {
             //     applyRating(event.currentTarget.dataset.rating); 
