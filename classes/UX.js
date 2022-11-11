@@ -32,8 +32,11 @@ class QuickToast {
         let id = Math.floor(Math.random() * 1000000); 
         let template = this.fillTemplate(id, message, style); 
         document.body.insertAdjacentHTML('beforeend', template); 
+        if (style === 'smallBottomCenter') {
+            document.getElementById(`notif-${id}`).style.marginLeft = `calc(50% - ${document.getElementById(`notif-${id}`).offsetWidth/2}px;`; 
+        
+        }
         const removeNotification = () => {
-            // document.getElementById(`notif-${id}`).remove()
             this.removeFadeOut(document.getElementById(`notif-${id}`), 1000); 
         }
         setTimeout(removeNotification, delay); 
@@ -42,14 +45,14 @@ class QuickToast {
 
     fillTemplate(id, txt, style) {
         let successColor = "#20a779"; 
-        return  `<div 
+        return  `<div style="display:flex; justify-content: center; "><div 
                     class="quick-notification"
                     id="notif-${id}" 
                     style="
                         ${ this.listOfStyles(style) }
                     ">
                     ${txt}
-                </div>`; 
+                </div><div>`; 
     }
 
     removeFadeOut( el, speed ) {

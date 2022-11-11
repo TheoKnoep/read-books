@@ -57,10 +57,11 @@ class Book {
 	}
 
 	finishTheReading() {
-		if (this.finished_date) { throw new Error('finished date already exixts') }
-
-		this.status = 'finished', 
-		this.finished_date = Date.now(); 
+		this.status = 'finished';
+		if (!this.finished_date) { 
+			this.finished_date = Date.now();
+		}
+		 
 	}
 
 	reinitReading() {

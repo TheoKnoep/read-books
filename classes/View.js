@@ -381,10 +381,32 @@ VIEWS
 
 
         // Select rating 
+
+
+        // If 'dblclick' occurs, 'click event' also occurs.
+        // However, I need only one event occurs, either one or other, but not both at the same time
+        // So, I use a Promise to wait 600 ms before fire a click event, a time I consider enough to resolve a dblclick event before if it occurs : the 'click event' never occurs in this configuration
+        const checkDblClick = (elt) => {
+            return new Promise((resolve, reject) => {
+                elt.addEventListener('dblclick', event => {
+                    resolve(event); 
+                })
+                elt.addEventListener('click', event => {
+                    setTimeout(() => {
+                        reject(event); 
+                    }, 600); 
+                })
+            })
+        }
         const rating_selector = document.getElementById('rating-selector'); 
+        // rating_selector.addEventListener('click', event => {
+        //     new QuickToast('Double cliquer pour changer la note du livre').display({style: 'smallBottomCenter' }); 
+        // })
+        checkDblClick(rating_selector).catch(res => new QuickToast('Double cliquer pour changer la note du livre').display({style: 'smallBottomCenter' })); 
+
         const rating_item = document.querySelectorAll('#rating-selector span'); 
         rating_item.forEach(elt => {
-            elt.addEventListener('click', event => {
+            elt.addEventListener('dblclick', event => {
                 let newRating = event.currentTarget.dataset.rating; 
                 applyRating(event.currentTarget.dataset.rating); 
                 let index = wishlist.getIndexOfSingleBookByID( event.currentTarget.parentElement.dataset.bookId ); 
