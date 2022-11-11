@@ -814,9 +814,14 @@ EVENTS HANDLERS
     allMoreActionsBtn.forEach(btn => {
         btn.addEventListener('click', event => {
             event.stopPropagation(); 
-            document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
-            let book_id = ( Utils.getParentOfClass(event.target, 'more-actions-button').id ).split('id')[1] ; 
-            document.querySelector(`#id${book_id} .openable`).classList.add('opened'); 
+            let btn = event.currentTarget; 
+            if (btn.querySelector('.openable').classList.contains('opened')) {
+                btn.querySelector('.openable').classList.remove('opened'); 
+            } else {
+                // reset : 
+                document.querySelectorAll('.openable.opened').forEach(elt => elt.classList.remove('opened')); // reset
+                btn.querySelector('.openable').classList.add('opened'); 
+            }            
         })
     })
     window.addEventListener('click', event => {
