@@ -109,6 +109,8 @@
 				console.log('errrrrrrrr', err); 
 				View.not_found(err.toString());
 			}
+			
+			Utils.preventRightClick(); 
 		}
 
 
@@ -182,10 +184,7 @@
 
 
 
-		let start = 1667771220000; 
-		let now = Date.now(); 
-
-		Utils.calculateNumberOfDaysBetweenTwoTimestamps(start, now); 
+		
 
 	</script>
 

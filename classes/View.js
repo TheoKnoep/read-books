@@ -353,23 +353,16 @@ VIEWS
 
         // Edit dates 
         const allBtnEditDate = document.querySelectorAll('button.edit-date'); 
-        console.log(allBtnEditDate); 
         allBtnEditDate.forEach(btn => {
             btn.addEventListener('click', event => {
-                console.log(event.currentTarget.previousSibling); 
                 let spanToChange = event.currentTarget.previousSibling; 
                 let action = event.currentTarget.previousSibling.id.split('--')[0]; 
-                console.log(action); 
-                console.log(event.currentTarget.dataset.bookId); 
                 let indexToChange = wishlist.getIndexOfSingleBookByID(event.currentTarget.dataset.bookId); 
-                let bookToChange = wishlist.books[indexToChange]; 
-                console.log(wishlist.books[indexToChange]); 
+                let bookToChange = wishlist.books[indexToChange];
                 new UserChoice('Mettre la date à jour : ', "Valider", "Annuler", true).waitFor()
                     .then(res => {
-                        console.log(res); 
                         if (res === '') { throw new Error('Undefined date') }
                         spanToChange.textContent = new Date(res).toLocaleDateString(); 
-                        console.log(bookToChange[action]); 
                         bookToChange[action] = new Date(res).getTime(); 
                         wishlist.saveWishlist(); 
                     })

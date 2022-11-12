@@ -58,7 +58,15 @@ class Utils {
 
 		let millisecondsInOneDay = 1000 * 3600 * 24; 
 
-		return ((final_time - start_time) / millisecondsInOneDay) + 1; 
+		return Math.round(((final_time - start_time) / millisecondsInOneDay) + 1); 
 				
+	}
+
+	static preventRightClick() {
+		document.querySelectorAll('img, a').forEach(elt => {
+			elt.addEventListener('contextmenu', event => {
+				event.preventDefault(); 
+			})
+		})
 	}
 }
