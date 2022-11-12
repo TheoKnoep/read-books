@@ -708,12 +708,14 @@ Book entry :
 
 .single-book__container #rating-selector span {
 	color: var(--text);
+	opacity: .25; 
 }
 /* .single-book__container #rating-selector span:hover {
 	color: var(--accent); 
 } */
 .single-book__container #rating-selector span.rated {
 	color: var(--accent); 
+	opacity: 1;
 }
 
 

@@ -394,15 +394,22 @@ VIEWS
                 elt.addEventListener('click', event => {
                     setTimeout(() => {
                         reject(event); 
-                    }, 600); 
+                    }, 300); 
                 })
             })
         }
         const rating_selector = document.getElementById('rating-selector'); 
-        // rating_selector.addEventListener('click', event => {
-        //     new QuickToast('Double cliquer pour changer la note du livre').display({style: 'smallBottomCenter' }); 
-        // })
+
+        
+
         checkDblClick(rating_selector).catch(res => new QuickToast('Double cliquer pour changer la note du livre').display({style: 'smallBottomCenter' })); 
+
+
+
+        // rating_selector.addEventListener('click', () => {
+        //     checkDblClick(rating_selector).catch(res => new QuickToast('Double cliquer pour changer la note du livre').display({style: 'smallBottomCenter' })); 
+        // }); 
+        
 
         const rating_item = document.querySelectorAll('#rating-selector span'); 
         rating_item.forEach(elt => {
@@ -410,7 +417,6 @@ VIEWS
                 let newRating = event.currentTarget.dataset.rating; 
                 applyRating(event.currentTarget.dataset.rating); 
                 let index = wishlist.getIndexOfSingleBookByID( event.currentTarget.parentElement.dataset.bookId ); 
-                console.log(index, ' : ', newRating); 
                 if (wishlist.books[index].rate == newRating) { 
                     wishlist.books[index].rate = 0;  
                     wishlist.saveWishlist(); 
