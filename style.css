@@ -333,6 +333,14 @@ main {
 	margin-left: 1em; 
 }
 
+#current-reading a.current-reading__card .days-counter {
+	position: absolute;
+    font-size: 1.2em;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+}
+
 #current-reading a.current-reading__card .fav-star {
 	position: absolute; 
 	font-size: 1.8em;

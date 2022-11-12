@@ -421,6 +421,7 @@ VIEWS
                     wishlist.books[index].rate = 0;  
                     wishlist.saveWishlist(); 
                     applyRating(0); 
+                    new QuickToast('Note supprimée').display(); 
                 } else {
                     wishlist.books[index].rate = newRating; 
                     wishlist.saveWishlist(); 
@@ -784,6 +785,7 @@ TEMPLATES
                 </div>
                 <img src="${b.miniature_link}" width="84"/>
                 <h3>${b.title}</h3>
+                <div class="days-counter">${Utils.calculateNumberOfDaysBetweenTwoTimestamps(b.started_date, Date.now())}j.</div>
             </a>`
         }
 
@@ -805,6 +807,18 @@ TEMPLATES
 
         return HTMLContent; 
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -48,4 +48,17 @@ class Utils {
 		let rect = elt.getBoundingClientRect();
 		return (rect.top < window.innerHeight && rect.bottom > 0); 
 	}
+
+
+
+
+	static calculateNumberOfDaysBetweenTwoTimestamps(a, b) {
+		let start_time = new Date(Math.min(a,b)).setHours(0, 0, 0, 0); 
+		let final_time = new Date(Math.max(a,b)).setHours(0, 0, 0, 0); 
+
+		let millisecondsInOneDay = 1000 * 3600 * 24; 
+
+		return ((final_time - start_time) / millisecondsInOneDay) + 1; 
+				
+	}
 }
