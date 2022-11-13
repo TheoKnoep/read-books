@@ -27,6 +27,16 @@
         "name": "Ajouter un livre", 
         "description": "Chercher et ajouter un livre dans votre wishlist", 
         "url": "./#/add"
+      }, 
+      {
+        "name": "Wishlist", 
+        "description": "La liste des livres à se procurer", 
+        "url": "./#/wishlist"
+      }, 
+      {
+        "name": "Next", 
+        "description": "Vos prochaines lectures", 
+        "url": "./#/next"
       }
     ]
   }

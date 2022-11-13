@@ -69,6 +69,8 @@
 		window.addEventListener('hashchange', RouteRequest); 
 
 		function RouteRequest() {
+			scrollTo(0,0);
+			
 			let route = window.location.hash.split('/'); 
 			// console.log(route); 
 
@@ -82,7 +84,10 @@
 						View.home(true); 
 						break; 
 					case 'wishlist':
-						View.display_list(wishlist.getAllBooksByStatus('to-read'), 'Liste d\'achat'); 
+						View.display_list(wishlist.getAllBooksByStatus('to-read').filter(item => { return !item.owned}), 'Liste d\'achat'); 
+						break; 
+					case 'next':
+						View.display_list(wishlist.getAllBooksByStatus('to-read').filter(item => { return item.owned}), 'Liste d\'achat'); 
 						break; 
 					case 'reading':
 						View.display_list(wishlist.getAllBooksByStatus('started'), 'En cours de lecture'); 
@@ -117,7 +122,7 @@
 
 		// reinit scroll into view : 
 		window.addEventListener('hashchange', evt => {
-			scrollTo(0,0); 
+			 
 		}); 
 
 /* !dev-only : */
