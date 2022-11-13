@@ -125,6 +125,17 @@ VIEWS
         const CONTAINER = document.querySelector('#app-container'); 
         let HTMLcontent = ''; 
 
+        let sort_order = true; 
+        const sort_by_date = (arr) => {
+            arr.sort((a, b) => {
+                if (sort_order) {
+                    return b.added_date - a.added_date; 
+                } else {
+                    return a.added_date - b.added_date; 
+                } 
+            }); 
+        }
+        sort_by_date(books_list);
 
         HTMLcontent = this.template_list(books_list,{name:list_name}); 
 
