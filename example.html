@@ -54,7 +54,7 @@
 	
 
 	<button onclick="new QuickToast('Le message est affiché ici pendant 3 secondes', 3000).display(); ">Afficher un message d'info</button>
-	<button onclick="new UserChoice(`<span style='font-weight: bold; font-size: 1.6em; line-height: 2; '>Ici le message :</span><br/>Êtes-vous sûr de vouloir continuer ?`, 'Continuer', 'Annuler').waitFor().then(()=>alert('L\'utilisateur a accepté')); ">Fenêtre de confirmation</button>
+	<button onclick="new UserChoice(`<span style='font-weight: bold; font-size: 1.6em; line-height: 2; '>Ici le message :</span><br/>Êtes-vous sûr de vouloir continuer ?`, 'Continuer', 'Annuler').waitFor().then(()=>new QuickToast().display({message: 'L\'action a bien été effectuée'})); ">Fenêtre de confirmation</button>
 
 
 	<script src="scripts/search-book.js"></script>
