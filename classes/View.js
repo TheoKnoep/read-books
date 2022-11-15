@@ -49,8 +49,7 @@ VIEWS
 
 
         let HTMLcontent = `
-        <div><input id="filter-cards" type="search" oninput="filterCards(event.target.value)" placeholder="Filtrer les livres"></div>
-        ${ this.template_current_reading() }
+       ${ this.template_current_reading() }
         ${ next_reading.length || !wish_list.length ? this.template_list(next_reading, { id:'next-reading', name:'Prochaines lectures'}) : '' } 
         ${ wish_list.length ? this.template_list(wish_list, {id:'wish-list', name:'Liste d\'achat'}) : '' }`; 
         
