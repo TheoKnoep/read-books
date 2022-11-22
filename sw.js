@@ -14,6 +14,7 @@ self.addEventListener("install", function (event) {
             'classes/Book.js',
             'classes/Wishlist.js',
             'classes/Utils.js',
+            'classes/Time.js',
             'scripts/dom-manipulation.js',
             'scripts/search-book.js',
             'manifest.webmanifest', 
