@@ -1,5 +1,5 @@
 class Book {
-	constructor(title, author, publisher, description, miniature_link, isbn, rate, comment, format, google_id, series, series_number, language, added_date, status, started_date, finished_date, owned) {
+	constructor(title, author, publisher, description, miniature_link, isbn, rate, comment, format, google_id, series, series_number, language, added_date, status, started_date, finished_date, owned, reading_log) {
 		this.title = title; 
 		this.author = author; 
 		this.publisher = publisher; 
@@ -18,6 +18,7 @@ class Book {
 		this.started_date = started_date; 
 		this.finished_date = finished_date; 
 		this.owned = owned; 
+		this.reading_log = reading_log; 
 	}
 
 
@@ -94,5 +95,36 @@ class Book {
 		} 
 
 		return `${url}/listeliv.php?form_recherche_avancee=ok&base=allbooks&titre=${formatString(this.title)}&titre1=${formatString(this.title)}&auteurs=${formatString(this.author)}&auteurs1=${formatString(this.author)}&dispo=1%2C2&select_tri_recherche=pertinence`; 
+	}
+
+	recordReadingSession() {
+		if (!this.reading_log) {
+			this.reading_log = []; 
+		}
+		this.reading_log.push({start: Date.now(), end: null}); 
+	}
+	stopReadingSession() {
+		this.reading_log[this.reading_log.length-1].end = Date.now(); 
+	}
+	readingSessionIsOnGoing() {
+		if (!this.reading_log) { return false }
+		if (this.reading_log[this.reading_log.length-1].end === null ) { 
+			return true; 
+		} else {
+			return false; 
+		}
+	}
+
+	calculateReadingTime() {
+		if (!this.reading_log) { return }; 
+		let output = 0; 
+		this.reading_log.forEach(entry => {
+			if (entry.end) {
+				output += entry.end - entry.start; 
+			}
+		}); 
+
+		console.log(Time.formatMs(output)); 
+		return output; 
 	}
 }

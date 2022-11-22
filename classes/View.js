@@ -779,25 +779,32 @@ TEMPLATES
 
         let HTMLContent = ``; 
 
-        const writeCard = (b) => {
-            return `
-            <a href="#/book/${b.google_id}" id="id${b.google_id}" class="current-reading__card" style="width: calc(${ 100 / books_list.length }% - ${(books_list.length-1) * 12}px); ">
+
+        let booksCards = ''; 
+        books_list.forEach(b => {
+            //is reading session active ?
+            console.log(b.readingSessionIsOnGoing()); 
+            let readingSessionHTML = ''; 
+            b.readingSessionIsOnGoing() ? readingSessionHTML = this.stop_reading_session_button(b.google_id) : readingSessionHTML =  this.record_reading_button(b.google_id) ; 
+
+            // fill card template : 
+            booksCards += `<a href="#/book/${b.google_id}" id="id${b.google_id}" class="current-reading__card" style="width: calc(${ 100 / books_list.length }% - ${(books_list.length-1) * 12}px); ">
                 <div class="fav-star" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>
                 </div>
                 <img src="${b.miniature_link}" width="84"/>
-                <h3>${b.title}</h3>
-                <div class="days-counter">${Utils.calculateNumberOfDaysBetweenTwoTimestamps(b.started_date, Date.now())}j.</div>
-            </a>`
-        }
-
-        let booksCards = ''; 
-        books_list.forEach(book => {
-            booksCards += writeCard(book); 
+                <div>
+                    <h3>${b.title}</h3>
+                    <div class="reading-session-btn__container" data-book-id="${b.google_id}">${ readingSessionHTML }</div>
+                </div>
+                <div class="days-counter">
+                    ${Utils.calculateNumberOfDaysBetweenTwoTimestamps(b.started_date, Date.now())}j. / 
+                    ${Time.formatMs(b.calculateReadingTime()) }
+                </div>
+            </a>`; 
         })
 
         HTMLContent = `
-        
         <div id="current-reading" ${books_list.length === 1 ? `class="single-current"` : '' }>
             <h2 class="">Lecture${books_list.length > 1 ? 's' : ''} en cours :</h2>
             <div class="current-reading__container" >
@@ -805,7 +812,7 @@ TEMPLATES
                     ${booksCards}
                 </div>
             </div>
-        </div>`
+        </div>`; 
 
         return HTMLContent; 
     }
@@ -884,6 +891,14 @@ TEMPLATES
 
 
 
+
+
+    static record_reading_button() {
+        return `<button class="reading-session-btn" data-action="record"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button>`; 
+    }
+    static stop_reading_session_button() {
+        return `<button class="reading-session-btn active" data-action="stop"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg></button>`; 
+    }
 
 
 
@@ -989,6 +1004,55 @@ EVENTS HANDLERS
             window.location.hash = '#/book/' +  book_id; 
         })
     }
+
+
+
+    // HANDLER READING SESSIONS : 
+    const allCurrentReading = document.querySelectorAll('a.current-reading__card'); 
+    allCurrentReading.forEach(elt => {
+        elt.addEventListener('click', event => {
+            event.preventDefault(); 
+            window.location.href = event.currentTarget.href; 
+        })
+    })
+
+    const handleReadingSession = document.querySelector('.reading-session-btn__container'); 
+    console.log(handleReadingSession); 
+    handleReadingSession.addEventListener('click', event => {
+        event.stopPropagation(); 
+        event.preventDefault(); 
+        let container = event.currentTarget; 
+        let indexOfBook = wishlist.getIndexOfSingleBookByID(container.dataset.bookId);
+        let action = container.querySelector('button').dataset.action; 
+        if (action === 'record') {
+            wishlist.books[indexOfBook].recordReadingSession(); 
+            wishlist.saveWishlist(); 
+
+            // animate : 
+            container.querySelector('button').style.transition = 'all ease 200ms'; 
+            container.querySelector('button').style.transform = 'scale(0)'; 
+            Utils.wait(200).then(() => {
+                container.innerHTML = this.stop_reading_session_button(); 
+                container.querySelector('button').style.transform = 'scale(0)'; 
+                container.querySelector('button').style.transition = 'all ease 200ms'; 
+                container.querySelector('button').style.transform = 'scale(1)';
+            })
+            
+        } else {
+            wishlist.books[indexOfBook].stopReadingSession(); 
+            wishlist.saveWishlist(); 
+            // animate : 
+            container.querySelector('button').style.transition = 'all ease 200ms'; 
+            container.querySelector('button').style.transform = 'scale(0)'; 
+            Utils.wait(200).then(() => {
+                container.innerHTML = this.record_reading_button(); 
+                container.querySelector('button').style.transform = 'scale(0)'; 
+                container.querySelector('button').style.transition = 'all ease 200ms'; 
+                container.querySelector('button').style.transform = 'scale(1)';
+            })
+        }
+    })
+
 }
 
 

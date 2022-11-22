@@ -330,7 +330,7 @@ main {
 	object-fit: cover;
 }
 #current-reading a.current-reading__card h3 {
-	margin-left: 1em; 
+	margin-left: 24px; 
 }
 
 #current-reading a.current-reading__card .days-counter {
@@ -391,6 +391,21 @@ main {
 	width: 100% !important;
 }
 
+
+#current-reading .reading-session-btn {
+	margin-left: 24px; 
+	border-radius: 120px; 
+	width: 42px;
+    height: 42px;
+    line-height: 0;
+	display: flex; 
+	justify-content: center;
+	align-items: center;
+	font-size: 1.2em;
+}
+#current-reading .reading-session-btn.active {
+	background-color: var(--code);
+}
 
 
 
