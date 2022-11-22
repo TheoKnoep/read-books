@@ -1016,42 +1016,44 @@ EVENTS HANDLERS
         })
     })
 
-    const handleReadingSession = document.querySelector('.reading-session-btn__container'); 
-    console.log(handleReadingSession); 
-    handleReadingSession.addEventListener('click', event => {
-        event.stopPropagation(); 
-        event.preventDefault(); 
-        let container = event.currentTarget; 
-        let indexOfBook = wishlist.getIndexOfSingleBookByID(container.dataset.bookId);
-        let action = container.querySelector('button').dataset.action; 
-        if (action === 'record') {
-            wishlist.books[indexOfBook].recordReadingSession(); 
-            wishlist.saveWishlist(); 
-
-            // animate : 
-            container.querySelector('button').style.transition = 'all ease 200ms'; 
-            container.querySelector('button').style.transform = 'scale(0)'; 
-            Utils.wait(200).then(() => {
-                container.innerHTML = this.stop_reading_session_button(); 
-                container.querySelector('button').style.transform = 'scale(0)'; 
+    const handleReadingSession = document.querySelectorAll('.reading-session-btn__container'); 
+    handleReadingSession.forEach(btn => {
+        btn.addEventListener('click', event => {
+            event.stopPropagation(); 
+            event.preventDefault(); 
+            let container = event.currentTarget; 
+            let indexOfBook = wishlist.getIndexOfSingleBookByID(container.dataset.bookId);
+            let action = container.querySelector('button').dataset.action; 
+            if (action === 'record') {
+                wishlist.books[indexOfBook].recordReadingSession(); 
+                wishlist.saveWishlist(); 
+    
+                // animate : 
                 container.querySelector('button').style.transition = 'all ease 200ms'; 
-                container.querySelector('button').style.transform = 'scale(1)';
-            })
-            
-        } else {
-            wishlist.books[indexOfBook].stopReadingSession(); 
-            wishlist.saveWishlist(); 
-            // animate : 
-            container.querySelector('button').style.transition = 'all ease 200ms'; 
-            container.querySelector('button').style.transform = 'scale(0)'; 
-            Utils.wait(200).then(() => {
-                container.innerHTML = this.record_reading_button(); 
                 container.querySelector('button').style.transform = 'scale(0)'; 
+                Utils.wait(200).then(() => {
+                    container.innerHTML = this.stop_reading_session_button(); 
+                    container.querySelector('button').style.transform = 'scale(0)'; 
+                    container.querySelector('button').style.transition = 'all ease 200ms'; 
+                    container.querySelector('button').style.transform = 'scale(1)';
+                })
+                
+            } else {
+                wishlist.books[indexOfBook].stopReadingSession(); 
+                wishlist.saveWishlist(); 
+                // animate : 
                 container.querySelector('button').style.transition = 'all ease 200ms'; 
-                container.querySelector('button').style.transform = 'scale(1)';
-            })
-        }
+                container.querySelector('button').style.transform = 'scale(0)'; 
+                Utils.wait(200).then(() => {
+                    container.innerHTML = this.record_reading_button(); 
+                    container.querySelector('button').style.transform = 'scale(0)'; 
+                    container.querySelector('button').style.transition = 'all ease 200ms'; 
+                    container.querySelector('button').style.transform = 'scale(1)';
+                })
+            }
+        })
     })
+    
 
 }
 
