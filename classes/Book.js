@@ -116,7 +116,7 @@ class Book {
 	}
 
 	calculateReadingTime() {
-		if (!this.reading_log) { return }; 
+		if (!this.reading_log) { return 0 }; 
 		let output = 0; 
 		this.reading_log.forEach(entry => {
 			if (entry.end) {
