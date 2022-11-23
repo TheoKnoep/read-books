@@ -1029,26 +1029,24 @@ EVENTS HANDLERS
                 wishlist.saveWishlist(); 
     
                 // animate : 
-                container.querySelector('button').style.transition = 'all ease 200ms'; 
-                container.querySelector('button').style.transform = 'scale(0)'; 
+                container.querySelector('button').classList.add('vanish'); 
                 Utils.wait(200).then(() => {
                     container.innerHTML = this.stop_reading_session_button(); 
-                    container.querySelector('button').style.transform = 'scale(0)'; 
-                    container.querySelector('button').style.transition = 'all ease 200ms'; 
-                    container.querySelector('button').style.transform = 'scale(1)';
+                    container.querySelector('button').classList.remove('vanish'); 
+                    container.querySelector('button').classList.add('appear'); 
+                    // launch timer : 
+                    // . . .
                 })
                 
             } else {
                 wishlist.books[indexOfBook].stopReadingSession(); 
                 wishlist.saveWishlist(); 
                 // animate : 
-                container.querySelector('button').style.transition = 'all ease 200ms'; 
-                container.querySelector('button').style.transform = 'scale(0)'; 
+                container.querySelector('button').classList.add('vanish');
                 Utils.wait(200).then(() => {
                     container.innerHTML = this.record_reading_button(); 
-                    container.querySelector('button').style.transform = 'scale(0)'; 
-                    container.querySelector('button').style.transition = 'all ease 200ms'; 
-                    container.querySelector('button').style.transform = 'scale(1)';
+                    container.querySelector('button').classList.remove('vanish'); 
+                    container.querySelector('button').classList.add('appear'); 
                 })
             }
         })
