@@ -43,6 +43,16 @@
 	<main id="app-container">
 	</main>
 
+	<div>
+		<div id="timer-container" style="display: flex; justify-content: space-evenly; align-items: center;">
+			<p id="reading-name">Lecture en cours : </p>
+			<p id="timer-count">:</p>
+			<button class="reading-session-btn" data-action="stop">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+			</button>
+		</div>
+	</div>
+
 	<footer class="footer">
 		<button id="open-search-btn" class="main-button" onclick="toggleAddButton(this)">+</button>
 		<a href="#/about">À propos</a>&nbsp;&nbsp;|&nbsp;
@@ -55,10 +65,26 @@
 	<script>
 		let wishlist = new Wishlist(); 
 
-		// new UserChoice("Pas encore disponible", null, "OK").waitFor();
+		if (wishlist.readingSessionIsOnGoing()) {
+			const timer = activateReadingBar(); 
+			console.log(timer); 
+		}
 
+		function activateReadingBar() {
+			let index = wishlist.readingSessionIsOnGoing(); 
+
+			let startTimestamp = wishlist.books[index].reading_log[ wishlist.books[index].reading_log.length-1 ].start; 
+			document.querySelector('#timer-container #reading-name').textContent = `Lecture en cours : ${wishlist.books[index].title}`; 
+			document.querySelector('#timer-container #timer-count').textContent = Time.formatMsMinSec(Date.now() - startTimestamp); 
+			document.querySelector('#timer-container').style.transform = 'translateY(-10vh)';
+
+			const timer = setInterval(() => {
+				document.querySelector('#timer-container #timer-count').textContent = Time.formatMsMinSec(Date.now() - startTimestamp); 
+			}, 1000); 
+			return timer; 
+		}
 			
-		//new QuickToast("Actions validée", 10000).display({message: "Yoverride", delay: 120000, style: 'smallBottomCenter'}); 
+		
 	</script>
 
 

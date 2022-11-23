@@ -191,6 +191,17 @@ class Wishlist {
 
 
 
+	readingSessionIsOnGoing() {
+		for (let i in this.books) {
+			if (this.books[i].readingSessionIsOnGoing()) {
+				return i; 
+			}
+		}
+		return null; 
+	}
+
+
+
 
 
 	

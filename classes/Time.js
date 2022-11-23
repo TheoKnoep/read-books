@@ -26,4 +26,18 @@ class Time {
         // return formated; 
         return hrs.toString() + 'h' + min.toString().padStart(2, '0') + "'"; 
     }
+
+    static formatMsMinSec(ms, date = false) {
+        let sec = Math.floor((ms / (1000) )) % 60; 
+        let min = Math.floor((ms / (1000 *60))) % 60; 
+        let hrs = Math.floor((ms / (1000 * 60 * 60))); 
+        if (date) { hrs = hrs % 24 }
+        let formated = [
+            hrs ? hrs.toString().padStart(2, '0') + ':' : '', 
+            min.toString().padStart(2, '0'), 
+            sec.toString().padStart(2, '0')
+        ].join(':'); 
+        // return formated; 
+        return hrs ? hrs.toString().padStart(2, '0') + ':' : '' + min.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0');
+    }
 }

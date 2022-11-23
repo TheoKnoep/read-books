@@ -106,6 +106,7 @@ class Book {
 	stopReadingSession() {
 		this.reading_log[this.reading_log.length-1].end = Date.now(); 
 	}
+	
 	readingSessionIsOnGoing() {
 		if (!this.reading_log) { return false }
 		if (this.reading_log[this.reading_log.length-1].end === null ) { 

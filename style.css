@@ -877,3 +877,40 @@ li.star {
 	left: 14px;
     top: 16px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================
+TIMER CONTAINER 
+========================================================== */
+#timer-container {
+	width: 100vw;
+	position: fixed;
+	top: 100vh; 
+	height: 10vh;
+	background: var(--accent-bg);
+	z-index: 2;
+	border-radius: 28px 28px 0 0;
+	transition: transform ease 380ms; 
+	transform: translateY(0vh);
+}
