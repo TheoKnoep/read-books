@@ -404,7 +404,9 @@ VIEWS
 
         
 
-        checkDblClick(rating_selector).catch(res => new QuickToast('Double cliquer pour changer la note du livre').display({style: 'smallBottomCenter' })); 
+        checkDblClick(rating_selector).catch(res => {
+            new QuickToast('Double cliquer pour changer la note du livre').display({style: 'smallBottomCenter' }); 
+        }); 
 
 
 
@@ -439,6 +441,65 @@ VIEWS
         
     }
 
+
+
+    static single_book_statistics(google_id) {
+        const CONTAINER = document.querySelector('#app-container'); 
+
+        let indexOfBook = wishlist.getIndexOfSingleBookByID(google_id); 
+        let b = wishlist.books[indexOfBook]; 
+
+        let HTMLcontent = `<p>Statistiques de lecture <strong>${b.title}</strong></p>`; 
+
+        if (!b.reading_log) {
+            HTMLcontent += `Pas de sessions de lectures`; 
+        } else {
+            let listEntries = ''; 
+            let formatedEntries = b.formatStatistics(); 
+            console.log(formatedEntries); 
+            console.log(Object.keys(formatedEntries)); 
+            let listOfDays = Object.keys(formatedEntries); 
+            listOfDays.forEach(day => {
+                console.log(new Date(day*1).toLocaleDateString()); 
+                console.log(formatedEntries[day]); 
+                let newList = ''; 
+                formatedEntries[day].forEach(session => {
+                    let newLi = ''; 
+                    newLi = `<li data-timestamp-start="${session.start}">${new Date(session.start).toLocaleTimeString()} -> ${new Date(session.end).toLocaleTimeString()} = ${ Time.formatMsMinSec(session.end-session.start) }</li>`; 
+                    newList += newLi; 
+                })
+                listEntries += `<ul>${new Date(day*1).toLocaleDateString()} ${newList}</ul>`; 
+            })
+
+            HTMLcontent += listEntries; 
+        }
+
+
+        CONTAINER.innerHTML = HTMLcontent; 
+
+
+
+        // EVENTS 
+        const allEntries = document.querySelectorAll('.time-entry span'); 
+        allEntries.forEach((entry, index) => {
+            entry.addEventListener('click', event => {
+                console.log(event.currentTarget.dataset.index); 
+            })
+            entry.addEventListener('blur', event => {
+                console.log(index); 
+                entry.removeAttribute('contenteditable'); 
+                console.log(entry.textContent.split(' -> ')); 
+                let parts = entry.textContent.split(' -> '); 
+                try {
+                    let start = new Date(parts[0]); 
+                    let end = new Date(parts[1]); 
+                    console.log(start, end); 
+                } catch(err) {
+                    console.log(err); 
+                }
+            })
+        })
+    }
 
 
 
@@ -1031,7 +1092,6 @@ EVENTS HANDLERS
         })
     })
 
-    
     const handleReadingSession = document.querySelectorAll('.reading-session-btn__container'); 
     handleReadingSession.forEach(btn => {
         btn.addEventListener('click', event => {
@@ -1082,7 +1142,10 @@ EVENTS HANDLERS
                     container.querySelector('button').classList.add('appear'); 
                 })
                 //stop timer : 
-                clearInterval(timers[timers.length-1]); 
+                // clearInterval(timers[timers.length-1]); 
+                timers.forEach(timer => {
+                    clearInterval(timer); 
+                })
                 console.log(timers); 
                 console.log(document.querySelector(`#current-reading #id${b.google_id} .days-counter`).textContent); 
                 document.querySelector(`#current-reading #id${b.google_id} .days-counter .stats`).textContent = `${Utils.calculateNumberOfDaysBetweenTwoTimestamps(b.started_date, Date.now())}j. / ${Time.formatMs(b.calculateReadingTime()) }`; 

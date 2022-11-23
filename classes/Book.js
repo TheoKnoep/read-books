@@ -128,4 +128,22 @@ class Book {
 		console.log(Time.formatMs(output)); 
 		return output; 
 	}
+
+
+	formatStatistics() {
+		let s = this.reading_log; 
+		let output = {}; 
+		s.forEach(s => {
+			let dayTs = Time.getTimestampOfTheDay(s.start); 
+			if (output[ dayTs ]) {
+				output[ dayTs ].push({start: s.start, end: s.end}); 
+			} else {
+				output[ dayTs ] = [{start: s.start, end: s.end}]; 
+			}
+		})
+
+		return output; 
+
+		//
+	}
 }

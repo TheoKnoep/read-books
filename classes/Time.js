@@ -40,4 +40,10 @@ class Time {
         // return formated; 
         return hrs ? hrs.toString().padStart(2, '0') + ':' : '' + min.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0');
     }
+
+    static getTimestampOfTheDay(ts) {
+        let d = new Date(ts); 
+        d.setHours(0, 0, 0, 0); 
+        return d.getTime(); 
+    }
 }

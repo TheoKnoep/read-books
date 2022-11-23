@@ -125,12 +125,13 @@ class MoreActions {
 
 
 class UserChoice {
-    constructor(message = "Voulez-vous continuer ?", confirm = null, cancel = null, input = null) {
+    constructor(message = "Voulez-vous continuer ?", confirm = null, cancel = null, input = null, value = null) {
         this.id = this.createHash();  
         this.message = message; 
         this.confirm = confirm; 
         this.cancel = cancel; 
         this.input = input; 
+        this.value = value; 
     }
 
     applyStyle() {
@@ -186,7 +187,7 @@ class UserChoice {
         <div id="popin-${this.id}" class="user-choice-popin" >
             <div class="popin-content">
                 <p class="message__container" id="choice-text">${this.message}</p>
-                ${this.input ? `<input type="date" id="date" >` : '' }
+                ${this.input ? `<input type="date" id="date" value="${this.value}">` : '' }
                 <div class="btn-container">
                     ${ this.cancel ? `<button id="cancel-btn">${this.cancel}</button>` : ''}
                     ${ this.confirm ? `<button id="confirm-btn">${this.confirm}</button>` : ''}
