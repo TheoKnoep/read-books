@@ -1029,6 +1029,7 @@ EVENTS HANDLERS
                 wishlist.saveWishlist(); 
     
                 // animate : 
+                container.querySelector('button').classList.remove('appear');
                 container.querySelector('button').classList.add('vanish'); 
                 Utils.wait(200).then(() => {
                     container.innerHTML = this.stop_reading_session_button(); 
@@ -1042,6 +1043,7 @@ EVENTS HANDLERS
                 wishlist.books[indexOfBook].stopReadingSession(); 
                 wishlist.saveWishlist(); 
                 // animate : 
+                container.querySelector('button').classList.remove('appear');
                 container.querySelector('button').classList.add('vanish');
                 Utils.wait(200).then(() => {
                     container.innerHTML = this.record_reading_button(); 
