@@ -66,24 +66,12 @@
 		let wishlist = new Wishlist(); 
 
 		if (wishlist.readingSessionIsOnGoing()) {
-			const timer = activateReadingBar(); 
-			console.log(timer); 
+			// activateReadingBar(); 
 		}
 
-		function activateReadingBar() {
-			let index = wishlist.readingSessionIsOnGoing(); 
 
-			let startTimestamp = wishlist.books[index].reading_log[ wishlist.books[index].reading_log.length-1 ].start; 
-			document.querySelector('#timer-container #reading-name').textContent = `Lecture en cours : ${wishlist.books[index].title}`; 
-			document.querySelector('#timer-container #timer-count').textContent = Time.formatMsMinSec(Date.now() - startTimestamp); 
-			document.querySelector('#timer-container').style.transform = 'translateY(-10vh)';
+		let timers = [];
 
-			const timer = setInterval(() => {
-				document.querySelector('#timer-container #timer-count').textContent = Time.formatMsMinSec(Date.now() - startTimestamp); 
-			}, 1000); 
-			return timer; 
-		}
-			
 		
 	</script>
 

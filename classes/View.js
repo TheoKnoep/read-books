@@ -798,10 +798,23 @@ TEMPLATES
                     <div class="reading-session-btn__container" data-book-id="${b.google_id}">${ readingSessionHTML }</div>
                 </div>
                 <div class="days-counter">
+                    <div class="stats ${b.readingSessionIsOnGoing() ? 'maxheight0' : ''}">
                     ${Utils.calculateNumberOfDaysBetweenTwoTimestamps(b.started_date, Date.now())}j. / 
                     ${Time.formatMs(b.calculateReadingTime()) }
+                    </div>
+                    <div class="counter ${b.readingSessionIsOnGoing() ? '' : 'maxheight0'}">
+                    
+                    </div>
                 </div>
             </a>`; 
+
+            // launch timer if reading session is on going : 
+            if (b.readingSessionIsOnGoing()) {
+                let startTimestamp = b.reading_log[ b.reading_log.length-1 ].start; 
+                timers.push(setInterval(() => {
+                    document.querySelector(`#current-reading #id${b.google_id} .days-counter .counter`).textContent = Time.formatMsMinSec(Date.now() - startTimestamp); 
+                }, 1000));
+            }
         })
 
         HTMLContent = `
@@ -813,6 +826,8 @@ TEMPLATES
                 </div>
             </div>
         </div>`; 
+
+        
 
         return HTMLContent; 
     }
@@ -1016,6 +1031,7 @@ EVENTS HANDLERS
         })
     })
 
+    
     const handleReadingSession = document.querySelectorAll('.reading-session-btn__container'); 
     handleReadingSession.forEach(btn => {
         btn.addEventListener('click', event => {
@@ -1023,7 +1039,9 @@ EVENTS HANDLERS
             event.preventDefault(); 
             let container = event.currentTarget; 
             let indexOfBook = wishlist.getIndexOfSingleBookByID(container.dataset.bookId);
+            let b = wishlist.books[indexOfBook];
             let action = container.querySelector('button').dataset.action; 
+             
             if (action === 'record') {
                 wishlist.books[indexOfBook].recordReadingSession(); 
                 wishlist.saveWishlist(); 
@@ -1035,13 +1053,26 @@ EVENTS HANDLERS
                     container.innerHTML = this.stop_reading_session_button(); 
                     container.querySelector('button').classList.remove('vanish'); 
                     container.querySelector('button').classList.add('appear'); 
-                    // launch timer : 
-                    // . . .
-                })
-                
+                })   
+                //launch timer : 
+                // let startTimestamp = b.reading_log[ b.reading_log.length-1 ].start; 
+                // console.log(Time.formatMsMinSec(Date.now() - startTimestamp)); 
+                // const timer = setInterval(() => {
+                //     document.querySelector(`#current-reading #id${b.google_id} .days-counter`).textContent = Time.formatMsMinSec(Date.now() - startTimestamp); 
+                // }, 1000); 
+                let startTimestamp = b.reading_log[ b.reading_log.length-1 ].start; 
+                document.querySelector(`#current-reading #id${b.google_id} .days-counter .counter`).textContent = Time.formatMsMinSec(Date.now() - startTimestamp); 
+                timers.push(setInterval(() => {
+                    document.querySelector(`#current-reading #id${b.google_id} .days-counter .counter`).textContent = Time.formatMsMinSec(Date.now() - startTimestamp); 
+                }, 1000));
+                document.querySelector(`#current-reading #id${b.google_id} .days-counter .stats`).classList.add('maxheight0'); 
+                document.querySelector(`#current-reading #id${b.google_id} .days-counter .counter`).classList.remove('maxheight0');
+
+                console.log(timers); 
             } else {
                 wishlist.books[indexOfBook].stopReadingSession(); 
                 wishlist.saveWishlist(); 
+                
                 // animate : 
                 container.querySelector('button').classList.remove('appear');
                 container.querySelector('button').classList.add('vanish');
@@ -1050,11 +1081,16 @@ EVENTS HANDLERS
                     container.querySelector('button').classList.remove('vanish'); 
                     container.querySelector('button').classList.add('appear'); 
                 })
+                //stop timer : 
+                clearInterval(timers[timers.length-1]); 
+                console.log(timers); 
+                console.log(document.querySelector(`#current-reading #id${b.google_id} .days-counter`).textContent); 
+                document.querySelector(`#current-reading #id${b.google_id} .days-counter .stats`).textContent = `${Utils.calculateNumberOfDaysBetweenTwoTimestamps(b.started_date, Date.now())}j. / ${Time.formatMs(b.calculateReadingTime()) }`; 
+                document.querySelector(`#current-reading #id${b.google_id} .days-counter .stats`).classList.remove('maxheight0'); 
+                document.querySelector(`#current-reading #id${b.google_id} .days-counter .counter`).classList.add('maxheight0');
             }
         })
     })
-    
-
 }
 
 

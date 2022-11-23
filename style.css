@@ -71,6 +71,7 @@ main {
 
 .maxheight0 {
 	max-height: 0 !important;
+	overflow: hidden;
 }
 
 
@@ -391,6 +392,10 @@ main {
 	width: 100% !important;
 }
 
+
+#current-reading .counter {
+	text-align: right;
+}
 
 #current-reading .reading-session-btn {
 	margin-left: 24px; 
@@ -910,7 +915,14 @@ TIMER CONTAINER
 	height: 10vh;
 	background: var(--accent-bg);
 	z-index: 2;
+	padding: 12px;
 	border-radius: 28px 28px 0 0;
 	transition: transform ease 380ms; 
 	transform: translateY(0vh);
+}
+
+#timer-container button {
+	background-color: var(--bg); 
+	border-radius: 120px;
+	color: var(--text); 
 }
