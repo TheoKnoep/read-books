@@ -29,7 +29,8 @@ class Wishlist {
 				book.started_date, 
 				book.finished_date, 
 				book.owned, 
-				book.reading_log
+				book.reading_log, 
+				book.progression
 			); 
 			output.push(newBook); 
 		})

@@ -1,5 +1,5 @@
 class Book {
-	constructor(title, author, publisher, description, miniature_link, isbn, rate, comment, format, google_id, series, series_number, language, added_date, status, started_date, finished_date, owned, reading_log) {
+	constructor(title, author, publisher, description, miniature_link, isbn, rate, comment, format, google_id, series, series_number, language, added_date, status, started_date, finished_date, owned, reading_log, progression) {
 		this.title = title; 
 		this.author = author; 
 		this.publisher = publisher; 
@@ -19,6 +19,7 @@ class Book {
 		this.finished_date = finished_date; 
 		this.owned = owned; 
 		this.reading_log = reading_log; 
+		this.progression = progression || {current: null, max: null }; 
 	}
 
 

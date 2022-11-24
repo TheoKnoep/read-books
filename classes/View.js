@@ -250,6 +250,14 @@ VIEWS
                         <div class="finished">${b.finished_date ? `<p>Terminé le <span id="finished_date--info">${new Date(b.finished_date).toLocaleDateString() }</span><button class="edit-date" data-book-id="${b.google_id}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><line x1="18" y1="2" x2="22" y2="6"></line><path d="M7.5 20.5 19 9l-4-4L3.5 16.5 2 22z"></path></svg></button></p>` : '' }</div>
                     </div>
                 </div>
+                
+                <div class="progression_custom">
+                    <h2>Progression : </h2>
+                    <p>Durée de lecture : ${Time.formatMs(b.calculateReadingTime())}</p>
+                    <p>Progression : <span id="percentage_progression">${ b.progression.max && b.progression.current ? Math.floor((b.progression.current / b.progression.max) * 100) + '%': ''}</span></p>
+                    <input type="number" id="current_progression" value="${b.progression ? b.progression.current : ''}" placeholder="Avancement actuel" data-book-id="${b.google_id}">
+                    <input type="number" id="max_progression" value="${b.progression ? b.progression.max : ''}" placeholder="Longueur du livre" data-book-id="${b.google_id}">
+                </div>
                 <div class="custom_section">
                     <h2>Avis : </h2>
                     <div id="rating-selector" class="rating-container" data-book-id="${b.google_id}">
@@ -437,9 +445,54 @@ VIEWS
             // })
         })
 
-        
-        
+
+
+
+
+        // EDIT PROGRESSION 
+        const current_progression = document.querySelector('#current_progression'); 
+        const max_progression = document.querySelector('#max_progression'); 
+
+        const update_percentage_progression = (current, max) => {
+            const domElt = document.querySelector('#percentage_progression'); 
+            domElt.textContent = Math.floor((current/max)*100) + '%'; 
+        }
+
+        max_progression.addEventListener('change', event => {
+            const b = wishlist.books[wishlist.getIndexOfSingleBookByID(event.currentTarget.dataset.bookId)]; 
+            b.progression['max'] = event.currentTarget.value; 
+            wishlist.saveWishlist(); 
+            update_percentage_progression(b.progression.current, b.progression.max); 
+            new QuickToast('Modifié avec succès').display(); 
+        })
+        current_progression.addEventListener('change', event => {
+            const b = wishlist.books[wishlist.getIndexOfSingleBookByID(event.currentTarget.dataset.bookId)]; 
+            b.progression['current'] = event.currentTarget.value; 
+            wishlist.saveWishlist(); 
+            update_percentage_progression(b.progression.current, b.progression.max); 
+            new QuickToast('Modifié avec succès').display(); 
+        })
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
