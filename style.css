@@ -396,9 +396,11 @@ main {
 #current-reading .counter {
 	text-align: right;
 }
-
-#current-reading .reading-session-btn {
+#current-reading .reading-session-btn__container {
+	width: 42px;
 	margin-left: 24px; 
+}
+#current-reading .reading-session-btn {
 	border-radius: 120px; 
 	width: 42px;
     height: 42px;
