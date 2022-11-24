@@ -269,7 +269,7 @@ VIEWS
                     </div>
                 </div>
                 
-                <div class="progression_custom ${b.status !== 'started' ? 'maxheight0' : ''}">
+                <div class="progression_custom ${b.status === 'to-read' ? 'maxheight0' : ''}">
                     <h2>Progression : </h2>
                     <p>Durée de lecture : ${Time.formatMs(b.calculateReadingTime())}</p>
                     <p>Progression : <span id="percentage_progression">${ b.progression.max && b.progression.current ? Math.floor((b.progression.current / b.progression.max) * 100) + '%': ''}</span></p>
@@ -363,7 +363,7 @@ VIEWS
                 wishlist.saveWishlist(); 
                 document.querySelector('.status-log .finished').innerHTML = `<p>Terminé le ${new Date(b.finished_date).toLocaleDateString() }</p>`; 
                 new QuickToast('Statut de lecture mis à jour').display(); 
-                document.querySelector('.progression_custom').classList.add('maxheight0'); 
+                document.querySelector('.progression_custom').classList.remove('maxheight0'); 
             }
         })
 
