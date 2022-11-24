@@ -203,6 +203,14 @@ VIEWS
             })
         }
 
+        const estimateLeftTime = () => {
+            if (!b.progression.max || !b.progression.current || !b.reading_log ) { return 'pas assez de données disponibles' }
+            let readingTime = b.calculateReadingTime(); 
+            let percentageRead = (b.progression.current / b.progression.max) * 100; 
+            let leftTimestamp = (readingTime / percentageRead ) * 100; 
+            return `environ ${ Time.formatMs(leftTimestamp) }`; 
+        }
+
 
 
 
@@ -251,12 +259,13 @@ VIEWS
                     </div>
                 </div>
                 
-                <div class="progression_custom">
+                <div class="progression_custom ${b.status !== 'started' ? 'maxheight0' : ''}">
                     <h2>Progression : </h2>
                     <p>Durée de lecture : ${Time.formatMs(b.calculateReadingTime())}</p>
                     <p>Progression : <span id="percentage_progression">${ b.progression.max && b.progression.current ? Math.floor((b.progression.current / b.progression.max) * 100) + '%': ''}</span></p>
                     <input type="number" id="current_progression" value="${b.progression ? b.progression.current : ''}" placeholder="Avancement actuel" data-book-id="${b.google_id}">
                     <input type="number" id="max_progression" value="${b.progression ? b.progression.max : ''}" placeholder="Longueur du livre" data-book-id="${b.google_id}">
+                    <pre id="estimate-left-time">Estimation du temps restant : ${ estimateLeftTime() }</pre>
                 </div>
                 <div class="custom_section">
                     <h2>Avis : </h2>
@@ -329,6 +338,7 @@ VIEWS
                         wishlist.books[index].reinitReading(); 
                         wishlist.saveWishlist(); 
                         new QuickToast('Statut de lecture mis à jour').display(); 
+                        document.querySelector('.progression_custom').classList.add('maxheight0'); 
                     }); 
             }
             if (action === "started") {
@@ -336,12 +346,14 @@ VIEWS
                 wishlist.saveWishlist(); 
                 document.querySelector('.status-log .started').innerHTML = `<p>Commencé le ${new Date(b.started_date).toLocaleDateString() }</p>`; 
                 new QuickToast('Statut de lecture mis à jour').display(); 
+                document.querySelector('.progression_custom').classList.remove('maxheight0'); 
             }
             if (action === "finished") {
                 wishlist.books[index].finishTheReading(); 
                 wishlist.saveWishlist(); 
                 document.querySelector('.status-log .finished').innerHTML = `<p>Terminé le ${new Date(b.finished_date).toLocaleDateString() }</p>`; 
                 new QuickToast('Statut de lecture mis à jour').display(); 
+                document.querySelector('.progression_custom').classList.add('maxheight0'); 
             }
         })
 
@@ -463,6 +475,7 @@ VIEWS
             b.progression['max'] = event.currentTarget.value; 
             wishlist.saveWishlist(); 
             update_percentage_progression(b.progression.current, b.progression.max); 
+            document.querySelector('#estimate-left-time').textContent = `Estimation du temps restant : ${ estimateLeftTime() }`; 
             new QuickToast('Modifié avec succès').display(); 
         })
         current_progression.addEventListener('change', event => {
@@ -470,6 +483,7 @@ VIEWS
             b.progression['current'] = event.currentTarget.value; 
             wishlist.saveWishlist(); 
             update_percentage_progression(b.progression.current, b.progression.max); 
+            document.querySelector('#estimate-left-time').textContent = `Estimation du temps restant : ${ estimateLeftTime() }`;
             new QuickToast('Modifié avec succès').display(); 
         })
     }

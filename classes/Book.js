@@ -125,8 +125,6 @@ class Book {
 				output += entry.end - entry.start; 
 			}
 		}); 
-
-		console.log(Time.formatMs(output)); 
 		return output; 
 	}
 
