@@ -136,6 +136,16 @@ VIEWS
         }
         sort_by_date(books_list);
 
+
+        //sort finished book by finish date : 
+        if (list_name = 'Livres terminés') {
+            books_list.sort((a, b) => {
+                return b.finished_date - a.finished_date; 
+            })
+        }
+
+        console.log('after : ', books_list);
+
         HTMLcontent = this.template_list(books_list,{name:list_name}); 
 
         CONTAINER.innerHTML = HTMLcontent; 
