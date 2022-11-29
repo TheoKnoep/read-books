@@ -276,6 +276,7 @@ VIEWS
                     <input type="number" id="current_progression" value="${b.progression ? b.progression.current : ''}" placeholder="Avancement actuel" data-book-id="${b.google_id}">
                     <input type="number" id="max_progression" value="${b.progression ? b.progression.max : ''}" placeholder="Longueur du livre" data-book-id="${b.google_id}">
                     <pre id="estimate-left-time">Estimation du temps restant : ${ estimateLeftTime() }</pre>
+                    <p><small><a href="#/book/${b.google_id}/stats">Statistiques de lecture</a></small></p>
                 </div>
                 <div class="custom_section">
                     <h2>Avis : </h2>

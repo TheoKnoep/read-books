@@ -111,7 +111,7 @@
 						View.display_list(wishlist.getAllBooksByStatus('finished'), 'Livres terminés'); 
 						break; 
 					case 'book':
-						if (route[3] && route[3] === 'statistics') {
+						if (route[3] && route[3] === 'stats') {
 							View.single_book_statistics(route[2]); 
 						} else {
 							View.single_book(route[2]);
