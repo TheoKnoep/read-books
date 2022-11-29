@@ -217,7 +217,7 @@ VIEWS
             if (!b.progression.max || !b.progression.current || !b.reading_log ) { return 'pas assez de données disponibles' }
             let readingTime = b.calculateReadingTime(); 
             let percentageRead = (b.progression.current / b.progression.max) * 100; 
-            let leftTimestamp = (readingTime / percentageRead ) * 100; 
+            let leftTimestamp = (readingTime / percentageRead) * (100 - percentageRead) ;
             return `environ ${ Time.formatMs(leftTimestamp) }`; 
         }
 
