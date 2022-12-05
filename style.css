@@ -764,6 +764,26 @@ Book entry :
 
 
 
+/* SINGLE Statistics */
+.statistics-sessions__day li::before {
+	content: '';
+    height: 22px;
+    width: 2px;
+    background: white;
+    display: inline-block;
+    position: relative;
+    left: -23px;
+    top: 16px;
+}
+
+
+
+
+
+
+
+
+
 
 
 

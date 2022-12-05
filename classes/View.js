@@ -527,7 +527,7 @@ VIEWS
         let indexOfBook = wishlist.getIndexOfSingleBookByID(google_id); 
         let b = wishlist.books[indexOfBook]; 
 
-        let HTMLcontent = `<p>Statistiques de lecture <strong>${b.title}</strong></p>`; 
+        let HTMLcontent = `<h2>Statistiques de lecture <strong>${b.title}</strong></h2>`; 
 
         if (!b.reading_log) {
             HTMLcontent += `Pas de sessions de lectures`; 
@@ -543,13 +543,13 @@ VIEWS
                 let newList = ''; 
                 formatedEntries[day].forEach(session => {
                     let newLi = ''; 
-                    newLi = `<li data-timestamp-start="${session.start}">${new Date(session.start).toLocaleTimeString()} -> ${new Date(session.end).toLocaleTimeString()} = ${ Time.formatMsMinSec(session.end-session.start) }</li>`; 
+                    newLi = `<li data-timestamp-start="${session.start}" data-timestamp-end="${session.end}">${new Date(session.start).toLocaleTimeString()} &rarr; ${new Date(session.end).toLocaleTimeString()} : : : ${ Time.formatMs(session.end-session.start) } </li>`; 
                     newList += newLi; 
                 })
-                listEntries += `<ul>${new Date(day*1).toLocaleDateString()} ${newList}</ul>`; 
+                listEntries += `<ul class="statistics-sessions__day">${new Date(day*1).toLocaleDateString()} ${newList}</ul>`; 
             })
 
-            HTMLcontent += listEntries; 
+            HTMLcontent += '<h3>Sessions de lecture</h3>' + listEntries; 
         }
 
 
