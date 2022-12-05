@@ -275,7 +275,7 @@ VIEWS
                     <p>Progression : <span id="percentage_progression">${ b.progression.max && b.progression.current ? Math.floor((b.progression.current / b.progression.max) * 100) + '%': ''}</span></p>
                     <input type="number" id="current_progression" value="${b.progression ? b.progression.current : ''}" placeholder="Avancement actuel" data-book-id="${b.google_id}">
                     <input type="number" id="max_progression" value="${b.progression ? b.progression.max : ''}" placeholder="Longueur du livre" data-book-id="${b.google_id}">
-                    <pre id="estimate-left-time">Estimation du temps restant : ${ estimateLeftTime() }</pre>
+                    <pre id="estimate-left-time">Estimation du temps restant :</br>${ estimateLeftTime() }</pre>
                     <p><small><a href="#/book/${b.google_id}/stats">Statistiques de lecture</a></small></p>
                 </div>
                 <div class="custom_section">
@@ -486,7 +486,7 @@ VIEWS
             b.progression['max'] = event.currentTarget.value; 
             wishlist.saveWishlist(); 
             update_percentage_progression(b.progression.current, b.progression.max); 
-            document.querySelector('#estimate-left-time').textContent = `Estimation du temps restant : ${ estimateLeftTime() }`; 
+            document.querySelector('#estimate-left-time').textContent = `Estimation du temps restant :<br/>${ estimateLeftTime() }`; 
             new QuickToast('Modifié avec succès').display(); 
         })
         current_progression.addEventListener('change', event => {
@@ -494,7 +494,7 @@ VIEWS
             b.progression['current'] = event.currentTarget.value; 
             wishlist.saveWishlist(); 
             update_percentage_progression(b.progression.current, b.progression.max); 
-            document.querySelector('#estimate-left-time').textContent = `Estimation du temps restant : ${ estimateLeftTime() }`;
+            document.querySelector('#estimate-left-time').textContent = `Estimation du temps restant :<br/>${ estimateLeftTime() }`;
             new QuickToast('Modifié avec succès').display(); 
         })
     }
@@ -928,9 +928,6 @@ TEMPLATES
 
             // fill card template : 
             booksCards += `<a href="#/book/${b.google_id}" id="id${b.google_id}" class="current-reading__card" style="width: calc(${ 100 / books_list.length }% - ${(books_list.length-1) * 12}px); ">
-                <div class="fav-star" >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>
-                </div>
                 <img src="${b.miniature_link}" width="84"/>
                 <div>
                     <h3>${b.title}</h3>
