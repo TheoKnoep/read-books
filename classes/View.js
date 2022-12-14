@@ -138,7 +138,7 @@ VIEWS
 
 
         //sort finished book by finish date : 
-        if (list_name = 'Livres terminés') {
+        if (list_name === 'Livres terminés') {
             books_list.sort((a, b) => {
                 return b.finished_date - a.finished_date; 
             })
@@ -998,7 +998,6 @@ TEMPLATES
 
         let id = options.id || ''; 
         let list_name = options.name || ''; 
-
         let books_list = list; 
 
         const owned_icon = `

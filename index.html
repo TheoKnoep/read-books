@@ -99,7 +99,7 @@
 						View.home(true); 
 						break; 
 					case 'wishlist':
-						View.display_list(wishlist.getAllBooksByStatus('to-read').filter(item => { return !item.owned}), 'Liste d\'achat'); 
+						View.display_list(wishlist.getAllBooksByStatus('to-read').filter(item => { return !item.owned}), 'Liste de souhaits'); 
 						break; 
 					case 'next':
 						View.display_list(wishlist.getAllBooksByStatus('to-read').filter(item => { return item.owned}), 'Liste d\'achat'); 
