@@ -765,6 +765,18 @@ Book entry :
 
 
 /* SINGLE Statistics */
+.statistics-sessions__day .list-head {
+	background: var(--accent-bg);
+	padding: 3px 6px;
+	border-radius: 4px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.statistics-sessions__day li {
+	padding-left: 4px;
+}
+
 .statistics-sessions__day li::before {
 	content: '';
     height: 21px;
@@ -778,6 +790,8 @@ Book entry :
 .statistics-sessions__day li:last-of-type::before {
 	height: 0;
 }
+
+
 
 
 

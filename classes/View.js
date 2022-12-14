@@ -486,7 +486,7 @@ VIEWS
             b.progression['max'] = event.currentTarget.value; 
             wishlist.saveWishlist(); 
             update_percentage_progression(b.progression.current, b.progression.max); 
-            document.querySelector('#estimate-left-time').textContent = `Estimation du temps restant :<br/>${ estimateLeftTime() }`; 
+            document.querySelector('#estimate-left-time').innerHTML = `Estimation du temps restant :<br/>${ estimateLeftTime() }`; 
             new QuickToast('Modifié avec succès').display(); 
         })
         current_progression.addEventListener('change', event => {
@@ -494,7 +494,7 @@ VIEWS
             b.progression['current'] = event.currentTarget.value; 
             wishlist.saveWishlist(); 
             update_percentage_progression(b.progression.current, b.progression.max); 
-            document.querySelector('#estimate-left-time').textContent = `Estimation du temps restant :<br/>${ estimateLeftTime() }`;
+            document.querySelector('#estimate-left-time').innerHTML = `Estimation du temps restant :<br/>${ estimateLeftTime() }`;
             new QuickToast('Modifié avec succès').display(); 
         })
     }
@@ -541,12 +541,17 @@ VIEWS
                 console.log(new Date(day*1).toLocaleDateString()); 
                 console.log(formatedEntries[day]); 
                 let newList = ''; 
+                let totalMsOfDay = 0; 
                 formatedEntries[day].forEach(session => {
                     let newLi = ''; 
                     newLi = `<li data-timestamp-start="${session.start}" data-timestamp-end="${session.end}">${new Date(session.start).toLocaleTimeString()} &rarr; ${new Date(session.end).toLocaleTimeString()} : : : ${ Time.formatMs(session.end-session.start) } </li>`; 
                     newList += newLi; 
+                    totalMsOfDay += session.end-session.start; 
                 })
-                listEntries += `<ul class="statistics-sessions__day">${new Date(day*1).toLocaleDateString()} ${newList}</ul>`; 
+                listEntries += `<ul class="statistics-sessions__day">
+                                    <div class="list-head"><span class="date">${new Date(day*1).toLocaleDateString()}</span><span class="total-day">${Time.formatMs(totalMsOfDay)}</span></div>
+                                     ${newList}
+                                </ul>`; 
             })
 
             HTMLcontent += '<h3>Sessions de lecture</h3>' + listEntries; 
