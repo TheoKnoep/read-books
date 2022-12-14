@@ -791,6 +791,15 @@ Book entry :
 	height: 0;
 }
 
+.statistics-sessions__day li .time-end {
+	opacity: .55;
+}
+
+.statistics-sessions__day li .session-time {
+	/* color: var(--text-light);  */
+	font-weight: 300; 
+	
+}
 
 
 

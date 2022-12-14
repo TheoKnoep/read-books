@@ -544,7 +544,7 @@ VIEWS
                 let totalMsOfDay = 0; 
                 formatedEntries[day].forEach(session => {
                     let newLi = ''; 
-                    newLi = `<li data-timestamp-start="${session.start}" data-timestamp-end="${session.end}">${new Date(session.start).toLocaleTimeString()} &rarr; ${new Date(session.end).toLocaleTimeString()} : : : ${ Time.formatMs(session.end-session.start) } </li>`; 
+                    newLi = `<li data-timestamp-start="${session.start}" data-timestamp-end="${session.end}">${new Date(session.start).toLocaleTimeString()} <span class="time-end">&rarr; ${new Date(session.end).toLocaleTimeString()}</span> <span class="session-time">: : : ${ Time.formatMs(session.end-session.start) }</span> </li>`; 
                     newList += newLi; 
                     totalMsOfDay += session.end-session.start; 
                 })
@@ -691,6 +691,12 @@ VIEWS
                 </div>
                 
                 <h2>Versions : </h2>
+                <div class="versions-container">
+                    <p>
+                        <strong>2022-11-29</strong> | V.0.9.4<br/>
+                        - ajout du tracking de temps de lecture
+                    </p>
+                </div>
                 <div class="versions-container">
                     <p>
                         <strong>2022-11-08</strong> | V.0.9.3<br/>
