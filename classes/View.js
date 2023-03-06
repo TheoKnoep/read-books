@@ -727,12 +727,9 @@ VIEWS
                     Fonctionnalités à venir :
                 </h2>
                 <ul>
-                    <li class="star">Gérer sa bibliothèque</li>
-                    <li class="star">Tracker ses lectures en cours</li>
-                    <li class="star">Prendre des notes sur un ouvrage</li>
-                    <li class="star">Import/export de données de livres au format JSON</li>
                     <li class="star">Synchronisation en ligne sur plusieurs appareils</li>
                     <li class="star">Recherche avancée dans les livres (par auteur, éditeur, etc.)</li>
+                    <li class="star">Gestion dans les paramètres du thème clair et sombre</li>
                 </ul>
 
 
