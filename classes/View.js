@@ -1012,6 +1012,9 @@ TEMPLATES
             let booksList = `<h2>${list_name} :</h2>`; 
             for (let i in books_list) {
                 let dateAdded = books_list[i].added_date ? `<span class="added-date">Ajouté le ${ new Date(books_list[i].added_date).toLocaleDateString() }</span>` : ''; 
+                if (books_list[i].finished_date) {
+                    dateAdded = `<span class="added-date">Terminé le ${ new Date(books_list[i].finished_date).toLocaleDateString() }</span>`
+                }
                 let flag = books_list[i].language ? `<img width="18" src="images/flags/4x3/${Utils.findFlag(books_list[i].language)}.svg" />` : '' ; 
     
                 let newEntry = `    <article class="book-entry" id="entry-${i}">
