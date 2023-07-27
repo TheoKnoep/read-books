@@ -71,17 +71,21 @@ class IndexedDB {
     }
   
     async deleteData(key) {
-      return new Promise((resolve, reject) => {
-        const transaction = this.db.transaction([this.storeName], 'readwrite');
-        const objectStore = transaction.objectStore(this.storeName);
-        const request = objectStore.delete(key);
-        request.onerror = event => {
-          reject(request.error);
-        };
-        request.onsuccess = event => {
-          resolve();
-        };
-      });
+      return this.openDB()
+      .then(() => {
+        return new Promise((resolve, reject) => {
+          const transaction = this.db.transaction([this.storeName], 'readwrite');
+          const objectStore = transaction.objectStore(this.storeName);
+          const request = objectStore.delete(key);
+          request.onerror = event => {
+            reject(request.error);
+          };
+          request.onsuccess = event => {
+            resolve();
+          };
+        });
+      })
+
     }
 
     async getListOfKeys() {

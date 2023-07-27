@@ -1,6 +1,12 @@
 class Wishlist {
 	constructor() {
 		this.books = []; 
+
+		this.storage = {
+			dataBase: 'read-books-app', 
+			storeObject: 'books', 
+			version: '1'
+		}; 
 	}
 
 	async initWishlist() {
@@ -55,12 +61,16 @@ class Wishlist {
 	}
 
 	remove(ID) {
-		let index = this.getIndexOfSingleBookByID(ID); 
+		let index = this.getIndexOfSingleBookByID(ID);
+		let isbn = this.books[index].isbn; 
+		console.log('suppressions de l\'isbn : ', isbn); 
 
 		if (index === null) { throw Error('ID not found') }
 		
 		this.books.splice(index, 1); 
 		this.saveWishlist(); 
+		let db = new IndexedDB('read-books-app', 'books', '1'); 
+		db.deleteData(isbn); 
 	}
 
 	saveWishlistLegacy() {
@@ -104,6 +114,8 @@ class Wishlist {
 	async saveWishlist() {
 		let db = new IndexedDB('read-books-app', 'books', '1'); 
 		// console.log(db); 
+
+		// delete missing wishlist entries entries 
 
 		let tableOfPromisses = []; 
 		this.books.forEach(book => {

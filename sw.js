@@ -1,5 +1,5 @@
 /**
- * Last update: 202307271715
+ * Last update: 202307271730
  */
 
 self.addEventListener("install", function (event) {
@@ -15,6 +15,7 @@ self.addEventListener("install", function (event) {
             'classes/Wishlist.js',
             'classes/Utils.js',
             'classes/Time.js',
+            'classes/indexeddb.js',
             'scripts/dom-manipulation.js',
             'scripts/search-book.js',
             'manifest.webmanifest', 
