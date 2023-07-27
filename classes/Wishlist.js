@@ -34,6 +34,7 @@ class Wishlist {
 			); 
 			output.push(newBook); 
 		})
+
 		return output; 
 	}
 
@@ -59,6 +60,36 @@ class Wishlist {
 
 	saveWishlist() {
 		localStorage.setItem('wishlist', JSON.stringify(this.books)); 
+	}
+
+
+	async saveInIndexedDB() {
+		let db = new IndexedDB('read-books-app', 'books', '1'); 
+		console.log(db); 
+
+		let tableOfPromisses = []; 
+		this.books.forEach(book => {
+			tableOfPromisses.push(db.setData(book.isbn, JSON.stringify(book))); 
+		})
+		return Promise.all(tableOfPromisses)
+			.then(res => {
+				return res; 
+			})
+
+	}
+
+	async retrievedFromIndexedDB() {
+		let db = new IndexedDB('read-books-app', 'books', '1'); 
+		return db.getListOfKeys().then(res => {
+			let tableOfPromisses = []; 
+			res.forEach(key => {
+				tableOfPromisses.push(db.getData(key)); 
+			})
+			return Promise.all(tableOfPromisses)
+				.then(res => {
+					return res; 
+				})
+		}); 
 	}
 
 	getAllBooksByStatus(status) {

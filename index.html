@@ -17,6 +17,7 @@
 
 	<!-- Scripts Classes -->
 	<script src="classes/Utils.js"></script>
+	<script src="classes/indexeddb.js"></script>
 	<script src="classes/Cache.js"></script>
 	<script src="classes/View.js"></script>
 	<script src="classes/UX.js"></script>
@@ -64,6 +65,10 @@
 
 	<script>
 		let wishlist = new Wishlist(); 
+
+				// !dev-only : test IndexedDB : 
+				wishlist.saveInIndexedDB().then(res => console.log(res)); 
+				wishlist.retrievedFromIndexedDB().then(res => console.log(res)); 
 
 		if (wishlist.readingSessionIsOnGoing()) {
 			// activateReadingBar(); 
