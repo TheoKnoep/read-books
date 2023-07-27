@@ -1,15 +1,16 @@
 class Wishlist {
 	constructor() {
-		this.books = this.initWishlist(); 	
+		this.books = []; 
 	}
 
-	initWishlist() {
+	async initWishlist() {
 		const local = localStorage.getItem('wishlist'); 
 		if (!local) { return [] }; 
 
 		let output = []; 
 		let fromLocal = JSON.parse(localStorage.getItem('wishlist')); 
-		fromLocal.forEach(book => {
+		let fromIndexedDB = await this.retrievedFromIndexedDB(); 
+		fromIndexedDB.forEach(book => {
 			let newBook = new Book(
 				book.title, 
 				book.author, 
@@ -35,11 +36,12 @@ class Wishlist {
 			output.push(newBook); 
 		})
 
-		return output; 
+		// return output; 
+		this.books = output; 
 	}
 
 	add(newBook) {
-		console.log(this.checkForDoublon(newBook)); 
+		// console.log(this.checkForDoublon(newBook)); 
 		if (this.checkForDoublon(newBook)) {
 			return false; 
 		} else {
@@ -58,14 +60,14 @@ class Wishlist {
 		this.saveWishlist(); 
 	}
 
-	saveWishlist() {
+	saveWishlistLegacy() {
 		localStorage.setItem('wishlist', JSON.stringify(this.books)); 
 	}
 
 
-	async saveInIndexedDB() {
+	async saveWishlist() {
 		let db = new IndexedDB('read-books-app', 'books', '1'); 
-		console.log(db); 
+		// console.log(db); 
 
 		let tableOfPromisses = []; 
 		this.books.forEach(book => {

@@ -65,10 +65,7 @@
 
 	<script>
 		let wishlist = new Wishlist(); 
-
-				// !dev-only : test IndexedDB : 
-				wishlist.saveInIndexedDB().then(res => console.log(res)); 
-				wishlist.retrievedFromIndexedDB().then(res => console.log(res)); 
+		
 
 		if (wishlist.readingSessionIsOnGoing()) {
 			// activateReadingBar(); 
@@ -88,7 +85,9 @@
 		window.addEventListener('load', RouteRequest); 
 		window.addEventListener('hashchange', RouteRequest); 
 
-		function RouteRequest() {
+		async function RouteRequest() {
+			await wishlist.initWishlist();  
+
 			scrollTo(0,0);
 			
 			let route = window.location.hash.split('/'); 
