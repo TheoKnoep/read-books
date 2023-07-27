@@ -127,7 +127,8 @@
 						View.import(route[2], route[3]); 
 						break; 
 					default: 
-						throw new Error('route non trouvée');
+						// throw new Error('route non trouvée');
+						View.home(); 
 				} 
 			} catch(err) {
 				console.log('errrrrrrrr', err); 

@@ -734,18 +734,13 @@ VIEWS
 
 
                 <h2>Export des données :</h2>
-                    <p>Cette chaîne de caractère vous permet de partager vos livres avec une autre personne, ou bien de la sauvegarder dans vos documents <em>(cliquez pour copier le code)</em> :</p>
-                    <button style="user-select: text; word-break: break-all; " class="copy-button">${wishlist.getListOfIDs().join(';')}</button>
-                    <p>Elle vous permet de réimporter vos livres mémorisés dans la page d'import de l'application.</p>
-
-                    <h3>Export de vos données au format JSON : </h3>
-                    <p>Si vous souhaitez inclure vos notes personnelles dans l'export :</p>
-                    <div id="export-container" class="versions-container" contenteditable="false">${JSON.stringify(wishlist.books)}</div>
-                    <button id="copy-json" style="">Copier</button>
-                    <button id="export-json" style="">Exporter</button>
+                    <button id="export-json" style="">Exporter au format JSON</button>
+                    <button id="export-csv" style="">Exporter au format CSV</button>
 
                 <h2>Import des données :</h2>
                 <p>★&nbsp;<a href="#/import">Formulaire d'import des données</a></p>
+                    <button id="import-json">Importer un fichier JSON</button>
+                    <input type="file" id="import-json-file" style="display: none; "/>
 
                 <h2>Suppression des données :</h2>
                 <p><strong>ATTENTION : opération irréversible ! </strong</p>
@@ -755,36 +750,47 @@ VIEWS
         CONTAINER.innerHTML = HTMLcontent; 
 
 
-        // EVENTS HANDLER 
-        const copyButton = document.querySelector('.copy-button'); 
-        copyButton.addEventListener('click', (event) => {
-            let copyText = copyButton.textContent; 
-            navigator.clipboard.writeText(copyText); 
-            new QuickToast("Copié dans le presse-papier", 3500).display(); 
-        })
-
-        //Copy JSON 
-        const copyJSON = document.getElementById('copy-json'); 
-        copyJSON.addEventListener('click', event => {
-            let copyText = document.getElementById('export-container').textContent; 
-            navigator.clipboard.writeText(copyText); 
-            new QuickToast("Copié dans le presse-papier", 3500).display({style: 'topFull'}); 
-        })
-
+        // EVENTS HANDLER
         //export JSON 
         const exportJSON = document.getElementById('export-json'); 
         exportJSON.addEventListener('click', event => {
-            try {
-                navigator.share({ 
-                    title: document.getElementById('export-container').textContent, 
-                    content: document.getElementById('export-container').textContent, 
-                    url: '#/import/ids/' + wishlist.getListOfIDs().join(';')
-                })
-                .catch(err => console.log('Oups : ', new UserChoice(err.toString(), null, "Compris").waitFor())); 
-            } catch(err) {
-                console.log('Oups : ', err.toString()); 
-                new UserChoice(err.toString(), null, "Compris").waitFor();  
-            } 
+            console.log('export JSON : ', wishlist.books);
+            let dataStr = JSON.stringify(wishlist.books); 
+            let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            let fileName = 'export_books.json'; 
+            let linkElt = document.createElement('a'); 
+            linkElt.setAttribute('href', dataUri);
+            linkElt.setAttribute('download', fileName);
+            linkElt.click(); 
+        })
+
+        // export CSV 
+        const exportCSV = document.getElementById('export-csv'); 
+        exportCSV.addEventListener('click', event => {
+            new UserChoice('Pas disponible pour le moment', null, 'Compris').waitFor(); 
+
+
+        })
+
+        // import JSON 
+        const import_json_btn = document.querySelector('#import-json'); 
+        const input_json = document.querySelector('#import-json-file'); 
+        import_json_btn.addEventListener('click', evt => {
+            input_json.click(); 
+        })
+        input_json.addEventListener('change', event => {
+            console.log(event.currentTarget.files[0]); 
+            let file = event.currentTarget.files[0]; 
+            if (file.type !== 'application/json') {
+                new QuickToast('❌ Erreur : format de fichier invalide, veuillez charger un fichier .JSON').display(); 
+                return; 
+            }
+            let reader = new FileReader(); 
+            reader.readAsText(file); 
+            reader.onload = (evt) => {
+                wishlist.importFromJSON(evt.target.result); 
+                new QuickToast('Import des données JSON effectué avec succès').display(); 
+            }; 
         })
 
 

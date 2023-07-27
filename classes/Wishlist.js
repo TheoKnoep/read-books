@@ -159,8 +159,6 @@ class Wishlist {
 		}); 
 
 
-		
-
 		// execute import : 
 		data.forEach(book => {
 			let newBook = new Book(
