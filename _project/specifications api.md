@@ -49,8 +49,6 @@ ROUTES :
 | POST | auth/login    | { email: string, password: string } | `{ user_id: stirng, token: string }` |                                                                    |
 | POST | auth/signup   | `{email, password}`                 |                                      | Chiffre le mot de passe de l'utilisateur et l'ajoute à la DB_users |
 
-
-
 ## Base de données :
 
 - users : 
@@ -65,10 +63,6 @@ ROUTES :
   
   - id ; user_id ; details 
 
-
-
-
-
 **Verify request** : 
 
 - le client envoie son id et son token dans la requête, et si elles correspondent à ceux enregistrées dans la base de donnée, la requête est valide
@@ -78,9 +72,3 @@ ROUTES :
   - => la personne n'est plus authentifiée, et doit se reconnecter avec login + mot de passe, et reçoit un nouveau token
   
   - 
-
-
-
-
-
-
