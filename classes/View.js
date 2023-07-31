@@ -693,6 +693,12 @@ VIEWS
                 <h2>Versions : </h2>
                 <div class="versions-container">
                     <p>
+                        <strong>2023-07-29</strong> | V.0.9.5<br/>
+                        - import/export de la liste complète au foramt JSON
+                    </p>
+                </div>
+                <div class="versions-container">
+                    <p>
                         <strong>2022-11-29</strong> | V.0.9.4<br/>
                         - ajout du tracking de temps de lecture
                     </p>
@@ -757,7 +763,9 @@ VIEWS
             console.log('export JSON : ', wishlist.books);
             let dataStr = JSON.stringify(wishlist.books); 
             let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            let fileName = 'export_books.json'; 
+            let now = new Date(); 
+            let dateString = now.getFullYear() + '.' + String(now.getMonth()+1).padStart(2, '0') + '.' + String(now.getDate()).padStart(2, '0') + '-' + String(now.getHours()).padStart(2, '0') + '.' + String(now.getMinutes()).padStart(2, '0'); 
+            let fileName = `${ dateString }_export-read-books.json`; 
             let linkElt = document.createElement('a'); 
             linkElt.setAttribute('href', dataUri);
             linkElt.setAttribute('download', fileName);

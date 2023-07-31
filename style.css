@@ -831,7 +831,7 @@ Book entry :
 	font-family: var(--mono-font);
 	background-color: var(--accent-bg);
     /* border: 1px solid var(--border); */
-	margin-bottom: 2px;
+	margin-bottom: 12px;
 }
 .about-container .versions-container p {
 	margin: 0; 

@@ -57,10 +57,10 @@
 	<button onclick="new UserChoice(`<span style='font-weight: bold; font-size: 1.6em; line-height: 2; '>Ici le message :</span><br/>Êtes-vous sûr de vouloir continuer ?`, 'Continuer', 'Annuler').waitFor().then(()=>new QuickToast().display({message: 'L\'action a bien été effectuée'})); ">Fenêtre de confirmation</button>
 
 
-	<form action="" id="login-form">
-		<input type="text" name="login" placeholder="Identifiant">
+	<form id="login-form">
+		<input type="text" name="login" placeholder="Identifiant" value="theo.knoepflin@gmail.com">
 		<input type="password" name="password" placeholder="Mot de passe">
-		<input type="submit" value="Connexion">
+		<button id="submit-login">Valider</button>
 	</form>
 
 
@@ -98,18 +98,31 @@
 
 
 		// test login : 
-		document.querySelector('#login-form').addEventListener('submit', event => {
+		$('#submit-login').addEventListener('click', event => {
 			event.preventDefault(); 
-			let data = new FormData(event.target); 
+			let data = new FormData($('#login-form')); 
 			let options = {
 				method: 'POST', 
 				body: data
 			}
 			fetch('https://demonic-leadership.000webhostapp.com/read-books/?route=auth/login', options)
 				.then(res => res.json())
-				.then(res => { console.log(res) })
+				.then(res => { 
+					console.log(res); 
+					if (res.result) {
+						saveToken(res.token); 
+					}
+				 })
 				.catch(err => console.log(err)); 
 		})
+
+		function saveToken(token) {
+			localStorage.setItem('_tok_vghfT', token); 
+		}
+
+		function $(selector) {
+			return document.querySelector(selector); 
+		}
 		
 	</script>
 </body>
