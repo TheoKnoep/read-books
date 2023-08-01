@@ -79,7 +79,7 @@ class Wishlist {
 
 	transitionLocaStorageToIndexedDB() {
 		let fromLocal = JSON.parse(localStorage.getItem('wishlist')); 
-		if (fromLocal) {
+		if (fromLocal && fromLocal.length > 0) {
 			fromLocal.forEach(book => {
 				let newBook = new Book(
 					book.title, 
@@ -126,6 +126,20 @@ class Wishlist {
 				return res; 
 			})
 
+	}
+
+	async deleteAllBooksFromIndexedDB() {
+		let db = new IndexedDB('read-books-app', 'books', '1'); 
+		return db.getListOfKeys().then(res => {
+			let promisses = []; 
+			res.forEach(key => {
+				promisses.push(db.deleteData(key))
+			})
+			return Promise.all(promisses)
+				.then(res => {
+					return res; 
+				})
+		})
 	}
 
 	async retrievedFromIndexedDB() {

@@ -25,7 +25,7 @@ class QuickToast {
         //handle options : 
         let message = options.message || this.msg; 
         let delay = options.delay || this.delay; 
-        let style = options.style || 'bottomLeft'; 
+        let style = options.style || 'bottomFull'; 
 
 
         // display : 
@@ -95,6 +95,18 @@ class QuickToast {
                 border-radius: 4px; 
                 solid 1px var(--border);
                 `, 
+            bottomFull: `position: fixed; 
+                width: calc(100% - 16px); 
+                bottom: 16px; 
+                left: 8px; 
+                z-index: 1000; 
+                background: var(--text); 
+                color: var(--bg);
+                padding: .8em 2em;
+                box-shadow: 1px 1px 4px rgba(0,0,0,.4); 
+                border-radius: 4px; 
+                solid 1px var(--border);
+                `,
             smallBottomCenter: `
                 position: fixed; 
                 bottom: 16px; 

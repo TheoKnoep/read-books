@@ -694,7 +694,7 @@ VIEWS
                 <div class="versions-container">
                     <p>
                         <strong>2023-07-29</strong> | V.0.9.5<br/>
-                        - import/export de la liste complète au foramt JSON
+                        - import/export de la liste complète au format JSON
                     </p>
                 </div>
                 <div class="versions-container">
@@ -750,7 +750,7 @@ VIEWS
 
                 <h2>Suppression des données :</h2>
                 <p><strong>ATTENTION : opération irréversible ! </strong</p>
-                <button onclick="new UserChoice('Nuke the data ?', 'Destroy all', 'Cancel').waitFor().then(() => { localStorage.setItem('wishlist', ''); wishlist.books = []; }); ">SUPPRIMER TOUTES LES DONNÉES</button>
+                <button id="delete-all-data" onclick=" ">SUPPRIMER TOUTES LES DONNÉES</button>
             </div>`; 
 
         CONTAINER.innerHTML = HTMLcontent; 
@@ -762,7 +762,9 @@ VIEWS
         exportJSON.addEventListener('click', event => {
             console.log('export JSON : ', wishlist.books);
             let dataStr = JSON.stringify(wishlist.books); 
-            let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            let dataUri = URL.createObjectURL(
+                new Blob([dataStr], { type: 'application/json' })
+            ); 
             let now = new Date(); 
             let dateString = now.getFullYear() + '.' + String(now.getMonth()+1).padStart(2, '0') + '.' + String(now.getDate()).padStart(2, '0') + '-' + String(now.getHours()).padStart(2, '0') + '.' + String(now.getMinutes()).padStart(2, '0'); 
             let fileName = `${ dateString }_export-read-books.json`; 
@@ -770,6 +772,7 @@ VIEWS
             linkElt.setAttribute('href', dataUri);
             linkElt.setAttribute('download', fileName);
             linkElt.click(); 
+            URL.revokeObjectURL(dataUri); 
         })
 
         // export CSV 
@@ -801,6 +804,19 @@ VIEWS
             }; 
         })
 
+
+        // delete all data
+        document.querySelector('#delete-all-data').addEventListener('click', event => {
+            new UserChoice("Êtes vous sûr de vouloir supprimer toutes les données de l'application ?<br/><small>⚠ Cette opération est irréversible</small>", 'SUPPRIMER', 'Annuler').waitFor()
+                .then(() => { 
+                    wishlist.deleteAllBooksFromIndexedDB()
+                        .then(res => {
+                            new QuickToast('Livres supprimés');
+                        })
+                });
+        })
+
+        
 
 
     }
