@@ -102,10 +102,11 @@ class QuickToast {
                 z-index: 1000; 
                 background: var(--text); 
                 color: var(--bg);
-                padding: .8em 2em;
+                padding: .8em 1em;
                 box-shadow: 1px 1px 4px rgba(0,0,0,.4); 
                 border-radius: 4px; 
                 solid 1px var(--border);
+                font-size: .8em;
                 `,
             smallBottomCenter: `
                 position: fixed; 

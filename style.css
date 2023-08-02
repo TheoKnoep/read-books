@@ -734,6 +734,10 @@ Book entry :
 
 
 
+.single-book__container .stats-link {
+	display: flex;
+    color: var(--accent);
+}
 
 
 

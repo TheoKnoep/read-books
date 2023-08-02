@@ -1,0 +1,11 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="24" height="24" fill="none"/>
+<rect x="2" y="19" width="20" height="1" rx="0.5" fill="currentColor"/>
+<path d="M5 20H7V21C7 21.5523 6.55228 22 6 22V22C5.44772 22 5 21.5523 5 21V20Z" fill="currentColor"/>
+<path d="M17 20H19V21C19 21.5523 18.5523 22 18 22V22C17.4477 22 17 21.5523 17 21V20Z" fill="currentColor"/>
+<rect x="4" y="6" width="4" height="12" fill="currentColor"/>
+<rect x="4" y="2" width="4" height="3" fill="currentColor"/>
+<rect x="9" y="5" width="3" height="9" fill="currentColor"/>
+<rect x="9" y="15" width="3" height="3" fill="currentColor"/>
+<path d="M13 6.026L16 5L20 17L17 18L13 6.026Z" fill="currentColor"/>
+</svg>

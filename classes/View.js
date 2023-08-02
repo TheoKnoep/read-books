@@ -276,7 +276,7 @@ VIEWS
                     <input type="number" id="current_progression" value="${b.progression ? b.progression.current : ''}" placeholder="Avancement actuel" data-book-id="${b.google_id}">
                     <input type="number" id="max_progression" value="${b.progression ? b.progression.max : ''}" placeholder="Longueur du livre" data-book-id="${b.google_id}">
                     <pre id="estimate-left-time">Estimation du temps restant :</br>${ estimateLeftTime() }</pre>
-                    <p><small><a href="#/book/${b.google_id}/stats">Statistiques de lecture</a></small></p>
+                    <p><small class="stats-link">${View.icon_statistics()}&nbsp;<a href="#/book/${b.google_id}/stats">Statistiques de lecture</a></small></p>
                 </div>
                 <div class="custom_section">
                     <h2>Avis : </h2>
@@ -332,7 +332,7 @@ VIEWS
         })
 
         txtArea.addEventListener('blur', event => {
-            if (txtArea.value) { new QuickToast('Note sauvegardée').display({style: 'topFull'}); }
+            if (txtArea.value) { new QuickToast('Note sauvegardée').display(); }
         })
 
         //update reading status : 
@@ -870,7 +870,7 @@ VIEWS
                 location.href = '#/'; 
             } catch(err) {
                 console.log(err); 
-                new QuickToast().display({message: err, delay: 10000, style: 'topFull'})
+                new QuickToast().display({message: err, delay: 10000})
             }
         })
     }
@@ -1029,7 +1029,7 @@ TEMPLATES
         let books_list = list; 
 
         const owned_icon = `
-            <span style="color: var(--accent);position: relative;top: 6px;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H2v15h7c1.7 0 3 1.3 3 3V7c0-2.2-1.8-4-4-4Z"></path><path d="m16 12 2 2 4-4"></path><path d="M22 6V3h-6c-2.2 0-4 1.8-4 4v14c0-1.7 1.3-3 3-3h7v-2.3"></path></svg></span>`; 
+            <span style="color: var(--accent);position: relative;top: 6px;"><svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z"/><rect x="2" y="19" width="20" height="1" rx=".5" fill="currentColor"/><path d="M5 20h2v1a1 1 0 1 1-2 0v-1ZM17 20h2v1a1 1 0 1 1-2 0v-1ZM4 6h4v12H4zM4 2h4v3H4zM9 5h3v9H9zM9 15h3v3H9zM13 6.026 16 5l4 12-3 1-4-11.974Z" fill="currentColor"/></svg></span>`; 
         
 
         if (books_list.length === 0) {
@@ -1090,6 +1090,9 @@ TEMPLATES
     }
     static stop_reading_session_button() {
         return `<button class="reading-session-btn active" data-action="stop"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg></button>`; 
+    }
+    static icon_statistics() {
+        return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>`; 
     }
 
 
