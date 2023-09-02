@@ -72,7 +72,7 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 				resultsBooks.push(new Book(
 					b.title, // title, 
 					b.authors ? b.authors.join(', ') : '', // authors
-					b.publisher, // publisher, 
+					b.publisher ? b.publisher : null, // publisher, 
 					b.description, // description, 
 					b.imageLinks ? b.imageLinks.thumbnail : "images/empty-cover.png", // miniature_link, 
 					b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '', // isbn, 

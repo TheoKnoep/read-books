@@ -245,7 +245,27 @@ class Wishlist {
 			) {
 				// all keys are ok : continue
 			} else {
-				throw new Error('Corrupted JSON at ' + index ); 
+				console.log('JSON ???', book); 
+				console.log('Verification model d import : ', 
+					'title' in book,
+					'author' in book,
+					'publisher' in book,
+					'description' in book,
+					'miniature_link' in book,
+					'isbn' in book,
+					'rate' in book,
+					'comment' in book,
+					'format' in book,
+					'google_id' in book,
+					'series' in book,
+					'series_number' in book,
+					'language' in book,
+					'added_date' in book,
+					'status' in book,
+					'started_date' in book,
+					'finished_date' in book 
+				);
+				// throw new Error('Corrupted JSON at ' + index ); 
 			} 
 
 			if (!book.google_id) {

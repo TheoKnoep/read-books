@@ -799,8 +799,12 @@ VIEWS
             let reader = new FileReader(); 
             reader.readAsText(file); 
             reader.onload = (evt) => {
-                wishlist.importFromJSON(evt.target.result); 
-                new QuickToast('Import des données JSON effectué avec succès').display(); 
+                try {
+                    wishlist.importFromJSON(evt.target.result); 
+                    new QuickToast('Import des données JSON effectué avec succès').display(); 
+                } catch(err) {
+                    new QuickToast(`❌ Erreur lors de l'import : ` + err.message).display(); 
+                }
             }; 
         })
 
@@ -811,7 +815,7 @@ VIEWS
                 .then(() => { 
                     wishlist.deleteAllBooksFromIndexedDB()
                         .then(res => {
-                            new QuickToast('Livres supprimés');
+                            new QuickToast('Livres supprimés').display();
                         })
                 });
         })
