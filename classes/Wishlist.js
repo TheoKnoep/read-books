@@ -294,7 +294,9 @@ class Wishlist {
 				book.status, 
 				book.started_date, 
 				book.finished_date, 
-				book.owned
+				book.owned, 
+				book.reading_log, 
+				book.progression
 			); 
 			this.add(newBook); 
 		})
