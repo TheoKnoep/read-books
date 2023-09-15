@@ -8,7 +8,7 @@ class View {
     static config() {
         return {
             main_container: document.querySelector('#app-container'), 
-            API_source: 'http://localhost/test-json-in-db/'
+            API_source: 'http://theokne.cluster021.hosting.ovh.net/index.php?route='
         }
     }
 
@@ -792,38 +792,39 @@ VIEWS
     static async save() {
         const CONTAINER = this.config().main_container; 
 
-        // USER INFO : 
-        const verifyAuth = async () => {
-            return fetch(this.config().API_source + 'auth')
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json); 
-                    return json; 
-                })
-        }
-                // verifyAuth()
-                //     .then(res => {
-                //         if (res.success) {
-                //             document.querySelector('#user-area').innerHTML = "Vous êtes connecté en tant que " + res.login; 
-                //         } else {
-                //             document.querySelector('#user-area').innerHTML = "Connectez-vous"; 
-                //         }
-                //     })
-
-        // let auth = await verifyAuth(); 
-        // let user_block = ''; 
-        // if (auth.success) {
-        //     user_block = `<p>
-        //         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-        //         &nbsp;<strong>Vous êtes connecté en tant que ${aut.login}</strong></p>
-        //         <button id="synchronize-json">Sauvegarder en ligne</button>"`; 
-        // } else {
-        //     user_block = `<p><strong>Connectez-vous</strong> pour effectuer une sauvegarde en ligne : </p>
-        //         <input type="text" name="login">
-        //         <input type="password" name="password">
-        //         <input type="submit" value="Connexion">
-        //         <p><em>Si vous n'avez pas encore de compte : <a href="#">créer un compte</a></em></p>`; 
+        let token = localStorage.getItem('session') || null; 
+        // const getUserInfo = async (token) => {
+        //     return fetch(this.config().API_source + 'auth', {
+        //         headers: {
+        //             Authorization: 'Bearer ' + token
+        //         }
+        //     }).then(res => res.json())
+        //         .then(res => {
+        //             return res; 
+        //         });  
         // }
+
+        let response = null; 
+        console.log(response); 
+
+        // USER INFO : 
+        let user_block = ''; 
+        let auth = {
+            success: false,
+            login: 'theo.knoepflin@gmail.com'
+        }
+        if (auth.success) {
+            user_block = `<p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+                &nbsp;Vous êtes connecté en tant que <strong>${auth.login}</strong></p>
+                <button id="synchronize-json">Sauvegarder en ligne</button>`; 
+        } else {
+            user_block = `<p><strong>Connectez-vous</strong> pour effectuer une sauvegarde en ligne : </p>
+                <input type="text" name="login">
+                <input type="password" name="password">
+                <input type="submit" value="Connexion">
+                <p><em>Si vous n'avez pas encore de compte : <a href="#">créer un compte</a></em></p>`; 
+        }
         
 
         // RENDER HTML : 
