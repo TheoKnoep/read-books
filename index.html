@@ -57,6 +57,7 @@
 	<footer class="footer">
 		<button id="open-search-btn" class="main-button" onclick="toggleAddButton(this)">+</button>
 		<a href="#/about">À propos</a>&nbsp;&nbsp;|&nbsp;
+		<a href="#/save">Sauvegarde</a>&nbsp;&nbsp;|&nbsp;
 		<a href="#/finished">Archives</a>
 	</footer>
 
@@ -127,6 +128,9 @@
 						break; 
 					case 'import': 
 						View.import(route[2], route[3]); 
+						break; 
+					case 'save': 
+						View.save(); 
 						break; 
 					default: 
 						// throw new Error('route non trouvée');

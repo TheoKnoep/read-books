@@ -7,7 +7,8 @@
 class View {
     static config() {
         return {
-            main_container: document.querySelector('#app-container')
+            main_container: document.querySelector('#app-container'), 
+            API_source: 'http://localhost/test-json-in-db/'
         }
     }
 
@@ -679,33 +680,29 @@ VIEWS
             <div class="about-container">
                 <h1>À propos : Web application de gestion de liste de lecture</h1>
                 <blockquote>Cherchez et ajoutez des livres à votre liste de lecture pour les garder en mémoire</blockquote>
-
-                <div class="data-clarification" style="">
-                    <div style=" width: 25%; max-width: 132px; min-width: 72px; float: left; text-align: center;">
-                        <svg style="width: 80%; height: 80%; opacity: .4;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                    </div>
-                    <div>
-                        <p><strong>Aucune de vos données n'est partagée en utilisant cette application, toutes les informations de livres restent stockées uniquement sur votre appareil</strong></p>
-                        <p><em>Attention à ne pas les supprimer par mégarde (en supprimant les données de ce site dans les paramètres de votre navigateur).</em></p>
-                    </div>
-                </div>
                 
                 <h2>Versions : </h2>
                 <div class="versions-container">
                     <p>
-                        <strong>2023-07-29</strong> | V.0.9.5<br/>
+                        <strong data-time="">2023-09-16</strong> | V.0.9.6<br/>
+                        - possibilité de sauvegarder en ligne sa liste locale de livres
+                    </p>
+                </div>
+                <div class="versions-container">
+                    <p>
+                        <strong data-time="">2023-07-29</strong> | V.0.9.5<br/>
                         - import/export de la liste complète au format JSON
                     </p>
                 </div>
                 <div class="versions-container">
                     <p>
-                        <strong>2022-11-29</strong> | V.0.9.4<br/>
+                        <strong data-time="">2022-11-29</strong> | V.0.9.4<br/>
                         - ajout du tracking de temps de lecture
                     </p>
                 </div>
                 <div class="versions-container">
                     <p>
-                        <strong>2022-11-08</strong> | V.0.9.3<br/>
+                        <strong data-time="">2022-11-08</strong> | V.0.9.3<br/>
                         - ajout des statuts de lecture modifiable pour un livre : à lire, commencé, terminé<br/>
                         - ajout possibilité d'exporter/importer sa liste de lecture au format JSON<br/>
                         - ajout des lectures en cours en ouverture de la page d'accueil
@@ -713,7 +710,7 @@ VIEWS
                 </div>
                 <div class="versions-container">
                     <p>
-                        <strong>2022-11-07</strong> | V.0.9.2<br/>
+                        <strong data-time="">2022-11-07</strong> | V.0.9.2<br/>
                         - ouverture du détail d'un livre<br/>
                         - ajout de note personnelle sur la fiche d'un livre<br/>
                         - amélioration de l'expérience de recherche et d'ajout de livre à la liste
@@ -721,7 +718,7 @@ VIEWS
                 </div>
                 <div class="versions-container">
                     <p>
-                        <strong>2022-11-03</strong> | V.0.9.1<br/>
+                        <strong data-time="">2022-11-03</strong> | V.0.9.1<br/>
                         - recherche de livre dans l'API de Google Books<br/>
                         - ajout des livres à la liste de lecture<br/>
                         - supprimer des livres de liste de lecture<br/>
@@ -733,30 +730,132 @@ VIEWS
                     Fonctionnalités à venir :
                 </h2>
                 <ul>
-                    <li class="star">Synchronisation en ligne sur plusieurs appareils</li>
                     <li class="star">Recherche avancée dans les livres (par auteur, éditeur, etc.)</li>
                     <li class="star">Gestion dans les paramètres du thème clair et sombre</li>
                 </ul>
 
+                <h2>
+                    Crédits :
+                </h2>
+                <ul>
+                    <li class="">L'application utilise le <a href="https://simplecss.org/" target="_blank">framework SimpleCSS</a></li>
+                    <li>Certaines icônes proviennent de <a href="https://lucide.dev/icons/" target="-blank">Lucide.dev</a></li>
+                </ul>
 
-                <h2>Export des données :</h2>
-                    <button id="export-json" style="">Exporter au format JSON</button>
-                    <button id="export-csv" style="">Exporter au format CSV</button>
-
-                <h2>Import des données :</h2>
-                <p>★&nbsp;<a href="#/import">Formulaire d'import des données</a></p>
-                    <button id="import-json">Importer un fichier JSON</button>
-                    <input type="file" id="import-json-file" style="display: none; "/>
-
+                <hr/>
                 <h2>Suppression des données :</h2>
                 <p><strong>ATTENTION : opération irréversible ! </strong</p>
-                <button id="delete-all-data" onclick=" ">SUPPRIMER TOUTES LES DONNÉES</button>
+                <div><button id="delete-all-data" onclick=" ">SUPPRIMER TOUTES LES DONNÉES</button></div>
+            </div>`; 
+
+        CONTAINER.innerHTML = HTMLcontent; 
+
+        // display notification on new versions : 
+        let last_visit = new Date(localStorage.getItem('last-visit-for-news') || null); 
+        console.log(last_visit); 
+        document.querySelectorAll('.versions-container [data-time]').forEach(item => {
+            console.log(new Date(item.textContent) > last_visit); 
+            if (new Date(item.textContent) > last_visit) {
+                item.insertAdjacentHTML('beforebegin', '<span class="new-marker">Nouveauté</span>'); 
+            }
+        }); 
+        localStorage.setItem('last-visit-for-news', new Date()); 
+
+
+        // EVENTS HANDLER
+        // delete all data
+        document.querySelector('#delete-all-data').addEventListener('click', event => {
+            new UserChoice("Êtes vous sûr de vouloir supprimer toutes les données de l'application ?<br/><small>⚠ Cette opération est irréversible</small>", 'SUPPRIMER', 'Annuler').waitFor()
+                .then(() => { 
+                    wishlist.deleteAllBooksFromIndexedDB()
+                        .then(res => {
+                            new QuickToast('Livres supprimés').display();
+                        })
+                });
+        })
+
+        
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    static async save() {
+        const CONTAINER = this.config().main_container; 
+
+        // USER INFO : 
+        const verifyAuth = async () => {
+            return fetch(this.config().API_source + 'auth')
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json); 
+                    return json; 
+                })
+        }
+                // verifyAuth()
+                //     .then(res => {
+                //         if (res.success) {
+                //             document.querySelector('#user-area').innerHTML = "Vous êtes connecté en tant que " + res.login; 
+                //         } else {
+                //             document.querySelector('#user-area').innerHTML = "Connectez-vous"; 
+                //         }
+                //     })
+
+        let auth = await verifyAuth(); 
+        let user_block = ''; 
+        if (auth.success) {
+            user_block = `<p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+                &nbsp;<strong>Vous êtes connecté en tant que ${aut.login}</strong></p>
+                <button id="synchronize-json">Sauvegarder en ligne</button>"`; 
+        } else {
+            user_block = `<p><strong>Connectez-vous</strong> pour effectuer une sauvegarde en ligne : </p>
+                <input type="text" name="login">
+                <input type="password" name="password">
+                <input type="submit" value="Connexion">
+                <p><em>Si vous n'avez pas encore de compte : <a href="#">créer un compte</a></em></p>`; 
+        }
+        
+
+        // RENDER HTML : 
+        let HTMLcontent = `
+            <div class="save-container">
+                <h1>Sauvegarde de vos données</h1>
+                <h2>Sauvegarde en ligne</h2>
+                <p><blockquote>Vous avez la possibilité (facultative) de créer un compte pour enregistrer en ligne les données de l'application (votre liste de livre, vos annotations personnalisée et votre log de lecture). Vous pourrez de plus synchoniser vos données entre plusieurs appareils</blockquote></p>
+
+                <div id="user-area">${user_block}</div>
+
+                <hr/>
+                <h2>Export des données :</h2>
+                
+                <button id="export-json" style="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-json-2"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/><polyline points="14 2 14 8 20 8"/><path d="M4 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1"/><path d="M8 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1"/></svg>
+                    &nbsp;Exporter au format JSON
+                </button>
+
+
+                <hr/>
+                <h2>Import des données :</h2>
+                    <button id="import-json">Importer un fichier JSON</button>
+                    <input type="file" id="import-json-file" style="display: none; "/>
             </div>`; 
 
         CONTAINER.innerHTML = HTMLcontent; 
 
 
-        // EVENTS HANDLER
+
+
+        // EVENTS HANDLER 
         //export JSON 
         const exportJSON = document.getElementById('export-json'); 
         exportJSON.addEventListener('click', event => {
@@ -773,14 +872,6 @@ VIEWS
             linkElt.setAttribute('download', fileName);
             linkElt.click(); 
             URL.revokeObjectURL(dataUri); 
-        })
-
-        // export CSV 
-        const exportCSV = document.getElementById('export-csv'); 
-        exportCSV.addEventListener('click', event => {
-            new UserChoice('Pas disponible pour le moment', null, 'Compris').waitFor(); 
-
-
         })
 
         // import JSON 
@@ -809,30 +900,7 @@ VIEWS
         })
 
 
-        // delete all data
-        document.querySelector('#delete-all-data').addEventListener('click', event => {
-            new UserChoice("Êtes vous sûr de vouloir supprimer toutes les données de l'application ?<br/><small>⚠ Cette opération est irréversible</small>", 'SUPPRIMER', 'Annuler').waitFor()
-                .then(() => { 
-                    wishlist.deleteAllBooksFromIndexedDB()
-                        .then(res => {
-                            new QuickToast('Livres supprimés').display();
-                        })
-                });
-        })
-
-        
-
-
     }
-
-
-
-
-
-
-
-
-
 
 
 

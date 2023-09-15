@@ -842,6 +842,20 @@ Book entry :
 	padding: .6em; 
 }
 
+.about-container .versions-container .new-marker {
+	background-color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--text);
+    margin-right: 6px;
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 1px 1px 3px var(--accent-bg);
+}
+.about-container .versions-container .new-marker + strong {
+	color: var(--accent); 
+}
+
 li.star {
 	list-style-type: '★ ';
 }

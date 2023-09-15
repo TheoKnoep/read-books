@@ -16,7 +16,8 @@
     "status": "to-read",
     "started_date": null,
     "finished_date": null, 
-    "owned": false
+    "owned": false, 
+    "session_log": []
 }]
 
 
