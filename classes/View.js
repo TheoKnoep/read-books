@@ -810,20 +810,20 @@ VIEWS
                 //         }
                 //     })
 
-        let auth = await verifyAuth(); 
-        let user_block = ''; 
-        if (auth.success) {
-            user_block = `<p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-                &nbsp;<strong>Vous êtes connecté en tant que ${aut.login}</strong></p>
-                <button id="synchronize-json">Sauvegarder en ligne</button>"`; 
-        } else {
-            user_block = `<p><strong>Connectez-vous</strong> pour effectuer une sauvegarde en ligne : </p>
-                <input type="text" name="login">
-                <input type="password" name="password">
-                <input type="submit" value="Connexion">
-                <p><em>Si vous n'avez pas encore de compte : <a href="#">créer un compte</a></em></p>`; 
-        }
+        // let auth = await verifyAuth(); 
+        // let user_block = ''; 
+        // if (auth.success) {
+        //     user_block = `<p>
+        //         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+        //         &nbsp;<strong>Vous êtes connecté en tant que ${aut.login}</strong></p>
+        //         <button id="synchronize-json">Sauvegarder en ligne</button>"`; 
+        // } else {
+        //     user_block = `<p><strong>Connectez-vous</strong> pour effectuer une sauvegarde en ligne : </p>
+        //         <input type="text" name="login">
+        //         <input type="password" name="password">
+        //         <input type="submit" value="Connexion">
+        //         <p><em>Si vous n'avez pas encore de compte : <a href="#">créer un compte</a></em></p>`; 
+        // }
         
 
         // RENDER HTML : 
