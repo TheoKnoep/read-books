@@ -58,8 +58,8 @@
 
 
 	<form id="login-form">
-		<input type="text" name="login" placeholder="Identifiant" value="theo.knoepflin@gmail.com">
-		<input type="password" name="password" placeholder="Mot de passe">
+		<input type="text" name="login" placeholder="Identifiant" value="other@email.com">
+		<input type="password" name="password" placeholder="Mot de passe" value="poumpoum">
 		<button id="submit-login">Valider</button>
 	</form>
 
@@ -101,17 +101,22 @@
 		$('#submit-login').addEventListener('click', event => {
 			event.preventDefault(); 
 			let data = new FormData($('#login-form')); 
+
+			console.log(data.get('login')); console.log(data.get('password')); 
+
 			let options = {
-				method: 'POST', 
-				body: data
+				method: 'POST'
 			}
-			fetch('https://demonic-leadership.000webhostapp.com/read-books/?route=auth/login', options)
-				.then(res => res.json())
+			options.body = data; 
+
+			// let url = "http://localhost/test-json-in-db/index.php?route=auth"; 
+			let url = 'http://theokne.cluster021.hosting.ovh.net/index.php?route=auth'; 
+			
+			fetch(url, options)
+				.then(res => res.text())
 				.then(res => { 
 					console.log(res); 
-					if (res.result) {
-						saveToken(res.token); 
-					}
+					console.log(JSON.parse(res)); 
 				 })
 				.catch(err => console.log(err)); 
 		})
