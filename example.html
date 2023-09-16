@@ -10,6 +10,10 @@
 	<style>
 		html {
 			background: #222;
+			font-family: monospace;
+		}
+		p {
+			color: #eee; 
 		}
 		.user-choice-popin {
 			
@@ -53,15 +57,18 @@
 <body>
 	
 
-	<button onclick="new QuickToast('Le message est affiché ici pendant 3 secondes', 3000).display(); ">Afficher un message d'info</button>
-	<button onclick="new UserChoice(`<span style='font-weight: bold; font-size: 1.6em; line-height: 2; '>Ici le message :</span><br/>Êtes-vous sûr de vouloir continuer ?`, 'Continuer', 'Annuler').waitFor().then(()=>new QuickToast().display({message: 'L\'action a bien été effectuée'})); ">Fenêtre de confirmation</button>
+	<!-- <button onclick="new QuickToast('Le message est affiché ici pendant 3 secondes', 3000).display(); ">Afficher un message d'info</button>
+	<button onclick="new UserChoice(`<span style='font-weight: bold; font-size: 1.6em; line-height: 2; '>Ici le message :</span><br/>Êtes-vous sûr de vouloir continuer ?`, 'Continuer', 'Annuler').waitFor().then(()=>new QuickToast().display({message: 'L\'action a bien été effectuée'})); ">Fenêtre de confirmation</button> -->
 
 
 	<form id="login-form">
-		<input type="text" name="login" placeholder="Identifiant" value="other@email.com">
+		<input type="text" name="login" placeholder="Identifiant" value="other@mail.com">
 		<input type="password" name="password" placeholder="Mot de passe" value="poumpoum">
 		<button id="submit-login">Valider</button>
 	</form>
+
+
+	<div class="user-status"></div>
 
 
 
@@ -97,6 +104,11 @@
 		}
 
 
+
+
+		testUserConnexion(); 
+
+
 		// test login : 
 		$('#submit-login').addEventListener('click', event => {
 			event.preventDefault(); 
@@ -116,13 +128,43 @@
 				.then(res => res.text())
 				.then(res => { 
 					console.log(res); 
-					console.log(JSON.parse(res)); 
+					console.log(JSON.parse(res));
+					let result = JSON.parse(res); 
+					if (result.success) {
+						saveToken(result.token); 
+					}
 				 })
 				.catch(err => console.log(err)); 
 		})
 
 		function saveToken(token) {
 			localStorage.setItem('_tok_vghfT', token); 
+		}
+
+		function retrievedToken() {
+			return localStorage.getItem('_tok_vghfT') || null; 
+		}
+
+		function deleteSession() {
+			localStorage.removeItem('_tok_vghfT'); 
+			location.reload(); 
+		}
+
+		async function testUserConnexion() {
+			let url = 'http://theokne.cluster021.hosting.ovh.net/index.php?route=auth'; 
+			let token = retrievedToken(); 
+			if (!token) {
+				console.log('PAS DE TOKEN DE SESSION'); 
+				return; 
+			}
+			let response = await fetch(url + '&token=' + token); 
+			let text = await response.text(); 
+			console.log('test session', text); 
+			console.log(JSON.parse(text)); 
+			let result = JSON.parse(text); 
+			if (result.success) {
+				document.querySelector('.user-status').innerHTML = `<p>Vous êtes connecté en tant que <strong>${result.login}</strong><button onclick="deleteSession();">Déconnexion</button></p>`; 
+			}
 		}
 
 		function $(selector) {
