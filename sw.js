@@ -1,5 +1,5 @@
 /**
- * Last update: 202308021930
+ * Last update: 2023.09.16.17.12.000
  */
 
 self.addEventListener("install", function (event) {

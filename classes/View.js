@@ -792,37 +792,27 @@ VIEWS
     static async save() {
         const CONTAINER = this.config().main_container; 
 
-        let token = localStorage.getItem('session') || null; 
-        // const getUserInfo = async (token) => {
-        //     return fetch(this.config().API_source + 'auth', {
-        //         headers: {
-        //             Authorization: 'Bearer ' + token
-        //         }
-        //     }).then(res => res.json())
-        //         .then(res => {
-        //             return res; 
-        //         });  
-        // }
 
-        let response = null; 
-        console.log(response); 
+        let auth = await testUserConnexion(); 
+        console.log(auth); 
 
         // USER INFO : 
         let user_block = ''; 
-        let auth = {
-            success: false,
-            login: 'theo.knoepflin@gmail.com'
-        }
         if (auth.success) {
-            user_block = `<p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-                &nbsp;Vous êtes connecté en tant que <strong>${auth.login}</strong></p>
-                <button id="synchronize-json">Sauvegarder en ligne</button>`; 
+            user_block = `<p style="display: flex; align-items: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+                    <span>&nbsp;Vous êtes connecté en tant que <strong>${auth.login}</strong>&nbsp;</span>
+                    <button onclick="deleteSession()"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></button>
+                </p>
+                <button id="synchronize-json"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>&nbsp;Sauvegarder en ligne</button>
+                `; 
         } else {
             user_block = `<p><strong>Connectez-vous</strong> pour effectuer une sauvegarde en ligne : </p>
-                <input type="text" name="login">
-                <input type="password" name="password">
-                <input type="submit" value="Connexion">
+                <form id="signin-form">    
+                    <input type="text" name="login" id="login" placeholder="Login">
+                    <input type="password" name="password" id="password" placeholder="Mot de passe">
+                    <input type="submit" value="Connexion">
+                </form>
                 <p><em>Si vous n'avez pas encore de compte : <a href="#">créer un compte</a></em></p>`; 
         }
         
@@ -857,6 +847,55 @@ VIEWS
 
 
         // EVENTS HANDLER 
+
+        // signin : 
+        const signinForm = document.querySelector('#signin-form'); 
+        if (signinForm) {
+            signinForm.addEventListener('submit', event => {
+                event.preventDefault(); 
+                let login = event.target.querySelector('#login').value; 
+                let password = event.target.querySelector('#password').value; 
+                authentifyUser(login, password)
+                    .then(res => {
+                        console.log('Connection ? ', res); 
+                        if (res.success) {
+                            location.reload(); 
+                        } else {
+                            event.target.innerHTML = `<p>Identifiants incorrects, <a href="javascript:location.reload()">veuillez réessayer</a></p>`; 
+                        }
+                    }); 
+
+            })
+        }
+
+        // send JSON online : 
+        const synchronizeJSON = document.querySelector('#synchronize-json'); 
+        if (synchronizeJSON) {
+            synchronizeJSON.addEventListener('click', event => {
+                let jsonStr = JSON.stringify(wishlist.books); 
+
+                let jsonFile = new Blob([jsonStr], { type: 'application/json' }); 
+                let data = new FormData(); 
+                data.append('json', jsonFile); 
+
+                let token = retrievedToken(); 
+
+                fetch(CONFIG.api_source + 'json' + '&token=' + token, {
+                    method: 'POST', 
+                    body: data
+                })
+                    .then(res => res.text())
+                    .then(text => {
+                        console.log(text); 
+                        console.log(JSON.parse(text)); 
+                        let response = JSON.parse(text); 
+                        if (response.success) {
+                            new QuickToast('Sauvegarde en ligne réussie').display();
+                        }
+                    })
+            })
+        }
+
         //export JSON 
         const exportJSON = document.getElementById('export-json'); 
         exportJSON.addEventListener('click', event => {

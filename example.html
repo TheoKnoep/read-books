@@ -75,97 +75,18 @@
 	<script src="scripts/search-book.js"></script>
 	<script>
 		
-		
-		
-		// getSingleBookInformation('LVaGAQAAQBAJ')
-		// 	.then(data => console.log(data))
-		// 	.catch(err => console.log(err)); 
+		let url = "http://theokne.cluster021.hosting.ovh.net/index.php?route=";
+		let token = localStorage.getItem('_tok_vghfT'); 
 
-		
-
-		// let searchParam = new URLSearchParams(window.location.search); 
-
-		// open : dreee.html?import=LVaGAQAAQBAJ;WyBREAAAQBAJ;vVeGAQAAQBAJ
-		// console.log(searchParam.get('import').split(';')); 
-
-		// getBooksInfosThroughListOfIDs(searchParam.get('import').split(';'))
-		// 	.then(res => console.log('ola', res)) // on reçoit un tableau de JSON pour chaque livre dont on a fourni l'ID
-		// 	.catch(err => console.warn('ERR :: ', err)); 
-
-
-		function removeDuplicates(array) {
-			let output = []; 
-			array.forEach(item => {
-				if (output.indexOf(item) < 0) {
-					output.push(item); 
-				}
-			});
-			return output; 
-		}
-
-
-
-
-		testUserConnexion(); 
-
-
-		// test login : 
-		$('#submit-login').addEventListener('click', event => {
-			event.preventDefault(); 
-			let data = new FormData($('#login-form')); 
-
-			console.log(data.get('login')); console.log(data.get('password')); 
-
-			let options = {
-				method: 'POST'
-			}
-			options.body = data; 
-
-			// let url = "http://localhost/test-json-in-db/index.php?route=auth"; 
-			let url = 'http://theokne.cluster021.hosting.ovh.net/index.php?route=auth'; 
-			
-			fetch(url, options)
-				.then(res => res.text())
-				.then(res => { 
-					console.log(res); 
-					console.log(JSON.parse(res));
-					let result = JSON.parse(res); 
-					if (result.success) {
-						saveToken(result.token); 
-					}
-				 })
-				.catch(err => console.log(err)); 
-		})
-
-		function saveToken(token) {
-			localStorage.setItem('_tok_vghfT', token); 
-		}
-
-		function retrievedToken() {
-			return localStorage.getItem('_tok_vghfT') || null; 
-		}
-
-		function deleteSession() {
-			localStorage.removeItem('_tok_vghfT'); 
-			location.reload(); 
-		}
-
-		async function testUserConnexion() {
-			let url = 'http://theokne.cluster021.hosting.ovh.net/index.php?route=auth'; 
-			let token = retrievedToken(); 
-			if (!token) {
-				console.log('PAS DE TOKEN DE SESSION'); 
-				return; 
-			}
-			let response = await fetch(url + '&token=' + token); 
+		async function getJson() {
+			let response = await fetch(url + 'json' + '&token=' + token); 
 			let text = await response.text(); 
-			console.log('test session', text); 
+			console.log(text); 
 			console.log(JSON.parse(text)); 
-			let result = JSON.parse(text); 
-			if (result.success) {
-				document.querySelector('.user-status').innerHTML = `<p>Vous êtes connecté en tant que <strong>${result.login}</strong><button onclick="deleteSession();">Déconnexion</button></p>`; 
-			}
 		}
+
+		getJson(); 
+		
 
 		function $(selector) {
 			return document.querySelector(selector); 
