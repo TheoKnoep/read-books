@@ -333,8 +333,9 @@ class Wishlist {
 			let at_least_one_update = false; 
 			try {
 				let cover_url = new URL(book.miniature_link); 
-				console.log(cover_url); 
-				if (cover_url.host.includes('theoknoepflin.com' === false)) { 
+				console.log(cover_url, cover_url.host.includes('theoknoepflin.com') === false); 
+				
+				if ( cover_url.host.includes('theoknoepflin.com') === false ) { 
 					console.log('>>> change URL link of cover for : ', book.title, book.google_id); 
 					book.miniature_link = `https://theoknoepflin.com/read-books-api/cover.php?id=${book.google_id}`;
 					book.handleCoverInCache('add'); 
