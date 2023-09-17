@@ -345,7 +345,7 @@ class Wishlist {
 				console.log('--no url'); 
 			}
 
-			if (at_least_one_update) { new QuickToast('Les liens des minatures de couverture ont été mis à jour 👍').display(); }
+			if (at_least_one_update) { new QuickToast('Les liens des miniatures de couverture ont été mis à jour 👍').display({ delay: 10000 }); }
 		}); 
 		
 		this.saveWishlist(); 
