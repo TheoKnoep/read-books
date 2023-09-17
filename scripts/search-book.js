@@ -100,7 +100,7 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 					b.authors ? b.authors.join(',') : '', // authors
 					b.publisher, // publisher, 
 					b.description, // description, 
-					b.imageLinks ? b.imageLinks.thumbnail : "images/empty-cover.png", // miniature_link, 
+					b.imageLinks ? `https://theoknoepflin.com/read-books-api/cover.php?id=${data.items[i].id}` : "images/empty-cover.png", // miniature_link, 
 					b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '', // isbn, 
 					null, // rate, 
 					null, // comment,

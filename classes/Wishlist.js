@@ -56,19 +56,24 @@ class Wishlist {
 		} else {
 			this.books.push(newBook); 
 			this.saveWishlist(); 
+			newBook.handleCoverInCache('add'); 
 			return true; 
 		}
 	}
 
 	remove(ID) {
 		let index = this.getIndexOfSingleBookByID(ID);
-		let isbn = this.books[index].isbn; 
+		let bookToDelete = this.books[index]; 
+		let isbn = bookToDelete.isbn; 
 		console.log('suppressions de l\'isbn : ', isbn); 
+
+		bookToDelete.handleCoverInCache('delete')
 
 		if (index === null) { throw Error('ID not found') }
 		
 		this.books.splice(index, 1); 
 		this.saveWishlist(); 
+
 		let db = new IndexedDB('read-books-app', 'books', '1'); 
 		db.deleteData(isbn); 
 	}
@@ -317,6 +322,33 @@ class Wishlist {
 	}
 
 
+
+
+
+	/**
+	 * Legacy : to transform links of books miniatures with the API cover link, and therefor put them in cache
+	 */
+	update_minature_cover_with_new_API_link() {
+		this.books.forEach(book => {
+			let at_least_one_update = false; 
+			try {
+				let cover_url = new URL(book.miniature_link); 
+				console.log(cover_url); 
+				if (cover_url.host.includes('theoknoepflin.com' === false)) { 
+					console.log('>>> change URL link of cover for : ', book.title, book.google_id); 
+					book.miniature_link = `https://theoknoepflin.com/read-books-api/cover.php?id=${book.google_id}`;
+					book.handleCoverInCache('add'); 
+					at_least_one_update = true; 
+				}
+			} catch(err) {
+				console.log('--no url'); 
+			}
+
+			if (at_least_one_update) { new QuickToast('Les liens des minatures de couverture ont été mis à jour 👍').display(); }
+		}); 
+		
+		this.saveWishlist(); 
+	}
 
 
 

@@ -1076,7 +1076,7 @@ TEMPLATES
             let readingSessionHTML = ''; 
             b.readingSessionIsOnGoing() ? readingSessionHTML = this.stop_reading_session_button(b.google_id) : readingSessionHTML =  this.record_reading_button(b.google_id) ; 
 
-            console.log("Session reaing time ??? ", b.calculateReadingTime()); 
+            console.log("Session reading time ? ", b.calculateReadingTime()); 
             // fill card template : 
             booksCards += `<a href="#/book/${b.google_id}" id="id${b.google_id}" class="current-reading__card" style="width: calc(${ 100 / books_list.length }% - ${(books_list.length-1) * 12}px); ">
                 <img src="${b.miniature_link}" width="84"/>

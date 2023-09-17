@@ -1,6 +1,6 @@
 const CONFIG = {
 	'storage_name': '_tok_vghfT', 
-	'api_source': 'https://theoknoepflin.com/index.php?route='
+	'api_source': 'https://theoknoepflin.com/read-books-api/index.php?route='
 }; 
 
 function saveToken(token) {

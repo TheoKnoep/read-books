@@ -75,7 +75,6 @@
 
 		let timers = [];
 
-		
 	</script>
 
 
@@ -88,6 +87,8 @@
 
 		async function RouteRequest() {
 			await wishlist.initWishlist();  
+
+			wishlist.update_minature_cover_with_new_API_link(); 
 
 			scrollTo(0,0);
 			

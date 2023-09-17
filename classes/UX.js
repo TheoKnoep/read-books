@@ -181,6 +181,8 @@ class UserChoice {
             .btn-container {
                 text-align: right;
                 border-top: solid 1px var(--accent);
+                display: flex;
+                justify-content: flex-end;
             }
             #cancel-btn {
                 background: transparent;

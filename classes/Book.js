@@ -145,4 +145,23 @@ class Book {
 
 		//
 	}
+
+
+	handleCoverInCache(action) {
+		let cache_name = 'read-list-covers'; 
+		switch (action) {
+			case 'add': 
+				if (this.miniature_link !== "images/empty-cover.png") {
+					caches.open(cache_name)
+						.then(cache => cache.add(this.miniature_link));
+				}
+				break; 
+			case 'delete': 
+			caches.open(cache_name)
+				.then(cache => cache.delete(this.miniature_link));
+				break;
+			default: 
+				console.log('no parameter'); 
+		}
+	}
 }
