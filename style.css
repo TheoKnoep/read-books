@@ -290,6 +290,8 @@ button {
 	border-radius: 5px 0 0 5px;
 }
 
+
+
 /** Scroll bar style **/
 /* #current-reading .current-reading__container::-webkit-scrollbar {
 	height: 12px;
@@ -312,6 +314,7 @@ button {
 	justify-content: space-between;
 	align-items: center;
 	height: 92%;
+	position: relative;
 }
 #current-reading a.current-reading__card {
 	height: 100%;
@@ -336,6 +339,18 @@ button {
 		background-image: url(images/bg-grain-l.png);
 	}
 }
+
+#current-reading .progression-bar {
+	position: absolute;
+    height: 3px;
+    border-radius: 18px;
+    background-color: var(--accent);
+    bottom: 0;
+    left: 0;
+    opacity: .9;
+	transition: width ease 680ms;
+}
+
 #current-reading a.current-reading__card img {
 	height: 100%;
 	object-fit: cover;

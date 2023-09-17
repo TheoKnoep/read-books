@@ -143,6 +143,8 @@
 				console.log('errrrrrrrr', err); 
 				View.not_found(err.toString());
 			}
+
+			window.dispatchEvent(new Event('renderedHTML')); 
 			
 			Utils.preventRightClick(); 
 		}

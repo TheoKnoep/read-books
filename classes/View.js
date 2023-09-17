@@ -1072,11 +1072,20 @@ TEMPLATES
         let booksCards = ''; 
         books_list.forEach(b => {
             //is reading session active ?
-            console.log(b.readingSessionIsOnGoing()); 
+            // console.log(b.readingSessionIsOnGoing()); 
             let readingSessionHTML = ''; 
             b.readingSessionIsOnGoing() ? readingSessionHTML = this.stop_reading_session_button(b.google_id) : readingSessionHTML =  this.record_reading_button(b.google_id) ; 
 
-            console.log("Session reading time ? ", b.calculateReadingTime()); 
+            
+
+            // display progression bar : 
+            let progression_bar = ''; 
+            if (b.progression.max && b.progression.current) {
+                let percentage = (b.progression.current / b.progression.max) * 100; 
+                progression_bar = `<div class="progression-bar" style="width: 0%;" data-progression="${percentage}"></div>`; 
+            }
+
+
             // fill card template : 
             booksCards += `<a href="#/book/${b.google_id}" id="id${b.google_id}" class="current-reading__card" style="width: calc(${ 100 / books_list.length }% - ${(books_list.length-1) * 12}px); ">
                 <img src="${b.miniature_link}" width="84"/>
@@ -1093,7 +1102,9 @@ TEMPLATES
                     
                     </div>
                 </div>
-            </a>`; 
+                ${ progression_bar }
+            </a>
+            `; 
 
             // launch timer if reading session is on going : 
             if (b.readingSessionIsOnGoing()) {
@@ -1113,6 +1124,21 @@ TEMPLATES
                 </div>
             </div>
         </div>`; 
+
+
+        // launch progression animation : 
+        window.addEventListener('renderedHTML', evt => {
+            let all_progress_bar = document.querySelectorAll('[data-progression]'); 
+            let delay = 0; 
+            all_progress_bar.forEach(element => {
+                console.log(element); 
+                setTimeout(() => {
+                    element.style.width = element.dataset.progression + '%'; 
+                }, 1000 + delay); 
+                delay = delay + 600; 
+            })
+        })
+        
 
         
 
