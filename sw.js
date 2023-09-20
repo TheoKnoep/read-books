@@ -32,14 +32,40 @@ self.addEventListener("install", function (event) {
 
 
 self.addEventListener('fetch', event => {
-    // console.log(event.request.url); 
-    event.respondWith(
-        fetch(event.request)
-            .catch(() => {
-                return caches.match(event.request)
-                    .then(cachedResponse => {
+    console.log(new URL(event.request.url).origin === "https://theoknoepflin.com"); 
+    if (new URL(event.request.url).origin === "https://theoknoepflin.com") {
+        event.respondWith(
+            caches.match(event.request)
+                .then((cachedResponse) => {
+                    console.log('returned from cache : ', cachedResponse); 
+                    if (cachedResponse) {
                         return cachedResponse; 
-                    }); 
-            })
-    )
+                    } else {
+                        return fetch(event.request)
+                        .then(res => {
+                            console.log('res', res); 
+                            return res; 
+                        }); 
+                    }
+                })
+                // .catch(() => {
+                //     console.log('boo'); 
+                //     return fetch(event.request)
+                //         .then(res => {
+                //             console.log('res', res); 
+                //             return res; 
+                //         }); 
+                // })
+        )
+    } else {
+        event.respondWith(
+            fetch(event.request)
+                .catch(() => {
+                    return caches.match(event.request)
+                        .then(cachedResponse => {
+                            return cachedResponse; 
+                        }); 
+                })
+        )
+    }
 })

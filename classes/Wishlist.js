@@ -333,7 +333,7 @@ class Wishlist {
 			let at_least_one_update = false; 
 			try {
 				let cover_url = new URL(book.miniature_link); 
-				console.log(cover_url, cover_url.host.includes('theoknoepflin.com') === false); 
+				// console.log(cover_url, cover_url.host.includes('theoknoepflin.com') === false); 
 				
 				if ( cover_url.host.includes('theoknoepflin.com') === false ) { 
 					console.log('>>> change URL link of cover for : ', book.title, book.google_id); 
@@ -342,7 +342,7 @@ class Wishlist {
 					at_least_one_update = true; 
 				}
 			} catch(err) {
-				console.log('--no url'); 
+				// console.log('--no url'); 
 			}
 
 			if (at_least_one_update) { new QuickToast('Les liens des miniatures de couverture ont été mis à jour 👍').display({ delay: 10000 }); }
