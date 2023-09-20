@@ -32,18 +32,16 @@ self.addEventListener("install", function (event) {
 
 
 self.addEventListener('fetch', event => {
-    console.log(new URL(event.request.url).origin === "https://theoknoepflin.com"); 
+    // console.log(new URL(event.request.url).origin === "https://theoknoepflin.com"); 
     if (new URL(event.request.url).origin === "https://theoknoepflin.com") {
         event.respondWith(
             caches.match(event.request)
                 .then((cachedResponse) => {
-                    console.log('returned from cache : ', cachedResponse); 
                     if (cachedResponse) {
                         return cachedResponse; 
                     } else {
                         return fetch(event.request)
                         .then(res => {
-                            console.log('res', res); 
                             return res; 
                         }); 
                     }

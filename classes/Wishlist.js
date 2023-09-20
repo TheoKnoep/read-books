@@ -120,7 +120,7 @@ class Wishlist {
 		let db = new IndexedDB('read-books-app', 'books', '1'); 
 		// console.log(db); 
 
-		// delete missing wishlist entries entries 
+		// delete missing wishlist entries 
 
 		let tableOfPromisses = []; 
 		this.books.forEach(book => {
