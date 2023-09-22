@@ -233,7 +233,7 @@ VIEWS
             <div class="single-book__container" id="id${b.google_id}">
                 <div class="infos_container">
                     
-                    <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; "/ >
+                    <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; opacity: 0;  "/ >
                     <div class="owned-checkbox" >
                         <label class="${b.owned ? 'owned-label' : ''}" for="owned" >Dans votre bibliothèque&nbsp;: </label>
                         <input type="checkbox" name="owned" id="owned-checkbox" ${b.owned ? 'checked="true"' : ''}  data-book-id="${b.google_id}">
@@ -318,6 +318,11 @@ VIEWS
 
 
         // EVENTS HANDLER :
+
+        // img smooth loading
+        document.querySelector('.miniature-cover').addEventListener('load', evt => {
+            evt.target.style.opacity = '1'; 
+        })
 
         //svg comment : 
         txtArea.addEventListener('input', event => {
