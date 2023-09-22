@@ -340,9 +340,20 @@ button {
 	}
 }
 
+#current-reading .progression-bar__container {
+	width: 84px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 24px;
+    background: linear-gradient(1deg, #00000082, transparent);
+    border-radius: 0 0 5px 5px;
+    /* overflow: hidden; */
+}
+
 #current-reading .progression-bar {
 	position: absolute;
-    height: 3px;
+    height: 4px;
     border-radius: 18px;
     background-color: var(--accent);
     bottom: 0;

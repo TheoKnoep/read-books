@@ -1079,7 +1079,9 @@ TEMPLATES
             let progression_bar = ''; 
             if (b.progression.max && b.progression.current) {
                 let percentage = (b.progression.current / b.progression.max) * 100; 
-                progression_bar = `<div class="progression-bar" style="width: 0%;" data-progression="${percentage}"></div>`; 
+                progression_bar = `<div class="progression-bar__container">
+                    <div class="progression-bar" style="width: 0%;" data-progression="${percentage}"></div>
+                </div>`; 
             }
 
 
