@@ -796,9 +796,9 @@ VIEWS
         // USER INFO : 
         let user_block = ''; 
         if (auth.success) {
-            user_block = `<p style="display: flex; align-items: center;">
+            user_block = `<p class="user-block__logged">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-                    <span>&nbsp;Vous êtes connecté en tant que <strong>${auth.login}</strong>&nbsp;</span>
+                    <span>Vous êtes connecté en tant que <strong>${auth.login}</strong>&nbsp;</span>
                     <button onclick="deleteSession()"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></button>
                 </p>
                 <button id="synchronize-json"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>&nbsp;Sauvegarder en ligne</button>
@@ -1130,7 +1130,6 @@ TEMPLATES
             let all_progress_bar = document.querySelectorAll('[data-progression]'); 
             let delay = 0; 
             all_progress_bar.forEach(element => {
-                console.log(element); 
                 setTimeout(() => {
                     element.style.width = element.dataset.progression + '%'; 
                 }, 1000 + delay); 

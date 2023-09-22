@@ -41,6 +41,9 @@
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"></path><path d="M12 6v14"></path><path d="M8 8v12"></path><path d="M4 4v16"></path></svg>
 			Read List
 		</a>
+		<div id="network-state">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi-off"><line x1="2" x2="22" y1="2" y2="22"></line><path d="M8.5 16.5a5 5 0 0 1 7 0"></path><path d="M2 8.82a15 15 0 0 1 4.17-2.65"></path><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"></path><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"></path><path d="M5 13a10 10 0 0 1 5.24-2.76"></path><line x1="12" x2="12.01" y1="20" y2="20"></line></svg>
+		</div>
 	</header>
 
 	<main id="app-container">
@@ -68,12 +71,19 @@
 
 	<script>
 		let wishlist = new Wishlist(); 
+		  
 
 		if (wishlist.readingSessionIsOnGoing()) {
 			// activateReadingBar(); 
 		}
 
 		let timers = [];
+
+		// display network status :
+		const networkState = document.querySelector('#network-state'); 
+		window.addEventListener('DOMContentLoaded', evt => { Utils.detectNetworkStatus(networkState) });
+		window.addEventListener('online', evt => { Utils.detectNetworkStatus(networkState) }); 
+		window.addEventListener('offline', evt => { Utils.detectNetworkStatus(networkState) }); 
 
 	</script>
 
@@ -82,11 +92,14 @@
 
 	<script>
 		// # Router =======================================
-		window.addEventListener('load', RouteRequest); 
+		window.addEventListener('load', evt => {
+			wishlist.initWishlist().then(() => RouteRequest()); 
+		});
+
 		window.addEventListener('hashchange', RouteRequest); 
 
 		async function RouteRequest() {
-			await wishlist.initWishlist();  
+			// await wishlist.initWishlist();  
 
 			wishlist.update_minature_cover_with_new_API_link(); 
 

@@ -76,4 +76,15 @@ class Utils {
 			setTimeout(() => { resolve() }, delay); 
 		})
 	}
+
+
+
+
+	static detectNetworkStatus(target) {
+		if (navigator.onLine) {
+			target.style.display = 'none'; 
+		} else {
+			target.style.display = 'block'; 
+		}
+	}
 }
