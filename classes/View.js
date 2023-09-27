@@ -682,7 +682,7 @@ VIEWS
             <div class="about-container">
                 <h1>À propos : Web application de gestion de liste de lecture</h1>
                 <blockquote>Cherchez et ajoutez des livres à votre liste de lecture pour les garder en mémoire</blockquote>
-                
+                <a href="https://www.buymeacoffee.com/theoknoep" class="buy-me-a-coffee-link">☕ Buy me a coffee</a>
                 <h2>Versions : </h2>
                 <div class="versions-container">
                     <p>

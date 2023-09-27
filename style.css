@@ -921,6 +921,17 @@ li.star {
 
 
 
+.buy-me-a-coffee-link {
+	width: 100%;
+    display: inline-block;
+    text-align: center;
+    background-color: var(--accent-bg);
+    border-radius: 6px;
+    padding: 6px;
+	font-weight: light; 
+	text-decoration: none;
+}
+
 
 
 
