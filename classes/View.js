@@ -288,7 +288,19 @@ VIEWS
                         <span data-rating="5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                     </div>
                     <div class="annotation-container">
-                        <textarea id="comment_container" placeholder="Ajoutez des notes personnalisées sur le livre" rows="8">${b.comment || ''}</textarea>
+                        <!-- <textarea id="comment_container" placeholder="Ajoutez des notes personnalisées sur le livre" rows="8">${b.comment || ''}</textarea> -->
+                        <div class="placeholder" style="position: absolute;padding: .5rem;font-size: 16px;color: #757567;/* color: transparent; *//* transition: color ease 280ms; */">Ajoutez des notes personnalisées sur le livre</div>
+                        <div contenteditable="true" id="comment_container_editable" class="editable" style="
+                            border: solid 1px var(--border);
+                            border-radius: 5px;
+                            padding: 0.5rem;
+                            font-size: 16px;
+                            position: relative;
+                            min-height: 72px;
+                            max-height: 80svh;
+                            overflow: auto;
+                        "></div>
+
                     </div>
                     
                 </div>
@@ -298,23 +310,35 @@ VIEWS
 
 
 
-        
-
-
-
+    
         CONTAINER.innerHTML = HTMLContent; 
-
-
-
-
         applyRating(b.rate); 
 
 
-        //set correct height for text area : 
-        let txtArea = document.getElementById('comment_container'); 
-        // let heightToSet = Math.max(txtArea.value.split('\n').length*22, 72);  
-        // txtArea.style.height = heightToSet + "px";  
+        
 
+        /** ANNOTATION AREA */
+        let txtArea = document.getElementById('comment_container_editable'); 
+        // fill annotation text :
+        txtArea.innerText = b.comment; 
+        // emulate placeholder behavior : 
+        const applyRightColorToPlaceHolder = () => {
+            if (txtArea.innerText === '') {
+                txtArea.previousElementSibling.style.color = "#757567"; 
+            } else {
+                txtArea.previousElementSibling.style.color = "transparent"; 
+            }
+        }
+        applyRightColorToPlaceHolder(); 
+        txtArea.addEventListener('input', event => {
+            applyRightColorToPlaceHolder();
+        }); 
+        // save annotation changes : 
+        txtArea.addEventListener('blur', event => {
+            b.comment = txtArea.innerText; 
+            wishlist.saveWishlist();
+            if (txtArea.innerText !== '') { new QuickToast('Note sauvegardée').display(); }
+        })
 
 
         // EVENTS HANDLER :
@@ -324,17 +348,7 @@ VIEWS
             evt.target.style.opacity = '1'; 
         })
 
-        //svg comment : 
-        // txtArea.addEventListener('input', event => {
-        //     let heightToSet = Math.max(txtArea.value.split('\n').length*22, 72);  
-        //     txtArea.style.height = heightToSet + "px"; 
-        // })
-
-        txtArea.addEventListener('blur', event => {
-            b.comment = txtArea.value; 
-            wishlist.saveWishlist();
-            if (txtArea.value) { new QuickToast('Note sauvegardée').display(); }
-        })
+        
 
         //update reading status : 
         const selecStatus = document.querySelector('#reading-status'); 
