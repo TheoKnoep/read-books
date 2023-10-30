@@ -53,7 +53,7 @@ function modifyPositionOfMainButton() {
 
 	let ascending = this.oldScroll > this.scrollY;
 	if (ascending) {
-		btn.style.bottom = '.6em'; 
+		btn.style.bottom = '.8em'; 
 		header.style.transform = `translateY(0px)`;
 		footer.style.transform = `translateY(0px)`;
 	} else {

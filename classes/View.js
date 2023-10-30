@@ -1031,7 +1031,7 @@ VIEWS
                 <option value="light" ${selectedTheme === 'light' ? 'selected':''}>Clair</option>
                 <option value="dark" ${selectedTheme === 'dark' ? 'selected':''}>Sombre</option>
 
-                <option value="default" ${selectedTheme === 'default' ? 'selected':''}>Défaut (paramètres de l'appareil)</option>
+                <option value="default" ${selectedTheme === 'default' ? 'selected':''}>Défaut système</option>
             </select>`; 
 
 
