@@ -63,16 +63,18 @@
 		<button id="open-search-btn" class="main-button" onclick="toggleAddButton(this)">+</button>
 		<a href="#/about">À propos</a>&nbsp;&nbsp;|&nbsp;
 		<a href="#/save">Sauvegarde</a>&nbsp;&nbsp;|&nbsp;
-		<a href="#/finished">Terminés</a>
+		<a href="#/finished">Archives</a>&nbsp;&nbsp;|&nbsp;
+		<a href="#/settings">Paramètres</a>
 	</footer>
 
 	
 
 
 	<script>
+		// init app :
+		applyPreferredTheme(); 
 		let wishlist = new Wishlist(); 
 		  
-
 		if (wishlist.readingSessionIsOnGoing()) {
 			// activateReadingBar(); 
 		}
@@ -85,31 +87,23 @@
 		window.addEventListener('online', evt => { Utils.detectNetworkStatus(networkState) }); 
 		window.addEventListener('offline', evt => { Utils.detectNetworkStatus(networkState) }); 
 
-	</script>
 
-
-
-
-	<script>
 		// # Router =======================================
 		window.addEventListener('load', evt => {
 			wishlist.initWishlist().then(() => RouteRequest()); 
 		});
 
-		window.addEventListener('hashchange', RouteRequest); 
+		window.addEventListener('hashchange', evt => {
+			RouteRequest()
+		}); 
 
 		async function RouteRequest() {
-			// await wishlist.initWishlist();  
-
 			wishlist.update_minature_cover_with_new_API_link(); 
-
 			scrollTo(0,0);
-			
 			let route = window.location.hash.split('/'); 
-			// console.log(route); 
 
 			if (route[0] !== '#') {
-				View.display_list(wishlist.books.filter(item => { return item.status === 'finished'}), "Livres terminés");
+				View.home(true);
 				return; 
 			}
 			try {
@@ -148,6 +142,9 @@
 					case 'save': 
 						View.save(); 
 						break; 
+					case 'settings': 
+						View.settings(); 
+						break; 
 					default: 
 						// throw new Error('route non trouvée');
 						View.home(); 
@@ -164,74 +161,42 @@
 
 
 
-		// reinit scroll into view : 
-		window.addEventListener('hashchange', evt => {
-			 
-		}); 
 
-/* !dev-only : */
-// Cache.svgID(wishlist.books); 
-
-
-		/**
-		 * TEST handle images as base64
-		 */
-
-		function old_getBase64Image(img) {
-			var canvas = document.createElement("canvas");
-			canvas.width = img.width;
-			canvas.height = img.height;
-			var ctx = canvas.getContext("2d");
-			ctx.drawImage(img, 0, 0);
-			var dataURL = canvas.toDataURL("image/png");
-			return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-		}
-
-		function convert(oldImag, callback) {
-			var img = new Image();
-			img.onload = function(){
-				callback(img)
+		function applyPreferredTheme() {
+			let storedUser = JSON.parse(localStorage.getItem('stored-user')) || {}; 
+			const htmlElt = document.querySelector('html'); 
+			console.log(detectPrefersColorScheme()); 
+			if (storedUser.theme && storedUser.theme !== 'default') {
+				console.log("stored user : ", storedUser.theme); 
+				htmlElt.dataset.theme = storedUser.theme; 
+			} else {
+				htmlElt.dataset.theme = detectPrefersColorScheme(); 
 			}
-			img.setAttribute('crossorigin', 'anonymous');
-			img.src = oldImag.src;
 		}
-		function getBase64Image(img,callback) {
-			convert(img, function(newImg){
-				var canvas = document.createElement("canvas");
-				canvas.width = newImg.width;
-				canvas.height = newImg.height;
-				var ctx = canvas.getContext("2d");
-				ctx.drawImage(newImg, 0, 0);
-				var base64=canvas.toDataURL("image/png");
-				callback(base64)
-			})
+
+		function detectPrefersColorScheme() {
+			if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+				return 'light'; 
+			}
+			if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				return 'dark'; 
+			}
+			return 'unknown'; 
 		}
+
+
+
+
+
 
 
 
 		
 
-		imageToBase64 = (URL) => {
-			let image;
-			image = new Image();
-			image.crossOrigin = 'Anonymous';
-			image.addEventListener('load', function() {
-				let canvas = document.createElement('canvas');
-				let context = canvas.getContext('2d');
-				canvas.width = image.width;
-				canvas.height = image.height;
-				context.drawImage(image, 0, 0);
-				try {
-					localStorage.setItem('saved-image-example', canvas.toDataURL('image/png'));
-				} catch (err) {
-					console.error(err)
-				}
-			});
-			image.src = URL;
-		};
 
 
 
+		
 
 		
 

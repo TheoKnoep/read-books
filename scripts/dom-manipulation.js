@@ -49,13 +49,17 @@ window.addEventListener('scroll', modifyPositionOfMainButton);
 function modifyPositionOfMainButton() {
 	const btn = document.querySelector('#open-search-btn');
 	const header = document.querySelector('header');  
+	const footer = document.querySelector('footer'); 
+
 	let ascending = this.oldScroll > this.scrollY;
 	if (ascending) {
 		btn.style.bottom = '.6em'; 
 		header.style.transform = `translateY(0px)`;
+		footer.style.transform = `translateY(0px)`;
 	} else {
 		btn.style.bottom = '-2.6em'; 
 		header.style.transform = `translateY(-${header.offsetHeight}px)`;
+		footer.style.transform = `translateY(${footer.offsetHeight}px)`;
 	}
 	this.oldScroll = this.scrollY;
 }

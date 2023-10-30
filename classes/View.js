@@ -1017,6 +1017,46 @@ VIEWS
 
 
 
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    static settings() {
+        const CONTAINER = document.querySelector('#app-container'); 
+
+        let storedUser = JSON.parse(localStorage.getItem('stored-user')) || {"theme": "default"}; 
+        let selectedTheme = storedUser.theme; 
+
+        let html = `<h1>Paramètres</h1>
+            <div>Thème : </div>
+            <select id="theme-selector">
+                
+                <option value="light" ${selectedTheme === 'light' ? 'selected':''}>Clair</option>
+                <option value="dark" ${selectedTheme === 'dark' ? 'selected':''}>Sombre</option>
+
+                <option value="default" ${selectedTheme === 'default' ? 'selected':''}>Défaut (paramètres de l'appareil)</option>
+            </select>`; 
+
+
+        CONTAINER.innerHTML = html; 
+
+        // EVENTS : 
+        const themeSelector = document.querySelector('#theme-selector'); 
+
+        themeSelector.addEventListener('change', evt => {
+            console.log(evt.target.value); 
+            let storedUser = JSON.parse(localStorage.getItem('stored-user')) || {};
+            storedUser.theme = evt.target.value;  
+            localStorage.setItem('stored-user', JSON.stringify(storedUser)); 
+            applyPreferredTheme(); 
+        })
+    }
+
+
+
+
+
+
+
+
+
 
 
 
