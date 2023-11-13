@@ -963,6 +963,7 @@ VIEWS
                 }).then(() => {
                     console.log('sharing successfull')
                 }).catch((error) => {
+                    alert('share error : ' + error)
                     console.log('share error : ', error); 
                 })
             } else {
