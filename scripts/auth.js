@@ -53,6 +53,7 @@ async function authentifyUser(login, password) {
 				saveToken(result.token); 
 				return { success: true }
 			} else {
+				localStorage.removeItem(CONFIG.storage_name); 
 				return { success: false }
 			}
 			})

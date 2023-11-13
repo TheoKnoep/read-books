@@ -807,6 +807,8 @@ VIEWS
         const CONTAINER = this.config().main_container; 
 
 
+        CONTAINER.style.opacity = "0"; 
+
         let auth = await testUserConnexion(); 
         console.log(auth); 
 
@@ -847,6 +849,9 @@ VIEWS
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-json-2"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/><polyline points="14 2 14 8 20 8"/><path d="M4 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1"/><path d="M8 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1"/></svg>
                     &nbsp;Exporter au format JSON
                 </button>
+                <button id="share-json">
+                    Partager la sauvegarde
+                </button>
 
 
                 <hr/>
@@ -856,7 +861,7 @@ VIEWS
             </div>`; 
 
         CONTAINER.innerHTML = HTMLcontent; 
-
+        CONTAINER.style.opacity = "1"; 
 
 
 
@@ -926,6 +931,44 @@ VIEWS
             linkElt.setAttribute('download', fileName);
             linkElt.click(); 
             URL.revokeObjectURL(dataUri); 
+        })
+
+        // share JSON 
+        const shareJSON = document.getElementById('share-json'); 
+        shareJSON.click(); 
+        shareJSON.addEventListener('click', event => {
+            console.log('share JSON : ', wishlist.books);
+            let dataStr = JSON.stringify(wishlist.books); 
+            let dataUri = URL.createObjectURL(
+                new Blob([dataStr], { type: 'application/json' })
+            ); 
+            let blob = new Blob([dataStr], { type: 'application/json' }); 
+            
+            let now = new Date(); 
+            let dateString = now.getFullYear() + '.' + String(now.getMonth()+1).padStart(2, '0') + '.' + String(now.getDate()).padStart(2, '0') + '-' + String(now.getHours()).padStart(2, '0') + '.' + String(now.getMinutes()).padStart(2, '0'); 
+            let fileName = `${ dateString }_export-read-books.json`; 
+
+            
+            console.log(typeof blob); 
+
+            let file = new File(wishlist.books, fileName); 
+            console.log(file); 
+           
+
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file], 
+                    title: fileName, 
+                    text: 'Export donnée appli read books'
+                }).then(() => {
+                    console.log('sharing successfull')
+                }).catch((error) => {
+                    console.log('share error : ', error); 
+                })
+            } else {
+                alert('Votre système ne permet pas le partage'); 
+            }
+            
         })
 
         // import JSON 
