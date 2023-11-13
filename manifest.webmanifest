@@ -55,5 +55,12 @@
           "type": "image/png"
       }]
       }
-    ]
+    ],
+    "share_target": {
+      "action": "#/add/", 
+      "method": "GET", 
+      "params": {
+        "text": "search"
+      }
+    }
   }
