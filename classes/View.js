@@ -948,20 +948,19 @@ VIEWS
             let dateString = now.getFullYear() + '.' + String(now.getMonth()+1).padStart(2, '0') + '.' + String(now.getDate()).padStart(2, '0') + '-' + String(now.getHours()).padStart(2, '0') + '.' + String(now.getMinutes()).padStart(2, '0'); 
             let fileName = `${ dateString }_export-read-books.json`; 
 
-            
-            console.log(typeof blob); 
-
-            let file = new File(wishlist.books, fileName); 
-            console.log(file); 
+            let file_to_share = new File([blob], fileName, {type: 'application/json'}); 
+            console.log(file_to_share); 
            
 
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            if (navigator.canShare && navigator.canShare({ files: [file_to_share] })) {
                 navigator.share({
-                    files: [file], 
+                    files: [file_to_share], 
                     title: fileName, 
                     text: 'Export donnée appli read books'
-                }).then(() => {
-                    console.log('sharing successfull')
+                }).then((res) => {
+                    console.log('sharing successfull'); 
+                    new QuickToast('Partage réussi').display();
+
                 }).catch((error) => {
                     alert('share error : ' + error)
                     console.log('share error : ', error); 
