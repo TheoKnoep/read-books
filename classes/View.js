@@ -215,12 +215,14 @@ VIEWS
         }
 
         const estimateLeftTime = () => {
-            if (!b.progression.max || !b.progression.current || !b.reading_log ) { return 'pas assez de données disponibles' }
+            if (!b.progression.max || !b.progression.current || !b.reading_log ) { return null }
             let readingTime = b.calculateReadingTime(); 
             let percentageRead = (b.progression.current / b.progression.max) * 100; 
             let leftTimestamp = (readingTime / percentageRead) * (100 - percentageRead) ;
             return `environ ${ Time.formatMs(leftTimestamp) }`; 
         }
+
+        console.log('estimateLeftTime', estimateLeftTime()); 
 
 
 
@@ -275,7 +277,7 @@ VIEWS
                     <p>Progression : <span id="percentage_progression">${ b.progression.max && b.progression.current ? Math.floor((b.progression.current / b.progression.max) * 100) + '%': ''}</span></p>
                     <input type="number" id="current_progression" value="${b.progression ? b.progression.current : ''}" placeholder="Avancement actuel" data-book-id="${b.google_id}">
                     <input type="number" id="max_progression" value="${b.progression ? b.progression.max : ''}" placeholder="Longueur du livre" data-book-id="${b.google_id}">
-                    <pre id="estimate-left-time">Estimation du temps restant :</br>${ estimateLeftTime() }</pre>
+                    <pre id="estimate-left-time" class="${estimateLeftTime() ? '':'displaynone'}">Estimation du temps restant :</br>${ estimateLeftTime() }</pre>
                     <p><small class="stats-link">${View.icon_statistics()}&nbsp;<a href="#/book/${b.google_id}/stats">Statistiques de lecture</a></small></p>
                 </div>
                 <div class="custom_section">
