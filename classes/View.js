@@ -50,7 +50,7 @@ VIEWS
 
 
         let HTMLcontent = `
-       ${ this.template_current_reading() }
+        ${ this.template_current_reading() }
         ${ next_reading.length || !wish_list.length ? this.template_list(next_reading, { id:'next-reading', name:'Pile à lire'}) : '' } 
         ${ wish_list.length ? this.template_list(wish_list, {id:'wish-list', name:'Liste d\'achat'}) : '' }`; 
         
@@ -59,7 +59,7 @@ VIEWS
 
         // Apply icons to title of custom lists : 
         if (next_reading.length) {
-            document.querySelector('#next-reading h2').outerHTML = '<h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg> <span style="margin-left: 6px">' + document.querySelector('#next-reading h2').innerHTML + '</span></h2>'; 
+            document.querySelector('#next-reading h2').outerHTML = '<h2><img href="images/icons/ico-pile-a-lire.svg"/> <span style="margin-left: 6px">' + document.querySelector('#next-reading h2').innerHTML + '</span></h2>'; 
             document.querySelector('#next-reading h2').setAttribute('style', `display: flex; align-items: center;`);
         }
         
