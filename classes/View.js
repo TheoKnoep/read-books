@@ -51,7 +51,7 @@ VIEWS
 
         let HTMLcontent = `
        ${ this.template_current_reading() }
-        ${ next_reading.length || !wish_list.length ? this.template_list(next_reading, { id:'next-reading', name:'Prochaines lectures'}) : '' } 
+        ${ next_reading.length || !wish_list.length ? this.template_list(next_reading, { id:'next-reading', name:'Pile à lire'}) : '' } 
         ${ wish_list.length ? this.template_list(wish_list, {id:'wish-list', name:'Liste d\'achat'}) : '' }`; 
         
 
