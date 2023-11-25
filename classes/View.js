@@ -59,7 +59,7 @@ VIEWS
 
         // Apply icons to title of custom lists : 
         if (next_reading.length) {
-            document.querySelector('#next-reading h2').outerHTML = '<h2><img href="images/icons/ico-pile-a-lire.svg"/> <span style="margin-left: 6px">' + document.querySelector('#next-reading h2').innerHTML + '</span></h2>'; 
+            document.querySelector('#next-reading h2').outerHTML = '<h2><img src="images/icons/ico-pile-a-lire.svg"/> <span style="margin-left: 6px">' + document.querySelector('#next-reading h2').innerHTML + '</span></h2>'; 
             document.querySelector('#next-reading h2').setAttribute('style', `display: flex; align-items: center;`);
         }
         
