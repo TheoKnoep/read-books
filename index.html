@@ -24,6 +24,7 @@
 	<script src="classes/Book.js"></script>
 	<script src="classes/Wishlist.js"></script>
 	<script src="classes/Time.js"></script>
+	<script src="classes/User.js"></script>
 
 	<script src="scripts/auth.js"></script>
 	
@@ -76,6 +77,11 @@
 		}
 
 		let timers = [];
+
+
+		// init User : 
+		let user = new User(); 
+		user.is_logged().then(res => console.log('user is logged ?', res)); 
 
 		// display network status :
 		const networkState = document.querySelector('#network-state'); 
@@ -161,7 +167,6 @@
 		function applyPreferredTheme() {
 			let storedUser = JSON.parse(localStorage.getItem('stored-user')) || {}; 
 			const htmlElt = document.querySelector('html'); 
-			console.log(detectPrefersColorScheme()); 
 			if (storedUser.theme && storedUser.theme !== 'default') {
 				console.log("stored user : ", storedUser.theme); 
 				htmlElt.dataset.theme = storedUser.theme; 
@@ -208,7 +213,7 @@
 		//install sw : 
 		if ("serviceWorker" in navigator) {
 			navigator.serviceWorker.register("sw.js", {scope: './'} ).then(registration => {
-				console.log("SW Registred!");
+				// console.log("SW Registred!");
 				// console.log(registration);
 			}).catch(error => {
 				console.log("SW Failed!");
