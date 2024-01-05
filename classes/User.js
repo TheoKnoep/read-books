@@ -6,7 +6,6 @@ const THIS_CONFIG = {
 class User {
     constructor() {
         this.state = 'pending'; 
-        // this.testAuthentification(); 
         this.testUserConnexion(); 
     }
 
@@ -20,18 +19,6 @@ class User {
                 })
             }
         })
-    }
-
-    async testAuthentification() {
-        let randomTime = Math.random() * 10 * 1000; 
-        setTimeout(() => {
-            if (Math.random() > .5) {
-                this.state = true; 
-            } else {
-                this.state = false; 
-            }
-            window.dispatchEvent(new Event('loginCompleted')); 
-        }, randomTime)
     }
 
     async testUserConnexion() {

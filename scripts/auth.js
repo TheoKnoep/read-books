@@ -1,3 +1,10 @@
+/**
+ * Initial script for handling users and distant saves
+ * Used in /save page
+ * But duplicate with User.js, which will replace it in the end
+ * Both are used for now
+ */
+
 const CONFIG = {
 	'storage_name': '_tok_vghfT', 
 	'api_source': 'https://theoknoepflin.com/read-books-api/index.php?route='

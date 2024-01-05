@@ -6,7 +6,8 @@ self.addEventListener("install", function (event) {
         return cache.addAll([
             './',
             'style.css', 
-            'simplecss.css',  
+            'simplecss.css', 
+
             'classes/Cache.js',
             'classes/View.js',
             'classes/UX.js',
@@ -15,8 +16,12 @@ self.addEventListener("install", function (event) {
             'classes/Utils.js',
             'classes/Time.js',
             'classes/indexeddb.js',
+            'classes/User.js',
+
+            'scripts/auth.js',
             'scripts/dom-manipulation.js',
             'scripts/search-book.js',
+
             'manifest.webmanifest', 
             'images/icons/icon_512x512.png',
             'images/icons/icon_maskable.png', 

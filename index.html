@@ -68,11 +68,14 @@
 
 
 	<script>
-		// init app :
+		// init App :
 		applyPreferredTheme(); 
 		let wishlist = new Wishlist(); 
 		  
 		if (wishlist.readingSessionIsOnGoing()) {
+			/**
+			 *  To DO ...
+			 */ 
 			// activateReadingBar(); 
 		}
 
@@ -205,12 +208,11 @@
 
 	<script src="scripts/dom-manipulation.js"></script>
 	<script src="scripts/search-book.js"></script>
-	<!-- <script src="scripts/display-wishlist.js"></script> -->
 	
 
 
 	<script>
-		//install sw : 
+		//install SW : 
 		if ("serviceWorker" in navigator) {
 			navigator.serviceWorker.register("sw.js", {scope: './'} ).then(registration => {
 				// console.log("SW Registred!");
