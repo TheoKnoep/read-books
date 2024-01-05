@@ -59,7 +59,7 @@ VIEWS
 
         // Apply icons to title of custom lists : 
         if (next_reading.length) {
-            document.querySelector('#next-reading h2').outerHTML = '<h2><img src="images/icons/ico-pile-a-lire.svg"/> <span style="margin-left: 6px">' + document.querySelector('#next-reading h2').innerHTML + '</span></h2>'; 
+            document.querySelector('#next-reading h2').outerHTML = '<h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 19L17 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 15L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 11H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 7L15 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 4.5L22 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> <span style="margin-left: 6px">' + document.querySelector('#next-reading h2').innerHTML + '</span></h2>'; 
             document.querySelector('#next-reading h2').setAttribute('style', `display: flex; align-items: center;`);
         }
         
@@ -1293,8 +1293,7 @@ TEMPLATES
                                             <p class="description maxheight0">${books_list[i].description}</p>
                                             <p class="publisher"><strong>${books_list[i].publisher}</strong></p>
                                             ${books_list[i].owned ? owned_icon + ' ' : ''}
-                                            ${ dateAdded }
-                                            
+                                            ${ dateAdded }                                            
                                         </div>
                                         <div class="more-actions-button" id="id${books_list[i].google_id}">
                                             <div class="visible"> ⁝ </div>
