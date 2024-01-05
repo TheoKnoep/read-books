@@ -641,7 +641,7 @@ VIEWS
         // EVENTS
         document.querySelector('#search-form').addEventListener('submit', event => {
             event.preventDefault(); 
-            document.querySelector('#search-results').innerHTML = '<p style="text-align: center; ">● ● ●</p>'; 
+            document.querySelector('#search-results').innerHTML = '<p class="search-loader" style="text-align: center; "><span class="dot dot--1">●</span> <span class="dot dot--2">●</span> <span class="dot dot--3">●</span></p>'; 
             let data = new FormData(document.querySelector('#search-form')); 
             document.querySelector('#query').blur(); // try to hide keyboard on mobile device. Is it working ?
             const query = data.get('query'); 

@@ -464,6 +464,18 @@ button {
 	}
 }
 
+@keyframes sparkle {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: .2; 
+	}
+	100% {
+		opacity: 1; 
+	}
+}
+
 
 .vanish {
 	animation: vanish 200ms;
@@ -560,8 +572,23 @@ button {
 }
 
 
+
+
 #search-results {
 	margin-top: 1em;
+}
+
+#search-results .search-loader .dot {
+	animation: sparkle ease 1500ms infinite both;
+}
+#search-results .search-loader .dot.dot--1 {
+	animation-delay: 0ms;
+}
+#search-results .search-loader .dot.dot--2 {
+	animation-delay: 300ms;
+}
+#search-results .search-loader .dot.dot--3 {
+	animation-delay: 600ms;
 }
 
 #search-results .small-info {
