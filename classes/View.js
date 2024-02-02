@@ -1063,21 +1063,28 @@ VIEWS
 
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-    static settings() {
+    static async settings() {
         const CONTAINER = document.querySelector('#app-container'); 
 
         let storedUser = JSON.parse(localStorage.getItem('stored-user')) || {"theme": "default"}; 
         let selectedTheme = storedUser.theme; 
 
         let html = `<h1>Paramètres</h1>
-            <div>Thème : </div>
-            <select id="theme-selector">
-                
-                <option value="light" ${selectedTheme === 'light' ? 'selected':''}>Clair</option>
-                <option value="dark" ${selectedTheme === 'dark' ? 'selected':''}>Sombre</option>
+            <div class="settings-block">
+                <div>Thème : </div>
+                <select id="theme-selector">
+                    
+                    <option value="light" ${selectedTheme === 'light' ? 'selected':''}>Clair</option>
+                    <option value="dark" ${selectedTheme === 'dark' ? 'selected':''}>Sombre</option>
 
-                <option value="default" ${selectedTheme === 'default' ? 'selected':''}>Défaut système</option>
-            </select>`; 
+                    <option value="default" ${selectedTheme === 'default' ? 'selected':''}>Défaut système</option>
+                </select>
+            </div>
+            <div class="settings-block">
+                <div>Occupation de la mémoire : </div>
+                <div id="storage-occupation"></div>
+            </div>
+            `; 
 
 
         CONTAINER.innerHTML = html; 
@@ -1092,6 +1099,25 @@ VIEWS
             localStorage.setItem('stored-user', JSON.stringify(storedUser)); 
             applyPreferredTheme(); 
         })
+
+        const $storageOccupation = document.querySelector('#storage-occupation'); 
+        let cacheOccupation = await Cache.getCacheOccupation(); 
+        let occupation_tpl = (cacheOccupation) => {
+            return `<div>
+                <ul>
+                    <li>Livres : ${Utils.formatBytes(cacheOccupation.db)}</li>
+                    <li>Application : ${Utils.formatBytes(cacheOccupation.cache)}</li>
+                    <li>Espace restant disponible : ${Utils.formatBytes(cacheOccupation.available)}</li>
+                </ul>
+            </div>`; 
+        }
+        console.log('cc', cacheOccupation); 
+        
+        console.log('livres : ', Utils.formatBytes(cacheOccupation.db)); 
+        console.log('appli : ', Utils.formatBytes(cacheOccupation.cache)); 
+        console.log('dispo : ', Utils.formatBytes(cacheOccupation.available)); 
+
+        $storageOccupation.innerHTML = occupation_tpl(cacheOccupation); 
     }
 
 

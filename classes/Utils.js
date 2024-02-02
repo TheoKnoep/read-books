@@ -87,4 +87,14 @@ class Utils {
 			target.style.display = 'block'; 
 		}
 	}
+
+
+	static formatBytes(bytes, decimals = 2) {
+		if (bytes === 0) return '0 bytes';
+		const k = 1024;
+		const sizes = ['bytes', 'kb', 'Mb', 'Gb', 'Tb'];
+		const i = Math.floor(Math.log(bytes) / Math.log(k));
+		return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+	}
+	  
 }

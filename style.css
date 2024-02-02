@@ -1105,3 +1105,21 @@ TIMER CONTAINER
 	border-radius: 120px;
 	color: var(--text); 
 }
+
+
+
+
+
+/* ==========================================================
+SETTINGS
+========================================================== */
+.settings-block {
+	margin-bottom: 2em
+	;
+}
+
+#storage-occupation ul {
+	margin-left: 0; 
+	padding-left: 0;
+	font-weight: 100;
+}
