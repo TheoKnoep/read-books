@@ -599,6 +599,18 @@ button {
 }
 
 
+#add-form-cta {
+    background: var(--accent-bg);
+	color: var(--text); 
+    text-decoration: none;
+	display: flex; 
+	justify-content: center;
+	align-items: center;
+	width: 100%; 
+	border-radius: 5px;
+	padding: 0.7em;
+}
+
 
 
 

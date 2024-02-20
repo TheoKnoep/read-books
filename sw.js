@@ -60,7 +60,7 @@ self.addEventListener('fetch', event => {
                 // })
         )
     } else {
-        event.respondWith(
+        event.respondWith( // network first strategy
             fetch(event.request)
                 .catch(() => {
                     return caches.match(event.request)

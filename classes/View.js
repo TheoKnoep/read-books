@@ -621,11 +621,13 @@ VIEWS
 
         let HTMLContent = `
         <div>
-        <form class="focus" action="" id="search-form" >
-            <input type="search" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
-            <input type="submit" name="" id="submit-form" value="Chercher">
-        </form>
-        <div id="search-results"></div>
+            <form class="focus" action="" id="search-form" >
+                <input type="search" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
+                <input type="submit" name="" id="submit-form" value="Chercher">
+            </form>
+            <div id="search-results"></div>
+            <hr/>
+            <a id="add-form-cta" href="#/manual">Ajout manuel</a>
         </div>`; 
 
         CONTAINER.innerHTML = HTMLContent; 
@@ -665,6 +667,21 @@ VIEWS
 
 
 
+
+
+
+
+
+    static manual_add_form() {
+        const CONTAINER = document.querySelector('#app-container'); 
+
+        let HTMLContent = `
+        <div>
+            <p>...🚧 Bientôt disponible</p>
+        </div>`; 
+
+        CONTAINER.innerHTML = HTMLContent; 
+    }
 
 
 

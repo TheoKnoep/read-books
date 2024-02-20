@@ -60,7 +60,7 @@
 		<button id="open-search-btn" class="main-button" onclick="toggleAddButton(this)">+</button>
 		<a href="#/about">À propos</a>&nbsp;&nbsp;|&nbsp;
 		<a href="#/save">Sauvegarde</a>&nbsp;&nbsp;|&nbsp;
-		<a href="#/finished">Archives</a>&nbsp;&nbsp;|&nbsp;
+		<a href="#/finished">Terminés</a>&nbsp;&nbsp;|&nbsp;
 		<a href="#/settings">Paramètres</a>
 	</footer>
 
@@ -137,6 +137,9 @@
 						break; 
 					case 'add': 
 						View.search_form(route[2]); 
+						break; 
+					case 'manual': 
+						View.manual_add_form(); 
 						break; 
 					case 'about': 
 						View.about(); 
