@@ -627,7 +627,7 @@ VIEWS
             </form>
             <div id="search-results"></div>
             <hr/>
-            <a id="add-form-cta" href="#/manual">Ajout manuel</a>
+            <a id="add-form-cta" href="#/add-form">Ajout manuel</a>
         </div>`; 
 
         CONTAINER.innerHTML = HTMLContent; 
@@ -677,11 +677,67 @@ VIEWS
 
         let HTMLContent = `
         <div>
-            <p>...🚧 Bientôt disponible</p>
+            <p class="warning-banner">...🚧 <em>en cours de développement</em></p>
+
+            <form id="book-form" action="" method="post">
+                <label for="title">Titre :</label>
+                <input type="text" id="title" name="title" required><br><br>
+                
+                <label for="author">Auteur :</label>
+                <input type="text" id="author" name="author" required><br><br>
+                
+                <label for="publisher">Editeur :</label>
+                <input type="text" id="publisher" name="publisher"><br><br>
+                
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+                
+                <label for="isbn">ISBN:</label><br>
+                <input type="text" id="isbn" name="isbn">
+                
+                <label for="language">Language:</label>
+                <select id="language" name="language">
+                    <option value="English">English</option>
+                    <option value="French">French</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="German">German</option>
+                    <!-- Add more options as needed -->
+                </select><br><br>
+                
+                <input type="submit" value="Submit">
+            </form>
         </div>`; 
 
         CONTAINER.innerHTML = HTMLContent; 
+        
+
+        // events handler : 
+        const newBookForm = document.querySelector('#book-form'); 
+        newBookForm.addEventListener('submit', (event) => {
+            event.preventDefault(); 
+
+            console.log(event.target); 
+
+            let formData = new FormData(event.target); 
+
+            console.log(formData); 
+            console.log(formData.get('title'))
+            for (let key of formData.keys()) {
+                console.log(key, formData.get(key));
+            }
+
+            let newBook = new Book(
+                formData.get('title'), 
+                formData.get('author'), 
+                formData.get('publisher'), 
+                formData.get('description'), 
+                null
+            )
+
+            console.log(newBook); 
+        })
     }
+
 
 
 
