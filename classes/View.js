@@ -677,34 +677,27 @@ VIEWS
 
         let HTMLContent = `
         <div>
-            <p class="warning-banner">...🚧 <em>en cours de développement</em></p>
 
             <form id="book-form" action="" method="post">
                 <label for="title">Titre :</label>
-                <input type="text" id="title" name="title" required><br><br>
+                <input type="text" id="title" name="title" >
                 
-                <label for="author">Auteur :</label>
-                <input type="text" id="author" name="author" required><br><br>
+                <label for="author">Auteur•Autrice :</label>
+                <input type="text" id="author" name="author">
                 
-                <label for="publisher">Editeur :</label>
-                <input type="text" id="publisher" name="publisher"><br><br>
+                <label for="publisher">Éditeur :</label>
+                <input type="text" id="publisher" name="publisher">
                 
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+                <label for="description"><em>Description :</em></label>
+                <textarea id="description" name="description" rows="4" cols="50"></textarea>
                 
-                <label for="isbn">ISBN:</label><br>
+                <label for="isbn"><em>isbn :</em></label>
                 <input type="text" id="isbn" name="isbn">
                 
-                <label for="language">Language:</label>
-                <select id="language" name="language">
-                    <option value="English">English</option>
-                    <option value="French">French</option>
-                    <option value="Spanish">Spanish</option>
-                    <option value="German">German</option>
-                    <!-- Add more options as needed -->
-                </select><br><br>
+                <label for="language"><em>Langue :</em></label>
+                <input type="text" id="language" name="language" />
                 
-                <input type="submit" value="Submit">
+                <input type="submit" value="Ajouter le livre">
             </form>
         </div>`; 
 
@@ -726,15 +719,21 @@ VIEWS
                 console.log(key, formData.get(key));
             }
 
-            let newBook = new Book(
-                formData.get('title'), 
-                formData.get('author'), 
-                formData.get('publisher'), 
-                formData.get('description'), 
-                null
-            )
+            let newBook = new Book({
+                title: formData.get('title'), 
+                author: formData.get('author'), 
+                publisher: formData.get('publisher'), 
+                description: formData.get('description'),
+                google_id: 'NotGoogle-' + Date.now() + '-' + Utils.generateGUID()
+            })
 
             console.log(newBook); 
+
+            wishlist.add(newBook)
+                .then(() => {
+                    new QuickToast('Ajouté avec succès').display(); 
+                    location.hash = '#/'; 
+                })
         })
     }
 
@@ -771,6 +770,12 @@ VIEWS
                 <blockquote>Cherchez et ajoutez des livres à votre liste de lecture pour les garder en mémoire</blockquote>
                 <a href="https://www.buymeacoffee.com/theoknoep" class="buy-me-a-coffee-link">☕ Buy me a coffee</a>
                 <h2>Versions : </h2>
+                <div class="versions-container">
+                <p>
+                    <strong data-time="">2024-02-20</strong> | V.0.9.6<br/>
+                    - possibilité d'ajouter manuellement un livre à sa liste s'il n'est pas présent dans les résultats de recherche
+                </p>
+            </div>
                 <div class="versions-container">
                     <p>
                         <strong data-time="">2023-09-16</strong> | V.0.9.6<br/>

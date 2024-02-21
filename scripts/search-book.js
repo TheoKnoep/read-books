@@ -69,26 +69,16 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 		for (let i = 0; i < data.items.length; i++) {
 			let b = data.items[i].volumeInfo; 
 			if (b.imageLinks) {
-				resultsBooks.push(new Book(
-					b.title, // title, 
-					b.authors ? b.authors.join(', ') : '', // authors
-					b.publisher ? b.publisher : null, // publisher, 
-					b.description, // description, 
-					b.imageLinks ? b.imageLinks.thumbnail : "images/empty-cover.png", // miniature_link, 
-					b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '', // isbn, 
-					null, // rate, 
-					null, // comment,
-					null, // format, 
-					data.items[i].id, // google_id, 
-					null, // series, 
-					null, // series_number, 
-					b.language ? b.language : null, // language, 
-					Date.now(), // added_date, 
-					'to-read', // status, 
-					null, // started_date, 
-					null, // finished_date
-					false // owned
-				))
+				resultsBooks.push(new Book({
+					title: b.title, // title, 
+					author: b.authors ? b.authors.join(', ') : '', // authors
+					publisher: b.publisher ? b.publisher : null, // publisher, 
+					description: b.description, // description, 
+					miniature_link: b.imageLinks ? b.imageLinks.thumbnail : "images/empty-cover.png", // miniature_link, 
+					isbn: b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '', // isbn, 
+					google_id: data.items[i].id, // google_id, 
+					language: b.language ? b.language : null, // language, 
+				}))
 			}
 			if (resultsBooks.length >= maxResults) { break; }
 		}
@@ -97,23 +87,23 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 			let b = data.items[i].volumeInfo; 
 			resultsBooks.push(new Book(
 				b.title, // title, 
-					b.authors ? b.authors.join(',') : '', // authors
-					b.publisher, // publisher, 
-					b.description, // description, 
-					b.imageLinks ? `https://theoknoepflin.com/read-books-api/cover.php?id=${data.items[i].id}` : "images/empty-cover.png", // miniature_link, 
-					b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '', // isbn, 
-					null, // rate, 
-					null, // comment,
-					null, // format, 
-					data.items[i].id, // google_id, 
-					null, // series, 
-					null, // series_number, 
-					b.language ? b.language : null, // language, 
-					Date.now(), // added_date, 
-					'to-read', // status, 
-					null, // started_date, 
-					null, // finished_date
-					false // owned
+				b.authors ? b.authors.join(',') : '', // authors
+				b.publisher, // publisher, 
+				b.description, // description, 
+				b.imageLinks ? `https://theoknoepflin.com/read-books-api/cover.php?id=${data.items[i].id}` : "images/empty-cover.png", // miniature_link, 
+				b.industryIdentifiers ? b.industryIdentifiers[0].identifier : '', // isbn, 
+				null, // rate, 
+				null, // comment,
+				null, // format, 
+				data.items[i].id, // google_id, 
+				null, // series, 
+				null, // series_number, 
+				b.language ? b.language : null, // language, 
+				Date.now(), // added_date, 
+				'to-read', // status, 
+				null, // started_date, 
+				null, // finished_date
+				false // owned
 			))
 		}
 	}

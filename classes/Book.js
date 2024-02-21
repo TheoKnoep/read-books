@@ -1,25 +1,25 @@
 class Book {
-	constructor(title, author, publisher, description, miniature_link, isbn, rate, comment, format, google_id, series, series_number, language, added_date, status, started_date, finished_date, owned, reading_log, progression) {
-		this.title = title; 
-		this.author = author; 
-		this.publisher = publisher; 
-		this.description = description; 
-		this.miniature_link = miniature_link; 
-		this.isbn = isbn; 
-		this.rate = Number(rate); 
-		this.comment = comment; 
-		this.format = format; 
-		this.google_id = google_id; 
-		this.series = series; 
-		this.series_number = series_number; 
-		this.language = language; 
-		this.added_date = added_date; 
-		this.status = this.verifyStatus(status); // "to-read", "started" or "finished"
-		this.started_date = started_date; 
-		this.finished_date = finished_date; 
-		this.owned = owned; 
-		this.reading_log = reading_log; 
-		this.progression = progression || {current: null, max: null }; 
+	constructor(options = {}) {
+		this.title = options.title || null; 
+		this.author = options.author || null; 
+		this.publisher = options.publisher || null; 
+		this.description = options.description  || 'Pas de description'; 
+		this.miniature_link = options.miniature_link || 'images/empty-cover.png'; 
+		this.isbn = options.isbn || Utils.generateGUID(); 
+		this.rate = Number(options.rate) || null; 
+		this.comment = options.comment || null; 
+		this.format = options.format || null; 
+		this.google_id = options.google_id || Utils.generateGUID(); 
+		this.series = options.series || null; 
+		this.series_number = options.series_number || null; 
+		this.language = options.language || null; 
+		this.added_date = options.added_date || Date.now(); 
+		this.status = this.verifyStatus(options.status || 'to-read'); // "to-read", "started" or "finished"
+		this.started_date = options.started_date || null; 
+		this.finished_date = options.finished_date || null; 
+		this.owned = options.owned  || false; 
+		this.reading_log = options.reading_log || null; 
+		this.progression = options.progression || {current: null, max: null }; 
 	}
 
 

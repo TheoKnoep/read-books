@@ -96,5 +96,16 @@ class Utils {
 		const i = Math.floor(Math.log(bytes) / Math.log(k));
 		return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
 	}
+
+	static generateGUID() {
+		// Générer un GUID aléatoire en utilisant la version 4 du format UUID
+		// Format: xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx (où x est une caractère hexadécimal et y est 8, 9, A ou B)
+		var guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		  var r = Math.random() * 16 | 0,
+			  v = c === 'x' ? r : (r & 0x3 | 0x8);
+		  return v.toString(16);
+		});
+		return guid;
+	  }
 	  
 }

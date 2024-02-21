@@ -21,26 +21,7 @@ class Wishlist {
 		let fromIndexedDB = await this.retrievedFromIndexedDB(); 
 		fromIndexedDB.forEach(book => {
 			let newBook = new Book(
-				book.title, 
-				book.author, 
-				book.publisher, 
-				book.description, 
-				book.miniature_link, 
-				book.isbn, 
-				book.rate, 
-				book.comment, 
-				book.format, 
-				book.google_id, 
-				book.series, 
-				book.series_number, 
-				book.language, 
-				book.added_date, 
-				book.status, 
-				book.started_date, 
-				book.finished_date, 
-				book.owned, 
-				book.reading_log, 
-				book.progression
+				book
 			); 
 			output.push(newBook); 
 		})
@@ -49,14 +30,14 @@ class Wishlist {
 		this.books = output; 
 	}
 
-	add(newBook) {
+	async add(newBook) {
 		// console.log(this.checkForDoublon(newBook)); 
 		if (this.checkForDoublon(newBook)) {
 			return false; 
 		} else {
 			this.books.push(newBook); 
-			this.saveWishlist(); 
 			newBook.handleCoverInCache('add'); 
+			await this.saveWishlist(); 
 			return true; 
 		}
 	}
@@ -86,28 +67,7 @@ class Wishlist {
 		let fromLocal = JSON.parse(localStorage.getItem('wishlist')); 
 		if (fromLocal && fromLocal.length > 0) {
 			fromLocal.forEach(book => {
-				let newBook = new Book(
-					book.title, 
-					book.author, 
-					book.publisher, 
-					book.description, 
-					book.miniature_link, 
-					book.isbn, 
-					book.rate, 
-					book.comment, 
-					book.format, 
-					book.google_id, 
-					book.series, 
-					book.series_number, 
-					book.language, 
-					book.added_date, 
-					book.status, 
-					book.started_date, 
-					book.finished_date, 
-					book.owned, 
-					book.reading_log, 
-					book.progression
-				); 
+				let newBook = new Book(	book ); 
 				this.add(newBook); 
 			}); 
 			this.saveWishlist(); 
@@ -281,28 +241,7 @@ class Wishlist {
 
 		// execute import : 
 		data.forEach(book => {
-			let newBook = new Book(
-				book.title, 
-				book.author, 
-				book.publisher, 
-				book.description, 
-				book.miniature_link, 
-				book.isbn, 
-				book.rate, 
-				book.comment, 
-				book.format, 
-				book.google_id, 
-				book.series, 
-				book.series_number, 
-				book.language, 
-				book.added_date, 
-				book.status, 
-				book.started_date, 
-				book.finished_date, 
-				book.owned, 
-				book.reading_log, 
-				book.progression
-			); 
+			let newBook = new Book( book ); 
 			this.add(newBook); 
 		})
 	}
