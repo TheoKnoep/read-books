@@ -1,4 +1,4 @@
-/** Last update: 2024.01.2.21.001
+/** Last update: 2024.01.2.24.001
  */ 
 
 self.addEventListener("install", function (event) {
