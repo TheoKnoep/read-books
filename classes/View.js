@@ -271,12 +271,12 @@ VIEWS
                     </div>
                 </div>
                 
-                <div class="progression_custom ${b.status === 'to-read' ? 'maxheight0' : ''}">
+                <div class="progression_custom">
                     <h2>Progression : </h2>
-                    <p>Durée de lecture : ${Time.formatMs(b.calculateReadingTime())}</p>
+                    <p class="${b.status !== 'to-read' ? '' : 'displaynone'}">Durée de lecture : ${Time.formatMs(b.calculateReadingTime())}</p>
                     <p>Progression : <span id="percentage_progression">${ b.progression.max && b.progression.current ? Math.floor((b.progression.current / b.progression.max) * 100) + '%': ''}</span></p>
-                    <input type="number" id="current_progression" value="${b.progression ? b.progression.current : ''}" placeholder="Avancement actuel" data-book-id="${b.google_id}">
-                    <input type="number" id="max_progression" value="${b.progression ? b.progression.max : ''}" placeholder="Longueur du livre" data-book-id="${b.google_id}">
+                    <input type="number" id="current_progression" value="${b.progression ? b.progression.current : ''}" placeholder="Pages lues" data-book-id="${b.google_id}" ${b.status !== 'to-read' ? '' : 'disabled'} ${b.status !== 'to-read' ? '' : 'title="Pour changer le nombre de pages lues, passez le livre en statut « Commencé »"'}>
+                    <input type="number" id="max_progression" value="${b.progression ? b.progression.max : ''}" placeholder="Pages" data-book-id="${b.google_id}">
                     <pre id="estimate-left-time" class="${estimateLeftTime() ? '':'displaynone'}">Estimation du temps restant :</br>${ estimateLeftTime() }</pre>
                     <p><small class="stats-link">${View.icon_statistics()}&nbsp;<a href="#/book/${b.google_id}/stats">Statistiques de lecture</a></small></p>
                 </div>
@@ -1381,7 +1381,7 @@ TEMPLATES
                 <p><a href="#/add" style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path><line x1="12" x2="12" y1="7" y2="13"></line><line x1="15" x2="9" y1="10" y2="10"></line></svg>&nbsp;Ajouter un livre ?</a></p>
             </div>`; 
         } else {
-            let booksList = `<h2>${list_name} :</h2>`; 
+            let booksList = `<h2>${list_name} <span class="list-items-counter">(${books_list.length})</span> :</h2>`; 
             for (let i in books_list) {
                 let dateAdded = books_list[i].added_date ? `<span class="added-date">Ajouté le ${ new Date(books_list[i].added_date).toLocaleDateString() }</span>` : ''; 
                 if (books_list[i].finished_date) {

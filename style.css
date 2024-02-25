@@ -313,6 +313,12 @@ button {
 }
 
 
+.reading-list .list-items-counter {
+	opacity: .33;
+	font-weight: 300;
+	font-size: .85em;
+}
+
 
 
 #current-reading {
