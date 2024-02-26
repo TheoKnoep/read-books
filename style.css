@@ -605,7 +605,7 @@ button {
 }
 
 
-#add-form-cta {
+#add-form-cta, #add-barcode {
     background: var(--accent-bg);
 	color: var(--text); 
     text-decoration: none;
@@ -615,6 +615,7 @@ button {
 	width: 100%; 
 	border-radius: 5px;
 	padding: 0.7em;
+	margin: 12px 0; 
 }
 
 
