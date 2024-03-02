@@ -6,6 +6,7 @@
 
 html[data-theme="light"] {
 	--bg: #fff;
+	--bg-faded: #ffffff78; 
 	--accent-bg: #f5f7ff;
 	--text: #212121;
 	--text-light: #585858;
@@ -20,6 +21,7 @@ html[data-theme="light"] {
 html[data-theme="dark"] {
 	color-scheme: dark;
 	--bg: #212121;
+	--bg-faded: #21212138;
 	--accent-bg: #2b2b2b;
 	--text: #dcdcdc;
 	--text-light: #ababab;
@@ -224,23 +226,41 @@ button {
 /* FOOTER */ 
 
 .footer {
-	padding: .2em;
+	padding: .6em;
 	transition: all ease 220ms;
-
 	position: fixed;
     bottom: 0px;
     width: 100%;
-    background: var(--bg);
+	display: flex;
+    justify-content: space-evenly;
+    border-radius: 12px 12px 0 0;
+	backdrop-filter: blur(6px);
+	background-color: var(--bg-faded);
+	box-shadow: 0 0 12px #00000080;
+}
+.footer a {
+	text-decoration: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+}
+.footer .ico-part {
+	font-size: 1.2em;
+}
+.footer .text-part {
+    font-size: .7em;
 }
 
 .main-button {
+	z-index: 12;
 	border-radius: 120px; 
 	box-shadow: 1px 1px 4px rgba(0,0,0,.6);
 	position: fixed; 
-	bottom: .8em; 
+	bottom: 1.8em; 
 	right: .8em; 
-	width: 64px; 
-	height: 64px; 
+	width: 58px; 
+	height: 58px; 
 	transition: all ease 240ms; 
 	display: flex;
     justify-content: center;

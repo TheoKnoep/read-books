@@ -1168,6 +1168,11 @@ VIEWS
                 <div>Occupation de la mémoire : </div>
                 <div id="storage-occupation"></div>
             </div>
+
+            <hr/>
+            <div class="settings-block">
+                <a href="#/about" class="buy-me-a-coffee-link">À propos</a>
+            </div>
             `; 
 
 

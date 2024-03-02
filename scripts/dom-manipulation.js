@@ -44,7 +44,7 @@ window.addEventListener('load', applyRightBtnStyle);
 window.addEventListener('hashchange', applyRightBtnStyle); 
 
 
-window.addEventListener('scroll', modifyPositionOfMainButton); 
+window.addEventListener('scroll', modifyPositionOfMainButton); // !dev-only
 
 function modifyPositionOfMainButton() {
 	const btn = document.querySelector('#open-search-btn');
@@ -53,13 +53,13 @@ function modifyPositionOfMainButton() {
 
 	let ascending = this.oldScroll > this.scrollY;
 	if (ascending) {
-		btn.style.bottom = '.8em'; 
+		btn.style.bottom = '1.8em'; 
 		header.style.transform = `translateY(0px)`;
 		footer.style.transform = `translateY(0px)`;
 	} else {
 		btn.style.bottom = '-2.6em'; 
 		header.style.transform = `translateY(-${header.offsetHeight}px)`;
-		footer.style.transform = `translateY(${footer.offsetHeight}px)`;
+		footer.style.transform = `translateY(${footer.offsetHeight + 6 }px)`;
 	}
 	this.oldScroll = this.scrollY;
 }
