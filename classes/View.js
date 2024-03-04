@@ -237,7 +237,7 @@ VIEWS
                     
                     <div class="miniature-cover">
                         <img class="" src="${b.miniature_link}" width="120" style="clear: both; opacity: 0;  "/ >
-                        <input type="file" id="custom-miniature-image" data-book-id="${b.google_id}" />
+                        <input type="file" accept="image/*" id="custom-miniature-image" data-book-id="${b.google_id}" style="clear: both; "/>
                     </div>
                     <div class="owned-checkbox" >
                         <label class="${b.owned ? 'owned-label' : ''}" for="owned" >Dans votre bibliothèque&nbsp;: </label>
