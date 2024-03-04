@@ -16,6 +16,39 @@ function convertToBase64(file) {
     });
 }
 
+function compresserEtRedimensionnerImage(base64Image, maxWidth) {
+    return new Promise((resolve, reject) => {
+        var img = new Image();
+        img.onload = function() {
+            var canvas = document.createElement('canvas');
+            var width = img.width;
+            var height = img.height;
+
+            if (width > maxWidth) {
+                height *= maxWidth / width;
+                width = maxWidth;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            var compressedBase64 = canvas.toDataURL('image/jpeg'); // Vous pouvez changer le format ici
+
+            resolve(compressedBase64);
+        };
+
+        img.onerror = function() {
+            reject(new Error("Erreur lors du chargement de l'image."));
+        };
+
+        img.src = base64Image;
+    });
+}
+
+
 // Redimensionner et compresser l'image
 function compressImage(file, quality) {
     convertFileToB64(file, (base64) => {

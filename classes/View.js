@@ -524,22 +524,21 @@ VIEWS
         const miniatureCover = document.querySelector('.miniature-cover img'); 
         const customMiniatureImageInput = document.querySelector('#custom-miniature-image'); 
         
-        customMiniatureImageInput.addEventListener('change', event => {
+        customMiniatureImageInput.addEventListener('change', async (event) => {
             event.preventDefault(); 
             console.log(event.target.value); 
             console.log(event.target.files[0]); 
 
             let fileType = event.target.files[0].type; 
 
-            convertToBase64(event.target.files[0])
-            .then(base64String => {
-                const b = wishlist.books[wishlist.getIndexOfSingleBookByID(event.target.dataset.bookId)]; 
-                let base64Header = `data:${fileType};base64,`; 
-                let newImageBase64String = base64Header + base64String; 
-                miniatureCover.src = newImageBase64String; 
-                b.miniature_link = newImageBase64String; 
-                wishlist.saveWishlist(); 
-            })
+            let base64String = await convertToBase64(event.target.files[0])
+            const b = wishlist.books[wishlist.getIndexOfSingleBookByID(event.target.dataset.bookId)]; 
+            let base64Header = `data:${fileType};base64,`; 
+            let newImageBase64String = base64Header + base64String; 
+            let redimImageBase64 = await compresserEtRedimensionnerImage(newImageBase64String, 120); 
+            miniatureCover.src = redimImageBase64; 
+            b.miniature_link = redimImageBase64; 
+            wishlist.saveWishlist(); 
         })
 
 
@@ -838,13 +837,16 @@ VIEWS
                 <h1>À propos : Web application de gestion de liste de lecture</h1>
                 <blockquote>Cherchez et ajoutez des livres à votre liste de lecture pour les garder en mémoire</blockquote>
                 <a href="https://www.buymeacoffee.com/theoknoep" class="buy-me-a-coffee-link">☕ Buy me a coffee</a>
+                
                 <h2>Versions : </h2>
+
                 <div class="versions-container">
-                <p>
-                    <strong data-time="">2024-02-20</strong> | V.0.9.6<br/>
-                    - possibilité d'ajouter manuellement un livre à sa liste s'il n'est pas présent dans les résultats de recherche
-                </p>
-            </div>
+                    <p>
+                        <strong data-time="">2024-03-04</strong> | V.0.9.7<br/>
+                        - possibilité d'ajouter manuellement un livre à sa liste s'il n'est pas présent dans les résultats de recherche
+                        - ajout d'images personnalisées pour les couvertures de livres enregistrés dans l'application
+                    </p>
+                </div>
                 <div class="versions-container">
                     <p>
                         <strong data-time="">2023-09-16</strong> | V.0.9.6<br/>
