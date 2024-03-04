@@ -75,3 +75,15 @@ function getAllButtons() {
 }
 
 
+function applyFocusedMenuItem() {
+	let currentHash = location.hash; 
+	document.querySelectorAll('footer a').forEach(item => {
+		console.log(new URL(item.href).hash); 
+		if (new URL(item.href).hash === currentHash) {
+			item.classList.add('active'); 
+		} else {
+			item.classList.remove('active'); 
+		}
+	})
+}
+
