@@ -1,4 +1,4 @@
-/** Last update: 2024.03.04.001
+/** Last update: 2024.03.04.002
  */ 
 
 self.addEventListener("install", function (event) {
@@ -21,6 +21,7 @@ self.addEventListener("install", function (event) {
             'scripts/auth.js',
             'scripts/dom-manipulation.js',
             'scripts/search-book.js',
+            'scripts/images.js',
 
             'manifest.webmanifest', 
             'images/icons/icon_512x512.png',

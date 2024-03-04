@@ -265,16 +265,18 @@ class Wishlist {
 
 
 	/**
-	 * Legacy : to transform links of books miniatures with the API cover link, and therefor put them in cache
+	 * Legacy : to transform links of books miniatures with
+	 * the API cover link, and therefor put them in cache
 	 */
 	update_minature_cover_with_new_API_link() {
 		this.books.forEach(book => {
 			let at_least_one_update = false; 
 			try {
 				let cover_url = new URL(book.miniature_link); 
-				// console.log(cover_url, cover_url.host.includes('theoknoepflin.com') === false); 
-				
-				if ( cover_url.host.includes('theoknoepflin.com') === false ) { 
+
+				let miniature_link_is_base64 = book.miniature_link.substring(0,11) === 'data:image/'; 
+
+				if ( cover_url.host.includes('theoknoepflin.com') === false && !miniature_link_is_base64 ) { 
 					console.log('>>> change URL link of cover for : ', book.title, book.google_id); 
 					book.miniature_link = `https://theoknoepflin.com/read-books-api/cover.php?id=${book.google_id}`;
 					book.handleCoverInCache('add'); 
@@ -294,7 +296,7 @@ class Wishlist {
 
 
 
-	
+
 
 	
 }

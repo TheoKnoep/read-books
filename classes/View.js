@@ -235,7 +235,10 @@ VIEWS
             <div class="single-book__container" id="id${b.google_id}">
                 <div class="infos_container">
                     
-                    <img class="miniature-cover" src="${b.miniature_link}" width="120" style="clear: both; opacity: 0;  "/ >
+                    <div class="miniature-cover">
+                        <img class="" src="${b.miniature_link}" width="120" style="clear: both; opacity: 0;  "/ >
+                        <input type="file" accept="images/*" id="custom-miniature-image" data-book-id="${b.google_id}" />
+                    </div>
                     <div class="owned-checkbox" >
                         <label class="${b.owned ? 'owned-label' : ''}" for="owned" >Dans votre bibliothèque&nbsp;: </label>
                         <input type="checkbox" name="owned" id="owned-checkbox" ${b.owned ? 'checked="true"' : ''}  data-book-id="${b.google_id}">
@@ -346,7 +349,7 @@ VIEWS
         // EVENTS HANDLER :
 
         // img smooth loading
-        document.querySelector('.miniature-cover').addEventListener('load', evt => {
+        document.querySelector('.miniature-cover img').addEventListener('load', evt => {
             evt.target.style.opacity = '1'; 
         })
 
@@ -514,7 +517,36 @@ VIEWS
             document.querySelector('#estimate-left-time').innerHTML = `Estimation du temps restant :<br/>${ estimateLeftTime() }`;
             new QuickToast('Modifié avec succès').display(); 
         })
+
+
+
+        // ADD CUSTOM IMAGE : 
+        const miniatureCover = document.querySelector('.miniature-cover img'); 
+        const customMiniatureImageInput = document.querySelector('#custom-miniature-image'); 
+        
+        customMiniatureImageInput.addEventListener('change', event => {
+            event.preventDefault(); 
+            console.log(event.target.value); 
+            console.log(event.target.files[0]); 
+
+            let fileType = event.target.files[0].type; 
+
+            convertToBase64(event.target.files[0])
+            .then(base64String => {
+                const b = wishlist.books[wishlist.getIndexOfSingleBookByID(event.target.dataset.bookId)]; 
+                let base64Header = `data:${fileType};base64,`; 
+                let newImageBase64String = base64Header + base64String; 
+                miniatureCover.src = newImageBase64String; 
+                b.miniature_link = newImageBase64String; 
+                wishlist.saveWishlist(); 
+            })
+        })
+
+
     }
+
+
+
 
 
 

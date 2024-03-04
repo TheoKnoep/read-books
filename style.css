@@ -744,7 +744,15 @@ Book entry :
 	float: left; 
 	margin-right: 18px;
 	width: 120px;
+}
+.single-book__container .miniature-cover img {
 	transition: opacity ease 1000ms;
+}
+.single-book__container .miniature-cover input[type="file"] {
+	margin: 0;
+    padding: 0;
+    font-size: 14px;
+	opacity: .6;
 }
 .single-book__container .description-content, .single-book__container .meta-container {
 	max-width: 920px; 
