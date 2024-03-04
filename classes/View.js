@@ -244,7 +244,7 @@ VIEWS
                         <input type="checkbox" name="owned" id="owned-checkbox" ${b.owned ? 'checked="true"' : ''}  data-book-id="${b.google_id}">
                     </div>
                     <p class="description-content">${b.description}</p>
-                    <div class="meta-container">
+                    <div class="meta-container" style="clear: both; ">
                         <div class="column">
                             <ul>
                                 <li>Auteur : <strong>${b.author}</strong></li>
