@@ -753,6 +753,37 @@ VIEWS
 
 
 
+    static finished_books() {
+        let html = ''; 
+        // this.display_list(wishlist.getAllBooksByStatus('finished'), 'Livres terminés');
+
+        let finished_books = wishlist.getAllBooksByStatus('finished'); 
+        let sorted_by_year = {}; 
+        sorted_by_year['2023'] = []; 
+
+        finished_books.forEach(book => {
+            let year = new Date(book.finished_date).getFullYear().toString();
+            if (typeof sorted_by_year[year] === 'undefined') {
+                sorted_by_year[year] = []; 
+            }
+            sorted_by_year[year].push(book); 
+        })
+
+        Object.keys(sorted_by_year).forEach(year => {
+            sorted_by_year[year].sort((a,b) => {
+                return b.finished_date - a.finished_date; 
+            })
+            html += this.template_list(sorted_by_year[year], {name: year}); 
+        })
+        
+        this.config().main_container.innerHTML = html; 
+
+        this.list_events_handler(); 
+    }
+
+
+
+
 
 
 
@@ -826,13 +857,6 @@ VIEWS
                 </div>
 
                 
-                <h2>
-                    Fonctionnalités à venir :
-                </h2>
-                <ul>
-                    <li class="star">Recherche avancée dans les livres (par auteur, éditeur, etc.)</li>
-                    <li class="star">Gestion dans les paramètres du thème clair et sombre</li>
-                </ul>
 
                 <h2>
                     Crédits :
@@ -878,6 +902,20 @@ VIEWS
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1446,6 +1484,15 @@ TEMPLATES
     static icon_statistics() {
         return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>`; 
     }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -126,7 +126,7 @@
 						View.display_list(wishlist.getAllBooksByStatus('started'), 'En cours de lecture'); 
 						break; 
 					case 'finished':
-						View.display_list(wishlist.getAllBooksByStatus('finished'), 'Livres terminés'); 
+						View.finished_books(); 
 						break; 
 					case 'book':
 						if (route[3] && route[3] === 'stats') {
