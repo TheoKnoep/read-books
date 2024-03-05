@@ -790,7 +790,6 @@ VIEWS
 
         let finished_books = wishlist.getAllBooksByStatus('finished'); 
         let sorted_by_year = {}; 
-        sorted_by_year['2023'] = []; 
 
         finished_books.forEach(book => {
             let year = new Date(book.finished_date).getFullYear().toString();
@@ -800,7 +799,9 @@ VIEWS
             sorted_by_year[year].push(book); 
         })
 
-        Object.keys(sorted_by_year).forEach(year => {
+        let keys = Object.keys(sorted_by_year); 
+        keys.sort((a,b) => { return b-a }); 
+        keys.forEach(year => {
             sorted_by_year[year].sort((a,b) => {
                 return b.finished_date - a.finished_date; 
             })
