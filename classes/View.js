@@ -650,6 +650,8 @@ VIEWS
     static search_form(existing_query = "") {
         const CONTAINER = document.querySelector('#app-container'); 
 
+        let barcode_detector_is_supported = ("BarcodeDetector" in globalThis); 
+
         let HTMLContent = `
         <div>
             <form class="focus" action="" id="search-form" >
@@ -659,7 +661,7 @@ VIEWS
             <div id="search-results"></div>
             <hr/>
             <a id="add-form-cta" href="#/add-form"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>&nbsp;Ajout manuel</a>
-            <a id="add-barcode" href="#/add-barcode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-qr-code"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>&nbsp;Scan de code-barre</a>
+            ${ (barcode_detector_is_supported || true) ? `<a id="add-barcode" href="#/add-barcode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-qr-code"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>&nbsp;Scan de code-barre</a>` : ''}
         </div>`; 
 
         CONTAINER.innerHTML = HTMLContent; 
@@ -694,14 +696,49 @@ VIEWS
             document.querySelector('#search-form').classList.remove('focus'); 
         })
 
-        document.querySelector('#add-barcode').addEventListener('click', event => {
-            event.preventDefault(); 
-            new UserChoice('⏳ Bientôt disponible', 'Compris').waitFor(); 
-        })
+        if (document.querySelector('#add-barcode')) {
+            document.querySelector('#add-barcode').addEventListener('click', event => {
+                // event.preventDefault(); 
+                // new UserChoice('⏳ Bientôt disponible', 'Compris').waitFor(); 
+            })    
+        }
 
 
     }
 
+
+
+
+    static add_by_barcode() {
+        const CONTAINER = document.querySelector('#app-container'); 
+        CONTAINER.innerHTML = `<h1>⏳ Bientôt disponible</h1><p>Supporté : ${ ("BarcodeDetector" in globalThis) }</p>`; 
+        // alert('oui'); 
+
+
+        if (!("BarcodeDetector" in globalThis)) {
+			console.log("Barcode Detector is not supported by this browser.");
+			// new UserChoice('Barcode Detector is not supported by this browser.', 'Compris').waitFor(); 
+            CONTAINER.innerHTML += `<p>Votre appareil ne permet pas de profiter de cette fonctionnalité</p>`; 
+
+		} else {
+            let html = ''; 
+			console.log("Barcode Detector supported!");
+
+			// new UserChoice('Barcode Detector supported!', 'Compris').waitFor(); 
+		
+			// create new detector
+			const barcodeDetector = new BarcodeDetector({
+			    formats: ["code_39", "codabar", "ean_13"],
+			});
+
+            barcodeDetector.getSupportedFormats().then((supportedFormats) => {
+                supportedFormats.forEach((format) => {
+                    console.log(format); 
+                    CONTAINER.innerHTML += `<pre>${format} <pre/>`; 
+                });
+            });
+		}
+    }
 
 
 
