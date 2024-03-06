@@ -731,7 +731,7 @@ VIEWS
 			    formats: ["code_39", "codabar", "ean_13"],
 			});
 
-            barcodeDetector.getSupportedFormats().then((supportedFormats) => {
+            BarcodeDetector.getSupportedFormats().then((supportedFormats) => {
                 supportedFormats.forEach((format) => {
                     console.log(format); 
                     CONTAINER.innerHTML += `<pre>${format} <pre/>`; 
