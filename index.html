@@ -28,6 +28,7 @@
 
 	<script src="scripts/auth.js"></script>
 	<script src="scripts/images.js"></script>
+	<script src="scripts/barcode-scanner.js"></script>
 	
 
 	<link rel="manifest" href="manifest.webmanifest">
@@ -194,6 +195,11 @@
 			return 'unknown'; 
 		}
 
+		window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",   e => {
+			console.log(e.matches); 
+			applyPreferredTheme(); 
+		});
+
 
 
 
@@ -228,6 +234,25 @@
 				// console.log(error); 
 			}); 
 		} 
+	</script>
+
+
+	<script>
+		// check compatibility
+		if (!("BarcodeDetector" in globalThis)) {
+			console.log("Barcode Detector is not supported by this browser.");
+			// new UserChoice('Barcode Detector is not supported by this browser.', 'Compris').waitFor(); 
+
+		} else {
+			console.log("Barcode Detector supported!");
+
+			// new UserChoice('Barcode Detector supported!', 'Compris').waitFor(); 
+		
+			// create new detector
+			const barcodeDetector = new BarcodeDetector({
+			formats: ["code_39", "codabar", "ean_13"],
+			});
+		}
 	</script>
 </body>
 </html>
