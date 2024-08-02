@@ -656,7 +656,9 @@ VIEWS
         <div>
             <form class="focus" action="" id="search-form" >
                 <input type="search" name="query" id="query" placeholder="Titre, auteur, ISBN, &hellip;" >
-                <input type="submit" name="" id="submit-form" value="Chercher">
+                <input type="submit" name="" id="submit-form" value="Chercher" >
+                <br>
+                <!-- <small><em>La recherche est désactivée pour le moment, elle revient vite</em></p> -->
             </form>
             <div id="search-results"></div>
             <hr/>
@@ -699,7 +701,7 @@ VIEWS
         if (document.querySelector('#add-barcode')) {
             document.querySelector('#add-barcode').addEventListener('click', event => {
                 // event.preventDefault(); 
-                // new UserChoice('⏳ Bientôt disponible', 'Compris').waitFor(); 
+                new UserChoice('⏳ Bientôt disponible', 'Compris').waitFor(); 
             })    
         }
 
