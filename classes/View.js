@@ -880,6 +880,13 @@ VIEWS
 
                 <div class="versions-container">
                     <p>
+                        <strong data-time="">2024-10-02</strong> | V.0.9.9<br/>
+                        - création de compte directement depuis l'application
+                    </p>
+                </div>
+
+                <div class="versions-container">
+                    <p>
                         <strong data-time="">2024-03-04</strong> | V.0.9.7<br/>
                         - possibilité d'ajouter manuellement un livre à sa liste s'il n'est pas présent dans les résultats de recherche
                         - ajout d'images personnalisées pour les couvertures de livres enregistrés dans l'application
@@ -1025,7 +1032,7 @@ VIEWS
                     <input type="password" name="password" id="password" placeholder="Mot de passe">
                     <input type="submit" value="Connexion">
                 </form>
-                <p><em>Si vous n'avez pas encore de compte : <a href="#">créer un compte</a></em></p>`; 
+                <p><em>Si vous n'avez pas encore de compte : <a href="#/account">créer un compte</a></em></p>`; 
         }
         
 
@@ -1194,6 +1201,102 @@ VIEWS
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    static async account() {  
+
+        const CONTAINER = this.config().main_container; 
+
+
+        let auth = await testUserConnexion(); 
+        console.log(auth); 
+
+        // USER INFO : 
+        let user_block = ''; 
+        if (auth.success) {
+            user_block = `<p class="user-block__logged">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+                    <span>Vous êtes connecté en tant que <strong>${auth.login}</strong>&nbsp;</span>
+                    <button onclick="deleteSession()"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></button>
+                </p>
+                `; 
+        } else {
+            user_block = `<h1>Créez un compte</h1>
+                <p><em>Renseignez votre adresse et choisissez un mot de passe pour créer un compte</em></p>
+                <form id="account-form">    
+                    <input type="email" name="login" id="login" placeholder="Email" required value="test@test.com">
+                    <input type="password" name="password" id="password" placeholder="Mot de passe" required value="bob">
+                    <input type="submit" value="Créez votre compte">
+                </form>`; 
+        }
+
+
+        let HTMLcontent = user_block; 
+        CONTAINER.innerHTML = HTMLcontent; 
+
+
+        const createAccountForm = document.querySelector('#account-form') || null; 
+        console.log(createAccountForm); 
+        if (createAccountForm) {
+            createAccountForm.addEventListener('submit', async event => {
+                console.log(event); 
+                event.preventDefault(); 
+                let formData = new FormData(event.currentTarget); 
+                console.log(formData); 
+
+                let options = {
+                    'method': "POST", 
+                    body: formData
+                }
+
+                let res = await fetch('https://theoknoepflin.com/read-books-api/?route=user', options); 
+                let json = await res.json(); 
+
+                console.log(json); 
+
+                if (json.success) {
+                    createAccountForm.innerHTML = `<p>✅ Votre compte a été créé avec succès</p>
+                    <p>Vous pouvez désormais vous connectez et sauvegarder votre liste de lecture en ligne</p>
+                    <p><a href="#/save">Connexion</a>`; 
+                } else {
+                    if (json.message === "existent user") {
+                        createAccountForm.insertAdjacentHTML('beforeend', `<p>Cet utilisateur existe déjà, vous ne pouvez pas créer un nouveau compte</p>`); 
+                    }
+                }
+
+            })
+        }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
