@@ -1239,8 +1239,8 @@ VIEWS
             user_block = `<h1>Créez un compte</h1>
                 <p><em>Renseignez votre adresse et choisissez un mot de passe pour créer un compte</em></p>
                 <form id="account-form">    
-                    <input type="email" name="login" id="login" placeholder="Email" required value="test@test.com">
-                    <input type="password" name="password" id="password" placeholder="Mot de passe" required value="bob">
+                    <input type="email" name="login" id="login" placeholder="Email" required >
+                    <input type="password" name="password" id="password" placeholder="Mot de passe" required >
                     <input type="submit" value="Créez votre compte">
                 </form>`; 
         }
