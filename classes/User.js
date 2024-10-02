@@ -79,4 +79,28 @@ class User {
         localStorage.removeItem(THIS_CONFIG.storage_name); 
         location.reload(); 
     }
+
+    async saveJSONonline() {
+        let jsonStr = JSON.stringify(wishlist.books); 
+        let jsonFile = new Blob([jsonStr], { type: 'application/json' }); 
+        let data = new FormData(); 
+        data.append('json', jsonFile); 
+    
+        let token = retrievedToken(); 
+    
+        return fetch('https://theoknoepflin.com/read-books-api/?route=json&token=' + token, {
+            method: 'POST', 
+            body: data
+        }).then(res => { 
+            return res; 
+        })
+            // .then(text => {
+            // 	console.log(text); 
+            // 	console.log(JSON.parse(text)); 
+            // 	let response = JSON.parse(text); 
+            // 	if (response.success) {
+            // 		new QuickToast('Sauvegarde en ligne réussie').display();
+            // 	}
+            // })
+    }
 }

@@ -91,7 +91,12 @@
 
 		// init User : 
 		let user = new User(); 
-		user.is_logged().then(res => console.log('user is logged ?', res)); 
+		user.is_logged().then(res => {
+			console.log('user is logged ?', res); 
+			if (res && navigator.onLine) {
+				user.saveJSONonline().then(res => console.log('saveJSON in bg ?? : ', res.ok)); 
+			}
+		}); 
 
 		// display network status :
 		const networkState = document.querySelector('#network-state'); 
@@ -110,6 +115,13 @@
 		}); 
 
 		async function RouteRequest() {
+			user.is_logged().then(res => {
+				console.log('user is logged ?', res); 
+				if (res && navigator.onLine) {
+					user.saveJSONonline().then(res => console.log('saveJSON in bg ?? : ', res.ok)); 
+				}
+			}); 
+
 			wishlist.update_minature_cover_with_new_API_link(); 
 			scrollTo(0,0);
 			let route = window.location.hash.split('/'); 
