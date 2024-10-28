@@ -1115,6 +1115,8 @@ VIEWS
                         let response = JSON.parse(text); 
                         if (response.success) {
                             new QuickToast('Sauvegarde en ligne réussie').display();
+                        } else {
+                            new QuickToast('❌ erreur : ' + response.message); 
                         }
                     })
             })

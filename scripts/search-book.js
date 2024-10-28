@@ -64,7 +64,7 @@ async function fetchBooksInformations(query, maxResults, onlyThumbnails = false)
 
 	console.log(response.status); 
 	if (response.status !== 200) {
-		throw new Error('Error in Google API response', {cause: response.code});; 
+		throw new Error('Error in Google API response', {cause: response.code});
 	}
 
 	const data = await response.json(); 
