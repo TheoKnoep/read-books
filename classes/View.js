@@ -1611,11 +1611,16 @@ TEMPLATES
         } else {
             let booksList = `<h2>${list_name} <span class="list-items-counter">(${books_list.length})</span> :</h2>`; 
             for (let i in books_list) {
+                
                 let dateAdded = books_list[i].added_date ? `<span class="added-date">Ajouté le ${ new Date(books_list[i].added_date).toLocaleDateString() }</span>` : ''; 
                 if (books_list[i].finished_date) {
                     dateAdded = `<span class="added-date">Terminé le ${ new Date(books_list[i].finished_date).toLocaleDateString() }</span>`
                 }
                 let flag = books_list[i].language ? `<img width="18" src="images/flags/4x3/${Utils.findFlag(books_list[i].language)}.svg" />` : '' ; 
+
+                let bookHasComment = books_list[i].comment !== null
+                let bookHasCommentIcon = `<svg style="position: relative; top: 3px;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text-icon lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>`; 
+
     
                 let newEntry = `    <article class="book-entry" id="entry-${i}">
                                         <div><img class="cover-miniature" width="80" src="${books_list[i].miniature_link}"></div>	
@@ -1625,6 +1630,7 @@ TEMPLATES
                                             <p class="description maxheight0">${books_list[i].description}</p>
                                             <!-- <p class="publisher"><strong>${books_list[i].publisher}</strong></p> -->
                                             <!-- ${books_list[i].owned ? owned_icon + ' ' : ''} -->
+                                            ${ bookHasComment ? bookHasCommentIcon : '' }
                                             ${ dateAdded }                                            
                                         </div>
                                         <div class="more-actions-button" id="id${books_list[i].google_id}">
